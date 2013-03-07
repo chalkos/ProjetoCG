@@ -2,13 +2,13 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "primitivas.h"
+#include "Primitivas.h"
 
-float angle = 0;
+float angley = 0;
+float anglex = 0;
 float translate[3] = {0,0,0};
-int ver = GL_FRONT_AND_BACK;
-int face = GL_FRONT;
-int drawMode = GL_LINE;
+int drawMode_face = GL_FRONT; //
+int drawMode_mode = GL_LINE;
 
 void changeSize(int w, int h) {
 
@@ -44,29 +44,24 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(10.0,2.0,10.0, 
+	gluLookAt(0.0,2.0,10.0, 
 		      0.0,1.0,0.0,
 			  0.0f,1.0f,0.0f);
 
 	// opções
     //glCullFace(ver);
-	glPolygonMode(face,drawMode);
+	glPolygonMode(drawMode_face,drawMode_mode);
 	//GL_FRONT, GL_BACK, GL_FRONT_AND_BACK
 	//GL_FILL, GL_LINE, GL_POINT
 
 	// pôr instruções de desenho aqui
-	glRotatef(angle,0,1,0); // rodar o espaço antes de colocar os triangulos
+	glRotatef(angley,0,1,0); // rodar o espaço antes de colocar os triangulos
+	glRotatef(anglex,1,0,0);
 	glTranslatef(translate[0],translate[1],translate[2]);
 
-	/*
-	glBegin(GL_TRIANGLES); //F
-		glColor3f(0.6,0.6,0.6);
-		glVertex3f(1.0f, 0.0f, 1.0f);
-		glVertex3f(-1.0f, 0.0f, 1.0f);
-		glVertex3f(1.0f, 0.0f, -1.0f);
-		
-	glEnd();*/
-	glutSolidSphere(2, 10, 10);
+	
+	Primitivas::criarPlano(2,1,2,-1,-2,-1,-2,1);
+
 	// End of frame
 	glutSwapBuffers();
 }
@@ -88,9 +83,13 @@ void keyPress(unsigned char tecla, int x, int y){
 
 void specialKeyPress(int tecla, int x, int y){
 	if( tecla == GLUT_KEY_LEFT ){
-		angle -= 5;
+		angley -= 5;
 	}else if( tecla == GLUT_KEY_RIGHT ){
-		angle += 5;
+		angley += 5;
+	}else if( tecla == GLUT_KEY_UP ){
+		anglex -= 5;
+	}else if( tecla == GLUT_KEY_DOWN ){
+		anglex += 5;
 	}
 	glutPostRedisplay(); //redesenhar
 }
@@ -107,14 +106,12 @@ void mouseMove(int x, int y){
 // escrever função de processamento do menu
 void menuCreate(int id_op){
 	switch(id_op){
-		case 1: ver = GL_BACK; break;
-		case 2: ver = GL_FRONT; break;
-		case 3: face = GL_FRONT; break;
-		case 4: face = GL_BACK; break;
-		case 5: face = GL_FRONT_AND_BACK; break;
-		case 6: drawMode = GL_FILL; break;
-		case 7: drawMode = GL_LINE; break;
-		case 8: drawMode = GL_POINT; break;
+		case 1: drawMode_face = GL_FRONT; break;
+		case 2: drawMode_face = GL_BACK; break;
+		case 3: drawMode_face = GL_FRONT_AND_BACK; break;
+		case 4: drawMode_mode = GL_FILL; break;
+		case 5: drawMode_mode = GL_LINE; break;
+		case 6: drawMode_mode = GL_POINT; break;
 	}
 	glutPostRedisplay(); //redesenhar
 }
@@ -127,8 +124,8 @@ int main(int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
 	glutInitWindowPosition(100,100);
-	glutInitWindowSize(800,800);
-	glutCreateWindow("CG@DI-UM");
+	glutInitWindowSize(800,600);
+	glutCreateWindow("ProjetoCG - Sandbox");
 		
 
 // registo de funções 
@@ -147,14 +144,14 @@ int main(int argc, char **argv) {
 // pôr aqui a criação do menu
 	int menuID = glutCreateMenu(menuCreate);
 	
-	glutAddMenuEntry("ver frente", 1); //GL_BACK
-	glutAddMenuEntry("ocultar frente", 2); //GL_FRONT
-	glutAddMenuEntry("pMode: GL_FRONT", 3);
-	glutAddMenuEntry("pMode: GL_BACK", 4);
-	glutAddMenuEntry("pMode: GL_FRONT_AND_BACK", 5);
-	glutAddMenuEntry("pMode: GL_FILL", 6);
-	glutAddMenuEntry("pMode: GL_LINE", 7);
-	glutAddMenuEntry("pMode: GL_POINT", 8);
+	glutAddMenuEntry("pMode_face: GL_FRONT", 1);
+	glutAddMenuEntry("pMode_face: GL_BACK", 2);
+	glutAddMenuEntry("pMode_face: GL_FRONT_AND_BACK", 3);
+	glutAddMenuEntry("pMode_mode: GL_FILL", 4);
+	glutAddMenuEntry("pMode_mode: GL_LINE", 5);
+	glutAddMenuEntry("pMode_mode: GL_POINT", 6);
+
+	
 
 	//GL_FRONT, GL_BACK, GL_FRONT_AND_BACK
 	//GL_FILL, GL_LINE, GL_POINT
