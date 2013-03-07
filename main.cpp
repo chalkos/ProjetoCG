@@ -2,6 +2,8 @@
 #include <math.h>
 #include <stdio.h>
 
+#include "primitivas.h"
+
 float angle = 0;
 float translate[3] = {0,0,0};
 int ver = GL_FRONT_AND_BACK;
