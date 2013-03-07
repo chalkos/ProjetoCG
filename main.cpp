@@ -60,7 +60,8 @@ void renderScene(void) {
 	glTranslatef(translate[0],translate[1],translate[2]);
 
 	
-	Primitivas::criarPlano(2,1,2,-1,-2,-1,-2,1);
+	//Primitivas::criarPlano(2,1,2,-1,-2,-1,-2,1);
+	Primitivas::criarCubo(1);
 
 	// End of frame
 	glutSwapBuffers();

@@ -11,3 +11,5 @@ GitHub for windows download: http://github-windows.s3.amazonaws.com/GitHubSetup.
 Documentar aplicações em VC++: http://msdn.microsoft.com/en-us/library/ms177227(v=vs.80).aspx
 
 Organização de ficheiros em C++: http://www.cplusplus.com/forum/articles/10627/
+
+Trig circle: http://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Circle-trig6.svg/400px-Circle-trig6.svg.png
