@@ -21,8 +21,10 @@ public:
 	static void criarCubo(float lado);
 
 	/// <summary>cria um cilindro</summary>
-	/// <param n
-	static void criarCilindro(float raio, float altura, float fatias);
+	/// <param name='raio'>O raio da base</param>
+	/// <param name='altura'>A altura do cilindro</param>
+	/// <param name='fatias'>Número de fatias</param>
+	static void criarCilindro(float raio, float altura, unsigned fatias);
 };
 
 

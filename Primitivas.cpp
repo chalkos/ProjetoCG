@@ -54,15 +54,59 @@ void Primitivas::criarCubo(float lado){
 	glPopMatrix();
 }
 
-void criarCilindro(float raio, float altura, unsigned fatias){
+void Primitivas::criarCilindro(float raio, float altura, unsigned fatias){
 	// guardar a matrix de rotações e translações
 	glPushMatrix();
+
+	float angle = (360 / fatias);
+	float lado = sinf( toRadian(angle) )*raio;
+	float x = cosf( toRadian(angle) )*raio;
+	float z = lado;
+
+	// fazer a base
+	for(int i=0; i<fatias; i++){
+		glBegin(GL_TRIANGLES);
+			glColor3f( 0.01*i+0.3, 0.01*i+0.3, 0.01*i+0.3);
+			glVertex3f(0.0f, 0.0f, 0.0f);
+			glVertex3f(x, 0.0f, -z);
+			glVertex3f(raio, 0.0f, 0.0f);
+		glEnd();
+		glRotatef(angle, 0,1,0);
+	}
+	
+	// voltar à matriz que estava quando a função foi chamada
+	glPopMatrix();
 	glPushMatrix();
 
-	float angle = (180 / fatias);
-	float lado = sinf( toRadian(angle/2) )*2;
+	// refazer a base, mas com y=altura
+	glTranslatef(0,altura,0);
+	for(int i=0; i<fatias; i++){
+		glBegin(GL_TRIANGLES);
+			glColor3f( 0.01*i+0.3, 0.01*i+0.3, 0.01*i+0.3);
+			glVertex3f(0.0f, 0.0f, 0.0f);
+			glVertex3f(raio, 0.0f, 0.0f);
+			glVertex3f(x, 0.0f, -z);
+		glEnd();
+		glRotatef(angle, 0,1,0);
+	}
+	
+	// voltar à matriz que estava quando a função foi chamada
+	glPopMatrix();
+	glPushMatrix();
 
-
+	// fazer os rectangulos para os lados
+	glRotatef(-90, 1, 0,0);
+	glTranslatef(raio,0,0);
+	glRotatef( -(90-angle/2), 0,0,1);
+	for(int i=0; i<fatias; i++){
+		criarPlano( 0,0,  -lado,0,  -lado,altura,  0,altura,   0x030303*i + 0x202020   );
+		
+		glRotatef( (90-angle/2), 0,0,1);
+		glTranslatef(-raio,0,0);
+		glRotatef(angle, 0,0,1);
+		glTranslatef(raio,0,0);
+		glRotatef( -(90-angle/2), 0,0,1);
+	}
 
 
 	// recuperar a matrix de rotações e translações
