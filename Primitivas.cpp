@@ -2,7 +2,7 @@
 #include "Utilities.h"
 
 #include <math.h>
-#include <GL\glut.h>
+#include <GL/glut.h>
 
 void Primitivas::criarPlano(float x1, float z1, float x2, float z2, float x3, float z3, float x4, float z4, unsigned cor){
 	if(cor!=0x0) glColor3f( ((cor >> 16) & 0xff) / 255.0, ((cor >> 8) & 0xff) / 255.0, (cor & 0xff) / 255.0);
