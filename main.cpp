@@ -1,4 +1,4 @@
-#include <GL/glut.h>
+#include <GL\glut.h>
 #include <math.h>
 #include <stdio.h>
 
@@ -62,7 +62,8 @@ void renderScene(void) {
 	
 	//Primitivas::criarPlano(2,1,2,-1,-2,-1,-2,1);
 	//Primitivas::criarCubo(1);
-	Primitivas::criarCilindro(1, 3, 60);
+	//Primitivas::criarCilindro(1, 3, 60);
+	glutWireSphere(0.5,100,100); 
 
 	// End of frame
 	glutSwapBuffers();
@@ -73,9 +74,9 @@ void renderScene(void) {
 // escrever função de processamento do teclado
 void keyPress(unsigned char tecla, int x, int y){
 	if( tecla == 'w' ){
-		translate[2] -= 0.1;
-	}else if( tecla == 's' ){
 		translate[2] += 0.1;
+	}else if( tecla == 's' ){
+		translate[2] -= 0.1;
 	}else if( tecla == 'a' ){
 		translate[0] -= 0.1;
 	}else if( tecla == 'd' ){
