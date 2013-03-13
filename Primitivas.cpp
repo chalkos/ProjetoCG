@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+
 #include "Primitivas.h"
 #include "Utilities.h"
 
@@ -237,4 +239,31 @@ void Primitivas::criarEsfera(float raio, unsigned fatias, unsigned seccoes){
 	}
 
 	glEnd();
+}
+
+void Primitivas::criarEsfera(float raio, int lati, int longi) {
+	int i, j;
+	for(i = 0; i <= lati; i++) {
+		float lat0 = M_PI * (-0.5 + (float) (i-1) / lati);
+		float z0 = sin(lat0);
+		float zr0 = cos(lat0);
+
+		float lat1 = M_PI * (-0.5 + (float) i / lati);
+		float z1 = sin(lat1);
+		float zr1 = cos(lat1);
+
+		glBegin(GL_TRIANGLE_STRIP);
+		for(j = 0; j <= longi; j++) {
+			float lng = 2 * M_PI * (float) (j - 1) / longi;
+            float x = cos(lng);
+			float y = sin(lng);
+
+		glNormal3f(x * zr0, y * zr0, z0);
+        glVertex3f(x * zr0, y * zr0, z0);
+        glNormal3f(x * zr1, y * zr1, z1);
+        glVertex3f(x * zr1, y * zr1, z1);
+
+		}
+		glEnd();
+	}
 }
