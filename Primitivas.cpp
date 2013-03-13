@@ -134,3 +134,7 @@ void Primitivas::criarCilindro(float raio, float altura, unsigned fatias, unsign
 
 	glEnd();
 }
+
+void Primitivas::criarEsfera(float raio, unsigned fatias, unsigned seccoes){
+
+}
