@@ -164,4 +164,47 @@ void Primitivas::criarCilindro(float raio, float altura, unsigned fatias, unsign
 void Primitivas::criarEsfera(float raio, unsigned fatias, unsigned seccoes){
 	Primitivas::setColorSeed(5);
 
+	if(seccoes%2 != 0) seccoes++; // se o numero de seccoes for impar, a esfera fica com dois buracos. Isto obriga a ter um numero par de seccoes
+
+	seccoes*=2;
+
+	float alpha = 2 * M_PI / fatias;
+	float beta = 2 * M_PI / seccoes;
+
+
+	glBegin(GL_TRIANGLES);
+
+	// desenhar a parte de baixo
+	int i = -(seccoes/4.0f);
+	for(int j=0; j < fatias; j++){
+		Primitivas::changeColor();
+		glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+		glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
+		glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*j), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*j));
+	}
+
+	// desenhar as secções intermédias
+	for(/* inicializado acima */; i < (seccoes/4.0f)-1; i+=1){
+		for(int j=0; j < fatias; j++){
+			Primitivas::changeColor();
+			glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+			glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
+			glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*j), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*j));
+			//continue;
+			glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+			glVertex3f(raio * cos(beta*i) * sin(alpha*(j+1)), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*(j+1)));
+			glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
+		}
+	}
+
+	// desenhar a secção de cima
+	i += 1;
+	for(int j=0; j < fatias; j++){
+		Primitivas::changeColor();
+		glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+		glVertex3f(raio * cos(beta*(i-1)) * sin(alpha*j), raio * sin(beta*(i-1)), raio * cos(beta*(i-1)) * cos(alpha*j));
+		glVertex3f(raio * cos(beta*(i-1)) * sin(alpha*(j+1)), raio * sin(beta*(i-1)), raio * cos(beta*(i-1)) * cos(alpha*(j+1)));
+	}
+
+	glEnd();
 }
