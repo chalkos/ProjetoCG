@@ -63,8 +63,8 @@ void renderScene(void) {
 	//Primitivas::criarPlano(3);
 	//Primitivas::criarCubo(2);
 	//Primitivas::criarCilindro(1, 5, 9);
-	Primitivas::criarEsfera(2,30,30);
-	//Primitivas::criarEsfera(2,5,30);
+	//Primitivas::criarEsfera(2,30,30);
+	Primitivas::criarEsfera(2,5,5);
 
 	// End of frame
 	glutSwapBuffers();
