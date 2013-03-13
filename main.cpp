@@ -44,7 +44,7 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(0.0,2.0,10.0, 
+	gluLookAt(10*sin(anglex)*cos(angley), 10*sin(angley), 10*cos(anglex)*cos(angley),
 		      0.0,1.0,0.0,
 			  0.0f,1.0f,0.0f);
 
@@ -55,14 +55,14 @@ void renderScene(void) {
 	//GL_FILL, GL_LINE, GL_POINT
 
 	// pôr instruções de desenho aqui
-	glRotatef(angley,0,1,0); // rodar o espaço antes de colocar os triangulos
-	glRotatef(anglex,1,0,0);
+	//glRotatef(angley,0,1,0); // rodar o espaço antes de colocar os triangulos
+	//glRotatef(anglex,1,0,0);
 	glTranslatef(translate[0],translate[1],translate[2]);
 
 	
-	//Primitivas::criarPlano(2,1,2,-1,-2,-1,-2,1);
+	Primitivas::criarPlano(3);
 	//Primitivas::criarCubo(1);
-	Primitivas::criarCilindro(1, 3, 60);
+	//Primitivas::criarCilindro(1, 5, 9);
 
 	// End of frame
 	glutSwapBuffers();
@@ -85,13 +85,15 @@ void keyPress(unsigned char tecla, int x, int y){
 
 void specialKeyPress(int tecla, int x, int y){
 	if( tecla == GLUT_KEY_LEFT ){
-		angley -= 5;
+		anglex -= 3.1415/16;
 	}else if( tecla == GLUT_KEY_RIGHT ){
-		angley += 5;
+		anglex += 3.1415/16;
 	}else if( tecla == GLUT_KEY_UP ){
-		anglex -= 5;
+		//if( angley < -3.1415/2 ) angley *= -1;
+		angley += 3.1415/16;
 	}else if( tecla == GLUT_KEY_DOWN ){
-		anglex += 5;
+		//if( angley > 3.1415/2 ) angley *= -1;
+		angley -= 3.1415/16;
 	}
 	glutPostRedisplay(); //redesenhar
 }
