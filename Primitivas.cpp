@@ -175,36 +175,35 @@ void Primitivas::criarEsfera(float raio, unsigned fatias, unsigned seccoes){
 	glBegin(GL_TRIANGLES);
 
 	// desenhar a parte de baixo
-	float i = -(seccoes/4.0f);
-	float iInc = 2 * M_PI / seccoes;
+	int i = -(seccoes/4.0f);
 	for(int j=0; j < fatias; j++){
 		Primitivas::changeColor();
 		glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
-		glVertex3f(raio * cos(beta*i+iInc) * sin(alpha*(j+1)), raio * sin(beta*i+iInc), raio * cos(beta*i+iInc) * cos(alpha*(j+1)));
-		glVertex3f(raio * cos(beta*i+iInc) * sin(alpha*j), raio * sin(beta*i+iInc), raio * cos(beta*i+iInc) * cos(alpha*j));
+		glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
+		glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*j), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*j));
 	}
 
 	// desenhar as secções intermédias
-	for(/* inicializado acima */; i < (seccoes/4.0f)-1; i+=iInc){
+	for(/* inicializado acima */; i < (seccoes/4.0f)-1; i+=1){
 		for(int j=0; j < fatias; j++){
 			Primitivas::changeColor();
 			glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
-			glVertex3f(raio * cos(beta*i+iInc) * sin(alpha*(j+1)), raio * sin(beta*i+iInc), raio * cos(beta*i+iInc) * cos(alpha*(j+1)));
-			glVertex3f(raio * cos(beta*i+iInc) * sin(alpha*j), raio * sin(beta*i+iInc), raio * cos(beta*i+iInc) * cos(alpha*j));
+			glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
+			glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*j), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*j));
 			//continue;
 			glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
 			glVertex3f(raio * cos(beta*i) * sin(alpha*(j+1)), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*(j+1)));
-			glVertex3f(raio * cos(beta*i+iInc) * sin(alpha*(j+1)), raio * sin(beta*i+iInc), raio * cos(beta*i+iInc) * cos(alpha*(j+1)));
+			glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
 		}
 	}
 
 	// desenhar a secção de cima
-	i += iInc;
+	i += 1;
 	for(int j=0; j < fatias; j++){
 		Primitivas::changeColor();
-			glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
-			glVertex3f(raio * cos(beta*i-iInc) * sin(alpha*(j+1)), raio * sin(beta*i-iInc), raio * cos(beta*i-iInc) * cos(alpha*(j+1)));
-			glVertex3f(raio * cos(beta*i-iInc) * sin(alpha*(j+1)), raio * sin(beta*i-iInc), raio * cos(beta*i-iInc) * cos(alpha*(j+1)));
+		glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+		glVertex3f(raio * cos(beta*(i-1)) * sin(alpha*j), raio * sin(beta*(i-1)), raio * cos(beta*(i-1)) * cos(alpha*j));
+		glVertex3f(raio * cos(beta*(i-1)) * sin(alpha*(j+1)), raio * sin(beta*(i-1)), raio * cos(beta*(i-1)) * cos(alpha*(j+1)));
 	}
 
 	glEnd();
