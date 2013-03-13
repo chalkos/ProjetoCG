@@ -98,7 +98,7 @@ void Primitivas::criarCilindro(float raio, float altura, unsigned fatias){
 	glRotatef(-90, 1, 0,0);
 	glTranslatef(raio,0,0);
 	glRotatef( -(90-angle/2), 0,0,1);
-	for(int i=0; i<fatias; i++){
+	for(int i=0; i<1; i++){
 		criarPlano( 0,0,  -lado,0,  -lado,altura,  0,altura,   0x030303*i + 0x202020   );
 		
 		glRotatef( (90-angle/2), 0,0,1);
