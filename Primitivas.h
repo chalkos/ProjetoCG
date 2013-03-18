@@ -25,7 +25,13 @@ public:
 	/// <param name='seccoes'>O nr de seccoes horizontais</param>
 	static void criarEsfera(float raio, unsigned fatias, unsigned seccoes);
 
+	/// <summary>define se as formas devem ser coloridas ou não</summary>
+	/// <param name='valor'>colorido (true) / não colorido (false)</param>
+	static void setColorir(bool valor);
+
 private:
+	static bool colorir;
+
 	static void setColorSeed(unsigned int seed);
 	static void changeColor();
 };

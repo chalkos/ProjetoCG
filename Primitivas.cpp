@@ -7,13 +7,19 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+bool Primitivas::colorir;
+
 void Primitivas::changeColor(){
-	// descomentar a linha seguinte desactiva as cores random
-	// return;
+	if(!Primitivas::colorir) return;
+
 	glColor3f(
 		(rand() % 80)*0.01+0.1, // gera numeros entre 0.1 e 0.9
 		(rand() % 80)*0.01+0.1, // como a seed é a mesma para cada forma
 		(rand() % 80)*0.01+0.1); // os numeros gerados sao os mesmos
+}
+
+void Primitivas::setColorir(bool valor){
+	Primitivas::colorir = valor;
 }
 
 void Primitivas::setColorSeed(unsigned int seed){
@@ -130,7 +136,7 @@ void Primitivas::criarCilindro(float raio, float altura, unsigned fatias, unsign
 			glVertex3f(raio * sin(alpha+delta), altura2, raio * cos(alpha+delta));
 		}
 
-		// a branco, as várias secções de altura (para que os triangulos nao fiquem muito esticados)
+		// as várias secções de altura (para que os triangulos nao fiquem muito esticados)
 		for(int i = 0; i<seccoes; i++){
 			Primitivas::changeColor();
 			seccao = (0.5 - 0.1*i) * altura;
@@ -148,7 +154,7 @@ void Primitivas::criarCilindro(float raio, float altura, unsigned fatias, unsign
 			}
 		}
 
-		// o topo (desenhado em y= -altura/2)
+		// a base (desenhado em y= -altura/2)
 		Primitivas::changeColor();
 		glColor3f( 0,1,0 );
 		for(float alpha = 0; alpha < 2*M_PI; alpha += delta){

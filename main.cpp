@@ -109,16 +109,68 @@ void mouseMove(int x, int y){
 }
 
 
-// escrever função de processamento do menu
-void menuCreate(int id_op){
+// acções do menu de modo de desenho
+void drawModeMenuCreate(int id_op){
 	switch(id_op){
-		case 1: drawMode_face = GL_FRONT; break;
-		case 2: drawMode_face = GL_BACK; break;
-		case 3: drawMode_face = GL_FRONT_AND_BACK; break;
-		case 4: drawMode_mode = GL_FILL; break;
-		case 5: drawMode_mode = GL_LINE; break;
-		case 6: drawMode_mode = GL_POINT; break;
+		case 1:
+			drawMode_face = GL_FRONT;
+			drawMode_mode = GL_FILL;
+			break;
+		case 2:
+			drawMode_face = GL_FRONT;
+			drawMode_mode = GL_LINE;
+			break;
+		case 3:
+			drawMode_face = GL_FRONT;
+			drawMode_mode = GL_POINT;
+			break;
+		
+		case 4:
+			drawMode_face = GL_BACK;
+			drawMode_mode = GL_FILL;
+			break;
+		case 5:
+			drawMode_face = GL_BACK;
+			drawMode_mode = GL_LINE;
+			break;
+		case 6:
+			drawMode_face = GL_BACK;
+			drawMode_mode = GL_POINT;
+			break;
+		
+		case 7:
+			drawMode_face = GL_FRONT_AND_BACK;
+			drawMode_mode = GL_FILL;
+			break;
+		case 8:
+			drawMode_face = GL_FRONT_AND_BACK;
+			drawMode_mode = GL_LINE;
+			break;
+		case 9:
+			drawMode_face = GL_FRONT_AND_BACK;
+			drawMode_mode = GL_POINT;
+			break;
 	}
+	glutPostRedisplay(); //redesenhar
+}
+
+
+// acções do menu de colorir
+void colorirMenuCreate(int id_op){
+	switch(id_op){
+		case 1:
+			Primitivas::setColorir(true);
+			break;
+		case 2:
+			Primitivas::setColorir(false);
+			break;
+	}
+	glutPostRedisplay(); //redesenhar
+}
+
+// acções do menu principal
+void mainMenuCreate(int id_op){
+	
 	glutPostRedisplay(); //redesenhar
 }
 
@@ -148,23 +200,31 @@ int main(int argc, char **argv) {
 
 
 // pôr aqui a criação do menu
-	int menuID = glutCreateMenu(menuCreate);
-	
-	glutAddMenuEntry("pMode_face: GL_FRONT", 1);
-	glutAddMenuEntry("pMode_face: GL_BACK", 2);
-	glutAddMenuEntry("pMode_face: GL_FRONT_AND_BACK", 3);
-	glutAddMenuEntry("pMode_mode: GL_FILL", 4);
-	glutAddMenuEntry("pMode_mode: GL_LINE", 5);
-	glutAddMenuEntry("pMode_mode: GL_POINT", 6);
+	int drawModeMenuID = glutCreateMenu(drawModeMenuCreate);
+	glutAddMenuEntry("FRONT - FILL", 1);
+	glutAddMenuEntry("FRONT - LINE", 2);
+	glutAddMenuEntry("FRONT - DOT", 3);
+	glutAddMenuEntry("BACK - FILL", 4);
+	glutAddMenuEntry("BACK - LINE", 5);
+	glutAddMenuEntry("BACK - DOT", 6);
+	glutAddMenuEntry("FRONT AND BACK - FILL", 7);
+	glutAddMenuEntry("FRONT AND BACK - LINE", 8);
+	glutAddMenuEntry("FRONT AND BACK - DOT", 9);
 
-	
+	int colorirMenuID = glutCreateMenu(colorirMenuCreate);
+	glutAddMenuEntry("Cores aleatórias", 1);
+	glutAddMenuEntry("Branco sobre Preto", 2);
+
+	int mainMenuID = glutCreateMenu(mainMenuCreate);
+	glutAddSubMenu("Modo de preenchimento",drawModeMenuID);
+	glutAddSubMenu("Colorir",colorirMenuID);
 
 	//GL_FRONT, GL_BACK, GL_FRONT_AND_BACK
 	//GL_FILL, GL_LINE, GL_POINT
 
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
-	glutSetMenu(menuID);
+	glutSetMenu(mainMenuID);
 
 	//glutPostRedisplay() //redesenhar
 
