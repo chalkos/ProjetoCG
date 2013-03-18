@@ -50,7 +50,6 @@ void Primitivas::criarCubo(float lado){
 	Primitivas::setColorSeed(3);
 	float mlado = lado/2;
 
-
 	glBegin(GL_TRIANGLES);
 		// baixo
 		Primitivas::changeColor();
@@ -156,7 +155,6 @@ void Primitivas::criarCilindro(float raio, float altura, unsigned fatias, unsign
 
 		// a base (desenhado em y= -altura/2)
 		Primitivas::changeColor();
-		glColor3f( 0,1,0 );
 		for(float alpha = 0; alpha < 2*M_PI; alpha += delta){
 			glVertex3f(0,-altura2,0);
 			glVertex3f(raio * sin(alpha+delta), -altura2, raio * cos(alpha+delta));

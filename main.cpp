@@ -9,6 +9,7 @@ float anglex = 0;
 float translate[3] = {0,0,0};
 int drawMode_face = GL_FRONT; //
 int drawMode_mode = GL_LINE;
+int tipoPrimitiva = 2;
 
 void changeSize(int w, int h) {
 
@@ -59,12 +60,13 @@ void renderScene(void) {
 	//glRotatef(anglex,1,0,0);
 	glTranslatef(translate[0],translate[1],translate[2]);
 
-	
-	//Primitivas::criarPlano(3);
-	//Primitivas::criarCubo(2);
-	//Primitivas::criarCilindro(1, 5, 9);
-	//Primitivas::criarEsfera(2,30,30);
-	Primitivas::criarEsfera(2,5,5);
+
+	switch (tipoPrimitiva) {
+		case 1: Primitivas::criarPlano(3); break;
+		case 2: Primitivas::criarCubo(2); break;
+		case 3: Primitivas::criarEsfera(2,30,30); break;
+		case 4: Primitivas::criarCilindro(1, 5, 9); break;
+	}
 
 	// End of frame
 	glutSwapBuffers();
@@ -168,6 +170,12 @@ void colorirMenuCreate(int id_op){
 	glutPostRedisplay(); //redesenhar
 }
 
+// acções do menu de mudar primitiva
+void primitivaMenuCreate(int id_op){
+	tipoPrimitiva = id_op;
+	glutPostRedisplay(); //redesenhar
+}
+
 // acções do menu principal
 void mainMenuCreate(int id_op){
 	
@@ -215,9 +223,16 @@ int main(int argc, char **argv) {
 	glutAddMenuEntry("Cores aleatórias", 1);
 	glutAddMenuEntry("Branco sobre Preto", 2);
 
+	int primitivaMenuID = glutCreateMenu(primitivaMenuCreate);
+	glutAddMenuEntry("Plano", 1);
+	glutAddMenuEntry("Cubo", 2);
+	glutAddMenuEntry("Esfera", 3);
+	glutAddMenuEntry("Cilindro", 4);
+
 	int mainMenuID = glutCreateMenu(mainMenuCreate);
 	glutAddSubMenu("Modo de preenchimento",drawModeMenuID);
 	glutAddSubMenu("Colorir",colorirMenuID);
+	glutAddSubMenu("Primitiva",primitivaMenuID);
 
 	//GL_FRONT, GL_BACK, GL_FRONT_AND_BACK
 	//GL_FILL, GL_LINE, GL_POINT
