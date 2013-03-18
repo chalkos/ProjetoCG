@@ -1,11 +1,8 @@
-#define _USE_MATH_DEFINES
-
 #include "Primitivas.h"
 #include "Utilities.h"
 
 #include <math.h>
 #include <GL/glut.h>
-
 
 void Primitivas::criarPlano(float x1, float z1, float x2, float z2, float x3, float z3, float x4, float z4, unsigned cor){
 	if(cor!=0x0) glColor3f( ((cor >> 16) & 0xff) / 255.0, ((cor >> 8) & 0xff) / 255.0, (cor & 0xff) / 255.0);
@@ -114,31 +111,4 @@ void Primitivas::criarCilindro(float raio, float altura, unsigned fatias){
 
 	// recuperar a matrix de rotações e translações
 	glPopMatrix();
-}
-
-void Primitivas::criarEsfera(float raio, int lati, int longi) {
-	int i, j;
-	for(i = 0; i <= lati; i++) {
-		float lat0 = M_PI * (-0.5 + (float) (i-1) / lati);
-		float z0 = sin(lat0);
-		float zr0 = cos(lat0);
-
-		float lat1 = M_PI * (-0.5 + (float) i / lati);
-		float z1 = sin(lat1);
-		float zr1 = cos(lat1);
-
-		glBegin(GL_TRIANGLE_STRIP);
-		for(j = 0; j <= longi; j++) {
-			float lng = 2 * M_PI * (float) (j - 1) / longi;
-            float x = cos(lng);
-			float y = sin(lng);
-
-		glNormal3f(x * zr0, y * zr0, z0);
-        glVertex3f(x * zr0, y * zr0, z0);
-        glNormal3f(x * zr1, y * zr1, z1);
-        glVertex3f(x * zr1, y * zr1, z1);
-
-		}
-		glEnd();
-	}
 }
