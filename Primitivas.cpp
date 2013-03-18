@@ -26,24 +26,31 @@ void Primitivas::setColorSeed(unsigned int seed){
 	srand(seed);
 }
 
-void Primitivas::criarPlano(float comprimento, float largura){
+void Primitivas::criarPlano(float comprimento, float largura, int camadas){
+	float x2 = comprimento/camadas;
+	float z2 = largura/camadas;
+
 	Primitivas::setColorSeed(2);
 	if( largura == -1 ) largura = comprimento;
-	
+
 	comprimento /= 2;
 	largura /= 2;
 
 	glBegin(GL_TRIANGLES);
+	for(int i = 0; i<camadas; i++) {
+		for(int j = 0; j<camadas; j++) {
 		Primitivas::changeColor();
-		glVertex3f(comprimento, 0.0f, largura);
-		glVertex3f(comprimento, 0.0f, -largura);
-		glVertex3f(-comprimento, 0.0f, largura);
+		glVertex3f(-comprimento + i*x2, 0.0f, largura - j*z2);
+		glVertex3f(-comprimento + (i+1)*x2 , 0.0f, largura - (j+1)*z2);
+		glVertex3f(-comprimento + i*x2, 0.0f, largura - (j+1)*z2);
 		
 		Primitivas::changeColor();
-		glVertex3f(comprimento, 0.0f, -largura);
-		glVertex3f(-comprimento, 0.0f, -largura);
-		glVertex3f(-comprimento, 0.0f, largura);
-	glEnd();
+		glVertex3f(-comprimento + i*x2, 0.0f, largura - j*z2);
+		glVertex3f(-comprimento + (i+1)*x2, 0.0f, largura - j*z2);
+		glVertex3f(-comprimento + (i+1)*x2, 0.0f, largura - (j+1)*z2);
+		}}
+		glEnd();
+
 }
 
 void Primitivas::criarCubo(float lado){
