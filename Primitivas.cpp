@@ -1,114 +1,218 @@
 #include "Primitivas.h"
 #include "Utilities.h"
 
-#include <math.h>
+#include <stdlib.h>
 #include <GL/glut.h>
 
-void Primitivas::criarPlano(float x1, float z1, float x2, float z2, float x3, float z3, float x4, float z4, unsigned cor){
-	if(cor!=0x0) glColor3f( ((cor >> 16) & 0xff) / 255.0, ((cor >> 8) & 0xff) / 255.0, (cor & 0xff) / 255.0);
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+bool Primitivas::colorir;
+
+void Primitivas::changeColor(){
+	if(!Primitivas::colorir) return;
+
+	glColor3f(
+		(rand() % 80)*0.01+0.1, // gera numeros entre 0.1 e 0.9
+		(rand() % 80)*0.01+0.1, // como a seed é a mesma para cada forma
+		(rand() % 80)*0.01+0.1); // os numeros gerados sao os mesmos
+}
+
+void Primitivas::setColorir(bool valor){
+	Primitivas::colorir = valor;
+}
+
+void Primitivas::setColorSeed(unsigned int seed){
+	srand(seed);
+}
+
+void Primitivas::criarPlano(float comprimento, float largura, int camadas){
+	float x2 = comprimento/camadas;
+	float z2 = largura/camadas;
+
+	Primitivas::setColorSeed(2);
+	if( largura == -1 ) largura = comprimento;
+
+	comprimento /= 2;
+	largura /= 2;
+
 	glBegin(GL_TRIANGLES);
-		glVertex3f(x1, 0.0f, z1);
-		glVertex3f(x2, 0.0f, z2);
-		glVertex3f(x4, 0.0f, z4);
-	glEnd();
-	glBegin(GL_TRIANGLES);
-		glVertex3f(x3, 0.0f, z3);
-		glVertex3f(x4, 0.0f, z4);
-		glVertex3f(x2, 0.0f, z2);
-	glEnd();
+	for(int i = 0; i<camadas; i++) {
+		for(int j = 0; j<camadas; j++) {
+		Primitivas::changeColor();
+		glVertex3f(-comprimento + i*x2, 0.0f, largura - j*z2);
+		glVertex3f(-comprimento + (i+1)*x2 , 0.0f, largura - (j+1)*z2);
+		glVertex3f(-comprimento + i*x2, 0.0f, largura - (j+1)*z2);
+		
+		Primitivas::changeColor();
+		glVertex3f(-comprimento + i*x2, 0.0f, largura - j*z2);
+		glVertex3f(-comprimento + (i+1)*x2, 0.0f, largura - j*z2);
+		glVertex3f(-comprimento + (i+1)*x2, 0.0f, largura - (j+1)*z2);
+		}}
+		glEnd();
+
 }
 
 void Primitivas::criarCubo(float lado){
+	Primitivas::setColorSeed(3);
 	float mlado = lado/2;
 
-	// guardar a matrix de rotações e translações
-	glPushMatrix();
+	glBegin(GL_TRIANGLES);
+		// baixo
+		Primitivas::changeColor();
+		glVertex3f(mlado, -mlado, -mlado);
+		glVertex3f(mlado, -mlado, mlado);
+		glVertex3f(-mlado, -mlado, mlado);
+		
+		glVertex3f(mlado, -mlado, -mlado);
+		glVertex3f(-mlado, -mlado, mlado);
+		glVertex3f(-mlado, -mlado, -mlado);
 
-	//baixo
-	Primitivas::criarPlano(mlado,mlado,-mlado,mlado,-mlado,-mlado,mlado,-mlado,0x111111);
+		// cima
+		Primitivas::changeColor();
+		glVertex3f(mlado, mlado, -mlado);
+		glVertex3f(-mlado, mlado, mlado);
+		glVertex3f(mlado, mlado, mlado);
+		
+		glVertex3f(mlado, mlado, -mlado);
+		glVertex3f(-mlado, mlado, -mlado);
+		glVertex3f(-mlado, mlado, mlado);
 
-	//cima
-	//glRotatef(90,1,0,0);
-	glTranslatef(0,lado, 0);
-	Primitivas::criarPlano(mlado, mlado, mlado, -mlado, -mlado, -mlado, -mlado, mlado,0x222222);
-	
-	//frente
-	glRotatef(90,1,0,0);
-	glTranslatef(0,mlado, mlado);
-	Primitivas::criarPlano(mlado, mlado, mlado, -mlado, -mlado, -mlado, -mlado, mlado, 0x333333);
+		// frente
+		Primitivas::changeColor();
+		glVertex3f(mlado, mlado, mlado);
+		glVertex3f(-mlado, -mlado, mlado);
+		glVertex3f(mlado, -mlado, mlado);
+		
+		glVertex3f(mlado, mlado, mlado);
+		glVertex3f(-mlado, mlado, mlado);
+		glVertex3f(-mlado, -mlado, mlado);
 
-	//tras
-	glTranslatef(0,-lado,0);
-	Primitivas::criarPlano(mlado,mlado,-mlado,mlado,-mlado,-mlado,mlado,-mlado, 0x444444);
+		// tras
+		Primitivas::changeColor();
+		glVertex3f(mlado, mlado, -mlado);
+		glVertex3f(mlado, -mlado, -mlado);
+		glVertex3f(-mlado, -mlado, -mlado);
+		
+		glVertex3f(mlado, mlado, -mlado);
+		glVertex3f(-mlado, -mlado, -mlado);
+		glVertex3f(-mlado, mlado, -mlado);
 
-	//lado esquerdo
-	glRotatef(90, 0,0,1);
-	glTranslatef(mlado,mlado,0);
-	Primitivas::criarPlano(mlado, mlado, mlado, -mlado, -mlado, -mlado, -mlado, mlado,0x555555);
+		// direita
+		Primitivas::changeColor();
+		glVertex3f(mlado, mlado, mlado);
+		glVertex3f(mlado, -mlado, -mlado);
+		glVertex3f(mlado, mlado, -mlado);
+		
+		glVertex3f(mlado, mlado, mlado);
+		glVertex3f(mlado, -mlado, mlado);
+		glVertex3f(mlado, -mlado, -mlado);
 
-	//lado direito
-	glTranslatef(0,-lado,0);
-	Primitivas::criarPlano(mlado,mlado,-mlado,mlado,-mlado,-mlado,mlado,-mlado,0x666666);
-	
-	// recuperar a matrix de rotações e translações
-	glPopMatrix();
+		// esquerda
+		Primitivas::changeColor();
+		glVertex3f(-mlado, mlado, mlado);
+		glVertex3f(-mlado, mlado, -mlado);
+		glVertex3f(-mlado, -mlado, -mlado);
+		
+		glVertex3f(-mlado, mlado, mlado);
+		glVertex3f(-mlado, -mlado, -mlado);
+		glVertex3f(-mlado, -mlado, mlado);
+
+
+	glEnd();
 }
 
-void Primitivas::criarCilindro(float raio, float altura, unsigned fatias){
-	// guardar a matrix de rotações e translações
-	glPushMatrix();
+void Primitivas::criarCilindro(float raio, float altura, unsigned fatias, unsigned seccoes){
+	Primitivas::setColorSeed(4);
+	float delta = 2 * M_PI / fatias;
+	float seccaos = 10;
+	float seccao, seccaoSeg;
 
-	float angle = (360 / fatias);
-	float lado = sinf( toRadian(angle) )*raio;
-	float x = cosf( toRadian(angle) )*raio;
-	float z = lado;
+	float altura2 = altura/2;
 
-	// fazer a base
-	for(int i=0; i<fatias; i++){
-		glBegin(GL_TRIANGLES);
-			glColor3f( 0.01*i+0.3, 0.01*i+0.3, 0.01*i+0.3);
-			glVertex3f(0.0f, 0.0f, 0.0f);
-			glVertex3f(x, 0.0f, -z);
-			glVertex3f(raio, 0.0f, 0.0f);
-		glEnd();
-		glRotatef(angle, 0,1,0);
-	}
 	
-	// voltar à matriz que estava quando a função foi chamada
-	glPopMatrix();
-	glPushMatrix();
 
-	// refazer a base, mas com y=altura
-	glTranslatef(0,altura,0);
-	for(int i=0; i<fatias; i++){
-		glBegin(GL_TRIANGLES);
-			glColor3f( 0.01*i+0.3, 0.01*i+0.3, 0.01*i+0.3);
-			glVertex3f(0.0f, 0.0f, 0.0f);
-			glVertex3f(raio, 0.0f, 0.0f);
-			glVertex3f(x, 0.0f, -z);
-		glEnd();
-		glRotatef(angle, 0,1,0);
-	}
-	
-	// voltar à matriz que estava quando a função foi chamada
-	glPopMatrix();
-	glPushMatrix();
-
-	// fazer os rectangulos para os lados
-	glRotatef(-90, 1, 0,0);
-	glTranslatef(raio,0,0);
-	glRotatef( -(90-angle/2), 0,0,1);
-	for(int i=0; i<fatias; i++){
-		criarPlano( 0,0,  -lado,0,  -lado,altura,  0,altura,   0x030303*i + 0x202020   );
+	glBegin(GL_TRIANGLES);
 		
-		glRotatef( (90-angle/2), 0,0,1);
-		glTranslatef(-raio,0,0);
-		glRotatef(angle, 0,0,1);
-		glTranslatef(raio,0,0);
-		glRotatef( -(90-angle/2), 0,0,1);
+		// o topo (desenhado em y=altura/2)
+		Primitivas::changeColor();
+		for(float alpha = 0; alpha < 2*M_PI; alpha += delta){
+			glVertex3f(0,altura2,0);
+			glVertex3f(raio * sin(alpha), altura2, raio * cos(alpha));
+			glVertex3f(raio * sin(alpha+delta), altura2, raio * cos(alpha+delta));
+		}
+
+		// as várias secções de altura (para que os triangulos nao fiquem muito esticados)
+		for(int i = 0; i<seccoes; i++){
+			Primitivas::changeColor();
+			seccao = (0.5 - 0.1*i) * altura;
+			seccaoSeg = (0.5 - 0.1*(i+1)) * altura;
+
+			// desenhar o reclangulo (=2 triangulos) dos lados
+			for(float alpha = 0; alpha < 2*M_PI; alpha += delta){
+				glVertex3f(raio * sin(alpha), seccao, raio * cos(alpha));
+				glVertex3f(raio * sin(alpha), seccaoSeg, raio * cos(alpha));
+				glVertex3f(raio * sin(alpha+delta), seccaoSeg, raio * cos(alpha+delta));
+			
+				glVertex3f(raio * sin(alpha+delta), seccao, raio * cos(alpha+delta));
+				glVertex3f(raio * sin(alpha), seccao, raio * cos(alpha));
+				glVertex3f(raio * sin(alpha+delta), seccaoSeg, raio * cos(alpha+delta));
+			}
+		}
+
+		// a base (desenhado em y= -altura/2)
+		Primitivas::changeColor();
+		for(float alpha = 0; alpha < 2*M_PI; alpha += delta){
+			glVertex3f(0,-altura2,0);
+			glVertex3f(raio * sin(alpha+delta), -altura2, raio * cos(alpha+delta));
+			glVertex3f(raio * sin(alpha), -altura2, raio * cos(alpha));
+		}
+
+
+	glEnd();
+}
+
+void Primitivas::criarEsfera(float raio, unsigned fatias, unsigned seccoes){
+	Primitivas::setColorSeed(5);
+
+
+	float alpha = 2 * M_PI / fatias;
+	float beta = M_PI / seccoes;
+
+
+	glBegin(GL_TRIANGLES);
+
+	// desenhar a parte de baixo
+	float i = -(seccoes/2.0f);
+	for(int j=0; j < fatias; j++){
+		Primitivas::changeColor();
+		glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+		glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
+		glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*j), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*j));
 	}
 
+	// desenhar as secções intermédias
+	for(/* inicializado acima */; i < (seccoes/2.0f)-1; i+=1){
+		for(int j=0; j < fatias; j++){
+			Primitivas::changeColor();
+			glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+			glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
+			glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*j), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*j));
+			//continue;
+			glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+			glVertex3f(raio * cos(beta*i) * sin(alpha*(j+1)), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*(j+1)));
+			glVertex3f(raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
+		}
+	}
 
-	// recuperar a matrix de rotações e translações
-	glPopMatrix();
+	// desenhar a secção de cima
+	i += 1;
+	for(int j=0; j < fatias; j++){
+		Primitivas::changeColor();
+		glVertex3f(raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+		glVertex3f(raio * cos(beta*(i-1)) * sin(alpha*j), raio * sin(beta*(i-1)), raio * cos(beta*(i-1)) * cos(alpha*j));
+		glVertex3f(raio * cos(beta*(i-1)) * sin(alpha*(j+1)), raio * sin(beta*(i-1)), raio * cos(beta*(i-1)) * cos(alpha*(j+1)));
+	}
+
+	glEnd();
 }

@@ -9,6 +9,7 @@ float anglex = 0;
 float translate[3] = {0,0,0};
 int drawMode_face = GL_FRONT; //
 int drawMode_mode = GL_LINE;
+int tipoPrimitiva = 2;
 
 void changeSize(int w, int h) {
 
@@ -44,7 +45,7 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(0.0,2.0,10.0, 
+	gluLookAt(10*sin(anglex)*cos(angley), 10*sin(angley), 10*cos(anglex)*cos(angley),
 		      0.0,1.0,0.0,
 			  0.0f,1.0f,0.0f);
 
@@ -55,14 +56,17 @@ void renderScene(void) {
 	//GL_FILL, GL_LINE, GL_POINT
 
 	// pôr instruções de desenho aqui
-	glRotatef(angley,0,1,0); // rodar o espaço antes de colocar os triangulos
-	glRotatef(anglex,1,0,0);
+	//glRotatef(angley,0,1,0); // rodar o espaço antes de colocar os triangulos
+	//glRotatef(anglex,1,0,0);
 	glTranslatef(translate[0],translate[1],translate[2]);
 
-	
-	//Primitivas::criarPlano(2,1,2,-1,-2,-1,-2,1);
-	//Primitivas::criarCubo(1);
-	Primitivas::criarCilindro(1, 3, 60);
+
+	switch (tipoPrimitiva) {
+		case 1: Primitivas::criarPlano(3); break;
+		case 2: Primitivas::criarCubo(2); break;
+		case 3: Primitivas::criarEsfera(2,30,30); break;
+		case 4: Primitivas::criarCilindro(1, 5, 9); break;
+	}
 
 	// End of frame
 	glutSwapBuffers();
@@ -85,13 +89,15 @@ void keyPress(unsigned char tecla, int x, int y){
 
 void specialKeyPress(int tecla, int x, int y){
 	if( tecla == GLUT_KEY_LEFT ){
-		angley -= 5;
+		anglex -= 3.1415/16;
 	}else if( tecla == GLUT_KEY_RIGHT ){
-		angley += 5;
+		anglex += 3.1415/16;
 	}else if( tecla == GLUT_KEY_UP ){
-		anglex -= 5;
+		//if( angley < -3.1415/2 ) angley *= -1;
+		angley += 3.1415/16;
 	}else if( tecla == GLUT_KEY_DOWN ){
-		anglex += 5;
+		//if( angley > 3.1415/2 ) angley *= -1;
+		angley -= 3.1415/16;
 	}
 	glutPostRedisplay(); //redesenhar
 }
@@ -105,16 +111,74 @@ void mouseMove(int x, int y){
 }
 
 
-// escrever função de processamento do menu
-void menuCreate(int id_op){
+// acções do menu de modo de desenho
+void drawModeMenuCreate(int id_op){
 	switch(id_op){
-		case 1: drawMode_face = GL_FRONT; break;
-		case 2: drawMode_face = GL_BACK; break;
-		case 3: drawMode_face = GL_FRONT_AND_BACK; break;
-		case 4: drawMode_mode = GL_FILL; break;
-		case 5: drawMode_mode = GL_LINE; break;
-		case 6: drawMode_mode = GL_POINT; break;
+		case 1:
+			drawMode_face = GL_FRONT;
+			drawMode_mode = GL_FILL;
+			break;
+		case 2:
+			drawMode_face = GL_FRONT;
+			drawMode_mode = GL_LINE;
+			break;
+		case 3:
+			drawMode_face = GL_FRONT;
+			drawMode_mode = GL_POINT;
+			break;
+		
+		case 4:
+			drawMode_face = GL_BACK;
+			drawMode_mode = GL_FILL;
+			break;
+		case 5:
+			drawMode_face = GL_BACK;
+			drawMode_mode = GL_LINE;
+			break;
+		case 6:
+			drawMode_face = GL_BACK;
+			drawMode_mode = GL_POINT;
+			break;
+		
+		case 7:
+			drawMode_face = GL_FRONT_AND_BACK;
+			drawMode_mode = GL_FILL;
+			break;
+		case 8:
+			drawMode_face = GL_FRONT_AND_BACK;
+			drawMode_mode = GL_LINE;
+			break;
+		case 9:
+			drawMode_face = GL_FRONT_AND_BACK;
+			drawMode_mode = GL_POINT;
+			break;
 	}
+	glutPostRedisplay(); //redesenhar
+}
+
+
+// acções do menu de colorir
+void colorirMenuCreate(int id_op){
+	switch(id_op){
+		case 1:
+			Primitivas::setColorir(true);
+			break;
+		case 2:
+			Primitivas::setColorir(false);
+			break;
+	}
+	glutPostRedisplay(); //redesenhar
+}
+
+// acções do menu de mudar primitiva
+void primitivaMenuCreate(int id_op){
+	tipoPrimitiva = id_op;
+	glutPostRedisplay(); //redesenhar
+}
+
+// acções do menu principal
+void mainMenuCreate(int id_op){
+	
 	glutPostRedisplay(); //redesenhar
 }
 
@@ -144,23 +208,38 @@ int main(int argc, char **argv) {
 
 
 // pôr aqui a criação do menu
-	int menuID = glutCreateMenu(menuCreate);
-	
-	glutAddMenuEntry("pMode_face: GL_FRONT", 1);
-	glutAddMenuEntry("pMode_face: GL_BACK", 2);
-	glutAddMenuEntry("pMode_face: GL_FRONT_AND_BACK", 3);
-	glutAddMenuEntry("pMode_mode: GL_FILL", 4);
-	glutAddMenuEntry("pMode_mode: GL_LINE", 5);
-	glutAddMenuEntry("pMode_mode: GL_POINT", 6);
+	int drawModeMenuID = glutCreateMenu(drawModeMenuCreate);
+	glutAddMenuEntry("FRONT - FILL", 1);
+	glutAddMenuEntry("FRONT - LINE", 2);
+	glutAddMenuEntry("FRONT - DOT", 3);
+	glutAddMenuEntry("BACK - FILL", 4);
+	glutAddMenuEntry("BACK - LINE", 5);
+	glutAddMenuEntry("BACK - DOT", 6);
+	glutAddMenuEntry("FRONT AND BACK - FILL", 7);
+	glutAddMenuEntry("FRONT AND BACK - LINE", 8);
+	glutAddMenuEntry("FRONT AND BACK - DOT", 9);
 
-	
+	int colorirMenuID = glutCreateMenu(colorirMenuCreate);
+	glutAddMenuEntry("Cores aleatórias", 1);
+	glutAddMenuEntry("Branco sobre Preto", 2);
+
+	int primitivaMenuID = glutCreateMenu(primitivaMenuCreate);
+	glutAddMenuEntry("Plano", 1);
+	glutAddMenuEntry("Cubo", 2);
+	glutAddMenuEntry("Esfera", 3);
+	glutAddMenuEntry("Cilindro", 4);
+
+	int mainMenuID = glutCreateMenu(mainMenuCreate);
+	glutAddSubMenu("Modo de preenchimento",drawModeMenuID);
+	glutAddSubMenu("Colorir",colorirMenuID);
+	glutAddSubMenu("Primitiva",primitivaMenuID);
 
 	//GL_FRONT, GL_BACK, GL_FRONT_AND_BACK
 	//GL_FILL, GL_LINE, GL_POINT
 
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
-	glutSetMenu(menuID);
+	glutSetMenu(mainMenuID);
 
 	//glutPostRedisplay() //redesenhar
 
