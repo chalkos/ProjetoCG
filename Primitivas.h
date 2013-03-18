@@ -25,13 +25,6 @@ public:
 	/// <param name='altura'>A altura do cilindro</param>
 	/// <param name='fatias'>Número de fatias</param>
 	static void criarCilindro(float raio, float altura, unsigned fatias);
-
-	/// <summary>cria uma esfera</summary>
-	/// <param name='raio'>O raio da esfera</param>
-	/// <param name='lati'>O número de camadas na latitude</param>
-	/// <param name='longi'>O número de camadas na longitude</param>
-	static void criarEsfera(float raio, int lati, int longi);
-
 };
 
 
