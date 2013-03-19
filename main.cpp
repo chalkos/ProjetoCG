@@ -61,10 +61,10 @@ void renderScene(void) {
 	glTranslatef(translate[0],translate[1],translate[2]);
 
 	switch (tipoPrimitiva) {
-		case 1: Primitivas::criarPlano(3); break;
-		case 2: Primitivas::criarCubo(2); break;
-		case 3: Primitivas::criarEsfera(2,30,30); break;
-		case 4: Primitivas::criarCilindro(1, 5, 9); break;
+		case 1: Primitivas::criarPlano(5,4,3); break;
+		case 2: Primitivas::criarCubo(3,4); break;
+		case 3: Primitivas::criarEsfera(2,20,20); break;
+		case 4: Primitivas::criarCilindro(2, 5, 25); break;
 	}
 
 	// End of frame
