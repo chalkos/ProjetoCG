@@ -169,8 +169,8 @@ void Primitivas::criarCilindro(float raio, float altura, unsigned fatias, unsign
 		// as várias secções de altura (para que os triangulos nao fiquem muito esticados)
 		for(int i = 0; i<seccoes; i++){
 			Primitivas::changeColor();
-			seccao = (0.5 - 0.1*i) * altura;
-			seccaoSeg = (0.5 - 0.1*(i+1)) * altura;
+			seccao = (0.5 - (1.0/seccoes)*i) * altura;
+			seccaoSeg = (0.5 - (1.0/seccoes)*(i+1)) * altura;
 
 			// desenhar o reclangulo (=2 triangulos) dos lados
 			for(float alpha = 0; alpha < 2*M_PI; alpha += delta){
