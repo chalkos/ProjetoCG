@@ -6,11 +6,13 @@ public:
 	/// <summary>cria um plano XZ, centrado na origem com os vertices especificados</summary>
 	/// <param name='comprimento'>Comprimento (ao longo do eixo x)</param>
 	/// <param name='largura'>Largura (ao longo do eixo z)</param>
+	/// <param name='camadas'>Nr de camadas(na horizontal e vertical)</param>
 	static void criarPlano(float comprimento, float largura=-1, int camadas=2);
 	 
 	/// <summary>cria um cubo</summary>
 	/// <param name='lado'>Comprimento do lado do cubo</param>
-	static void criarCubo(float lado);
+	/// <param name='camadas'>Nr de camadas(na horizontal e vertical)</param>
+	static void criarCubo(float lado, int camadas);
 
 	/// <summary>cria um cilindro</summary>
 	/// <param name='raio'>O raio da base</param>
