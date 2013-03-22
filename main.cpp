@@ -60,6 +60,7 @@ void renderScene(void) {
 	//glRotatef(anglex,1,0,0);
 	glTranslatef(translate[0],translate[1],translate[2]);
 
+
 	switch (tipoPrimitiva) {
 		case 1: Primitivas::criarPlano(5,4,3); break;
 		case 2: Primitivas::criarCubo(3,4); break;
