@@ -26,118 +26,117 @@ void Primitivas::setColorSeed(unsigned int seed){
 	srand(seed);
 }
 
-void Primitivas::criarPlano(float comprimento, float largura, int camadas){
-	float x2 = comprimento/camadas;
-	float z2 = largura/camadas;
-
+void Primitivas::criarPlano(float comprimento, int camadasx, int camadasz){
 	Primitivas::setColorSeed(2);
-	if( largura == -1 ) largura = comprimento;
+
+	float x2 = comprimento/camadasx;
+	float z2 = comprimento/camadasz;
 
 	comprimento /= 2;
-	largura /= 2;
 
 	glBegin(GL_TRIANGLES);
-	for(int i=0; i<camadas; i++) {
-		for(int j=0; j<camadas; j++) {
+	for(int i=0; i<camadasx; i++) {
+		for(int j=0; j<camadasz; j++) {
 		Primitivas::changeColor();
-		glVertex3f(-comprimento + i*x2, 0.0f, largura - j*z2);
-		glVertex3f(-comprimento + (i+1)*x2 , 0.0f, largura - (j+1)*z2);
-		glVertex3f(-comprimento + i*x2, 0.0f, largura - (j+1)*z2);
+		glVertex3f(-comprimento + i*x2, 0.0f, comprimento - j*z2);
+		glVertex3f(-comprimento + (i+1)*x2 , 0.0f, comprimento - (j+1)*z2);
+		glVertex3f(-comprimento + i*x2, 0.0f, comprimento - (j+1)*z2);
 		
 		Primitivas::changeColor();
-		glVertex3f(-comprimento + i*x2, 0.0f, largura - j*z2);
-		glVertex3f(-comprimento + (i+1)*x2, 0.0f, largura - j*z2);
-		glVertex3f(-comprimento + (i+1)*x2, 0.0f, largura - (j+1)*z2);
+		glVertex3f(-comprimento + i*x2, 0.0f, comprimento - j*z2);
+		glVertex3f(-comprimento + (i+1)*x2, 0.0f, comprimento - j*z2);
+		glVertex3f(-comprimento + (i+1)*x2, 0.0f, comprimento - (j+1)*z2);
 		}
 	}
 
 	glEnd();
 }
 
-void Primitivas::criarCubo(float lado, int camadas){
+void Primitivas::criarCubo(float lado, int camadasz, int camadasx){
 	Primitivas::setColorSeed(3);
 	float mlado = lado/2;
-	float n = lado/camadas;
+	float nx = lado/camadasx;
+	float nz = lado/camadasz;
 
 	glBegin(GL_TRIANGLES);
 
 	//baixo
-	for(int i=0; i<camadas; i++) {
-		for(int j=0; j<camadas; j++) {		
+	for(int i=0; i<camadasx; i++) {
+		for(int j=0; j<camadasz; j++) {		
 		Primitivas::changeColor();
-		glVertex3f(-mlado + i*n, -mlado, mlado - j*n);
-		glVertex3f(-mlado + i*n, -mlado, mlado - (j+1)*n);
-		glVertex3f(-mlado + (i+1)*n, -mlado, mlado - (j+1)*n);
+		glVertex3f(-mlado + i*nx, -mlado, mlado - j*nz);
+		glVertex3f(-mlado + i*nx, -mlado, mlado - (j+1)*nz);
+		glVertex3f(-mlado + (i+1)*nx, -mlado, mlado - (j+1)*nz);
 		
-		glVertex3f(-mlado + (i+1)*n, -mlado, mlado - j*n);
-		glVertex3f(-mlado + i*n, -mlado, mlado - j*n);
-		glVertex3f(-mlado + (i+1)*n, -mlado, mlado - (j+1)*n);
+		glVertex3f(-mlado + (i+1)*nx, -mlado, mlado - j*nz);
+		glVertex3f(-mlado + i*nx, -mlado, mlado - j*nz);
+		glVertex3f(-mlado + (i+1)*nx, -mlado, mlado - (j+1)*nz);
 		}
 	}
 	//cima
-	for(int i=0; i<camadas; i++) {
-		for(int j=0; j<camadas; j++) {		
+	for(int i=0; i<camadasx; i++) {
+		for(int j=0; j<camadasz; j++) {		
 		Primitivas::changeColor();
-		glVertex3f(-mlado + i*n, mlado, mlado - j*n);
-		glVertex3f(-mlado + i*n, mlado, mlado - (j+1)*n);
-		glVertex3f(-mlado + (i+1)*n, mlado, mlado - (j+1)*n);
+		glVertex3f(-mlado + i*nx, mlado, mlado - j*nz);
+		glVertex3f(-mlado + (i+1)*nx, mlado, mlado - (j+1)*nz);
+		glVertex3f(-mlado + i*nx, mlado, mlado - (j+1)*nz);
 		
-		glVertex3f(-mlado + (i+1)*n, mlado, mlado - j*n);
-		glVertex3f(-mlado + i*n, mlado, mlado - j*n);
-		glVertex3f(-mlado + (i+1)*n, mlado, mlado - (j+1)*n);
+		glVertex3f(-mlado + (i+1)*nx, mlado, mlado - j*nz);
+		glVertex3f(-mlado + (i+1)*nx, mlado, mlado - (j+1)*nz);
+		glVertex3f(-mlado + i*nx, mlado, mlado - j*nz);
 		}
 	
 	}
 	//frente
-	for(int i=0; i<camadas; i++) {
-		for(int j=0; j<camadas; j++) {		
+	for(int i=0; i<camadasx; i++) {
+		for(int j=0; j<camadasz; j++) {		
 		Primitivas::changeColor();
-		glVertex3f(-mlado + (i+1)*n, mlado - j*n, mlado);
-		glVertex3f(-mlado + i*n, mlado - (j+1)*n, mlado);
-		glVertex3f(-mlado + i*n, mlado - j*n, mlado);
+		glVertex3f(-mlado + (i+1)*nx, mlado - j*nz, mlado);
+		glVertex3f(-mlado + i*nx, mlado - j*nz, mlado);
+		glVertex3f(-mlado + i*nx, mlado - (j+1)*nz, mlado);
 		
-		glVertex3f(-mlado + (i+1)*n, mlado - j*n, mlado);
-		glVertex3f(-mlado + (i+1)*n, mlado - (j+1)*n, mlado);
-		glVertex3f(-mlado + i*n, mlado - (j+1)*n, mlado);
+		glVertex3f(-mlado + (i+1)*nx, mlado - j*nz, mlado);
+		glVertex3f(-mlado + i*nx, mlado - (j+1)*nz, mlado);
+		glVertex3f(-mlado + (i+1)*nx, mlado - (j+1)*nz, mlado);
 		}
 	}
 	//atras
-	for(int i=0; i<camadas; i++) {
-		for(int j=0; j<camadas; j++) {		
+	for(int i=0; i<camadasx; i++) {
+		for(int j=0; j<camadasz; j++) {		
 		Primitivas::changeColor();
-		glVertex3f(-mlado + (i+1)*n, mlado - j*n, -mlado);
-		glVertex3f(-mlado + i*n, mlado - (j+1)*n, -mlado);
-		glVertex3f(-mlado + i*n, mlado - j*n, -mlado);
+		glVertex3f(-mlado + (i+1)*nx, mlado - j*nz, -mlado);
+		glVertex3f(-mlado + i*nx, mlado - (j+1)*nz, -mlado);
+		glVertex3f(-mlado + i*nx, mlado - j*nz, -mlado);
 
-		glVertex3f(-mlado + (i+1)*n, mlado - j*n, -mlado);
-		glVertex3f(-mlado + (i+1)*n, mlado - (j+1)*n,-mlado);
-		glVertex3f(-mlado + i*n, mlado - (j+1)*n, -mlado);
+		glVertex3f(-mlado + (i+1)*nx, mlado - j*nz, -mlado);
+		glVertex3f(-mlado + (i+1)*nx, mlado - (j+1)*nz,-mlado);
+		glVertex3f(-mlado + i*nx, mlado - (j+1)*nz, -mlado);
 		}
 	}
 	//direita
-	for(int i=0; i<camadas; i++) {
-		for(int j=0; j<camadas; j++) {		
+	for(int i=0; i<camadasx; i++) {
+		for(int j=0; j<camadasz; j++) {		
 		Primitivas::changeColor();
-		glVertex3f(mlado, -mlado + i*n, -mlado + j*n);
-		glVertex3f(mlado, -mlado + (i+1)*n, -mlado + j*n);
-		glVertex3f(mlado, -mlado + (i+1)*n, -mlado + (j+1)*n);
+		glVertex3f(mlado, -mlado + i*nx, -mlado + j*nz);
+		glVertex3f(mlado, -mlado + (i+1)*nx, -mlado + j*nz);
+		glVertex3f(mlado, -mlado + (i+1)*nx, -mlado + (j+1)*nz);
 
-		glVertex3f(mlado, -mlado + i*n , -mlado + j*n);
-		glVertex3f(mlado, -mlado + (i+1)*n , -mlado + (j+1)*n);
-		glVertex3f(mlado, -mlado + i*n, -mlado + (j+1)*n);
+		glVertex3f(mlado, -mlado + i*nx , -mlado + j*nz);
+		glVertex3f(mlado, -mlado + (i+1)*nx , -mlado + (j+1)*nz);
+		glVertex3f(mlado, -mlado + i*nx, -mlado + (j+1)*nz);
 		}
 	}
 	//esquerda
-	for(int i=0; i<camadas; i++) {
-		for(int j=0; j<camadas; j++) {		
+	for(int i=0; i<camadasx; i++) {
+		for(int j=0; j<camadasz; j++) {		
 		Primitivas::changeColor();
-		glVertex3f(-mlado, -mlado + i*n, -mlado + j*n);
-		glVertex3f(-mlado, -mlado + (i+1)*n, -mlado + j*n);
-		glVertex3f(-mlado, -mlado + (i+1)*n, -mlado + (j+1)*n);
+		glVertex3f(-mlado, -mlado + i*nx, -mlado + j*nz);
+		glVertex3f(-mlado, -mlado + (i+1)*nx, -mlado + (j+1)*nz);
+		glVertex3f(-mlado, -mlado + (i+1)*nx, -mlado + j*nz);
 
-		glVertex3f(-mlado, -mlado + i*n , -mlado + j*n);
-		glVertex3f(-mlado, -mlado + (i+1)*n , -mlado + (j+1)*n);
-		glVertex3f(-mlado, -mlado + i*n, -mlado + (j+1)*n);
+		glVertex3f(-mlado, -mlado + i*nx , -mlado + j*nz);
+		glVertex3f(-mlado, -mlado + i*nx, -mlado + (j+1)*nz);
+		glVertex3f(-mlado, -mlado + (i+1)*nx , -mlado + (j+1)*nz);
 		}
 	}
 

@@ -4,22 +4,23 @@
 class Primitivas{
 public:
 	/// <summary>cria um plano XZ, centrado na origem com os vertices especificados</summary>
-	/// <param name='comprimento'>Comprimento (ao longo do eixo x)</param>
-	/// <param name='largura'>Largura (ao longo do eixo z)</param>
-	/// <param name='camadas'>Nr de camadas(na horizontal e vertical)</param>
-	static void criarPlano(float comprimento, float largura=-1, int camadas=2);
+	/// <param name='comprimento'>Comprimento</param>
+	/// <param name='camadasx'>Nr de camadas no eixo do X</param>
+	/// <param name='camadasz'>Nr de camadas no eixo do Z</param>
+	static void criarPlano(float comprimento, int camadasx, int camadasz);
 	 
 	/// <summary>cria um cubo</summary>
 	/// <param name='lado'>Comprimento do lado do cubo</param>
-	/// <param name='camadas'>Nr de camadas(na horizontal e vertical)</param>
-	static void criarCubo(float lado, int camadas);
+	/// <param name='camadasz'>Nr de camadas no eixo do Z</param>
+	/// <param name='camadasx'>Nr de camadas no eixo do X</param>
+	static void criarCubo(float lado, int camadasz, int camadasx);
 
 	/// <summary>cria um cilindro</summary>
 	/// <param name='raio'>O raio da base</param>
 	/// <param name='altura'>A altura do cilindro</param>
 	/// <param name='fatias'>Número de fatias</param>
 	/// <param name='seccoes'>Número de secções</param>
-	static void criarCilindro(float raio, float altura, unsigned fatias, unsigned seccoes=10);
+	static void criarCilindro(float raio, float altura, unsigned fatias, unsigned seccoes);
 
 	/// <summary>cria uma esfera</summary>
 	/// <param name='raio'>O raio da esfera</param>
