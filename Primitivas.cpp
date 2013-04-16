@@ -238,3 +238,36 @@ void Primitivas::criarEsfera(float raio, unsigned fatias, unsigned seccoes){
 
 	glEnd();
 }
+
+void Primitivas::criarParalelipipedo(float c, float l, float h, int camadas) {
+	glPushMatrix(); //frente
+		glRotatef(90,1,0,0);
+		glTranslatef(0.0,l/2,0.0);
+		Primitivas::criarPlano(c,h,camadas);
+	glPopMatrix();
+	glPushMatrix(); //atras
+		glRotatef(90,1,0,0);
+		glTranslatef(0.0,-l/2,0.0);
+		Primitivas::criarPlano(c,h,camadas);
+	glPopMatrix();
+	glPushMatrix(); //esquerda
+		glRotatef(90,1,0,0);
+		glRotatef(90,0,0,1);
+		glTranslatef(0,c/2,0);
+		Primitivas::criarPlano(l,h,camadas);
+	glPopMatrix();
+		glPushMatrix(); //direita
+		glRotatef(90,1,0,0);
+		glRotatef(90,0,0,1);
+		glTranslatef(0,-c/2,0);
+		Primitivas::criarPlano(l,h,camadas);
+	glPopMatrix();
+	glPushMatrix(); //cima
+		glTranslatef(0,h/2,0);
+		Primitivas::criarPlano(c,l,camadas);
+	glPopMatrix();
+	glPushMatrix(); //baixo
+		glTranslatef(0,-h/2,0);
+		Primitivas::criarPlano(c,l,camadas);
+	glPopMatrix();
+}

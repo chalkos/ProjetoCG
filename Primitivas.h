@@ -31,6 +31,9 @@ public:
 	/// <param name='valor'>colorido (true) / não colorido (false)</param>
 	static void setColorir(bool valor);
 
+	static void criarParalelipipedo(float c, float l, float h, int camadas);
+
+
 private:
 	static bool colorir;
 
