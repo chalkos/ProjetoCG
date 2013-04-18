@@ -13,24 +13,75 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Figuras">
+      <UniqueIdentifier>{72a91f38-731d-4400-ac0f-70d079b1c8c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Primitivas.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Figuras\CG_OBJ.cpp">
+      <Filter>Figuras</Filter>
+    </ClCompile>
+    <ClCompile Include="Figuras\Cilindro.cpp">
+      <Filter>Figuras</Filter>
+    </ClCompile>
+    <ClCompile Include="Figuras\Cubo.cpp">
+      <Filter>Figuras</Filter>
+    </ClCompile>
+    <ClCompile Include="Figuras\Esfera.cpp">
+      <Filter>Figuras</Filter>
+    </ClCompile>
+    <ClCompile Include="Figuras\Plano.cpp">
+      <Filter>Figuras</Filter>
+    </ClCompile>
+    <ClCompile Include="Figuras.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Figuras\Copo.cpp">
+      <Filter>Figuras</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Primitivas.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Figuras\CG_OBJ.h">
+      <Filter>Figuras</Filter>
+    </ClInclude>
+    <ClInclude Include="Figuras\Cilindro.h">
+      <Filter>Figuras</Filter>
+    </ClInclude>
+    <ClInclude Include="Figuras\Cubo.h">
+      <Filter>Figuras</Filter>
+    </ClInclude>
+    <ClInclude Include="Figuras\Esfera.h">
+      <Filter>Figuras</Filter>
+    </ClInclude>
+    <ClInclude Include="Figuras\Plano.h">
+      <Filter>Figuras</Filter>
+    </ClInclude>
+    <ClInclude Include="Figuras.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Figuras\Copo.h">
+      <Filter>Figuras</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
