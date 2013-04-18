@@ -70,11 +70,9 @@ void renderScene(void) {
 
 	//Figuras::desenharParedes();
 
-	//Figuras::desenharParedes();
-	//Figuras::desenharGarrafa();
-	
-	Figuras::desenharFigura(3);
-	
+	Figuras::desenharParedes();
+	//Figuras::desenharFigura(1);
+	Figuras::desenharMesa(2);
 
 	// End of frame
 	glutSwapBuffers();

@@ -11,9 +11,11 @@ public:
 	static void init();
 	static void desenharParedes();
 	static void desenharFigura(int indice);
+
 	static void desenharCopoChampanhe();
 	static void desenharGarrafa();
-	static void desenharCadeira();
+	static void desenharMesa(int tipo);
+	static void desenharCadeira(int tipo);
 };
 
 
