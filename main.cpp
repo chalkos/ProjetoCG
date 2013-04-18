@@ -65,8 +65,6 @@ void renderScene(void) {
 		case 2: Primitivas::criarCubo(3,4); break;
 		case 3: Primitivas::criarEsfera(2,20,20); break;
 		case 4: Primitivas::criarCilindro(2, 5, 25); break;
-		case 5: Primitivas::criarParalelipipedo(8, 4, 0.5, 4); break;
-
 	}
 
 	// End of frame
@@ -229,7 +227,6 @@ int main(int argc, char **argv) {
 	glutAddMenuEntry("Cubo", 2);
 	glutAddMenuEntry("Esfera", 3);
 	glutAddMenuEntry("Cilindro", 4);
-	glutAddMenuEntry("Paralelipipedo", 5);
 
 	int mainMenuID = glutCreateMenu(mainMenuCreate);
 	glutAddSubMenu("Modo de preenchimento",drawModeMenuID);
