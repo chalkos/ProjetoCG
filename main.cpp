@@ -72,7 +72,9 @@ void renderScene(void) {
 
 	Figuras::desenharParedes();
 	//Figuras::desenharFigura(1);
-	Figuras::desenharMesa(1);
+	//Figuras::desenharMesa(1);
+	glColor3f(1,1,1);
+	Figuras::desenharCadeira(1);
 
 	// End of frame
 	glutSwapBuffers();
