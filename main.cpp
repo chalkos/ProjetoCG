@@ -70,8 +70,10 @@ void renderScene(void) {
 
 	//Figuras::desenharParedes();
 
-	Figuras::desenharParedes();
-	Figuras::desenharFigura(1);
+	//Figuras::desenharParedes();
+	//Figuras::desenharGarrafa();
+	
+	Figuras::desenharFigura(3);
 	
 
 	// End of frame

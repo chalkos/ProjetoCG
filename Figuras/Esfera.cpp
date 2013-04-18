@@ -17,30 +17,30 @@ void Esfera::preencherVertices(){
 	// desenhar a parte de baixo
 	float i = -(seccoes/2.0f);
 	for(int j=0; j < fatias; j++){
-		CG_OBJ::addVertex(&vi,raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
-		CG_OBJ::addVertex(&vi,raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
-		CG_OBJ::addVertex(&vi,raio * cos(beta*(i+1)) * sin(alpha*j), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*j));
+		this->addVertex(&vi,raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+		this->addVertex(&vi,raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
+		this->addVertex(&vi,raio * cos(beta*(i+1)) * sin(alpha*j), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*j));
 	}
 
 	// desenhar as secções intermédias
 	for(i++; i < (seccoes/2.0f)-1; i+=1){
 		for(int j=0; j < fatias; j++){
-			CG_OBJ::addVertex(&vi,raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
-			CG_OBJ::addVertex(&vi,raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
-			CG_OBJ::addVertex(&vi,raio * cos(beta*(i+1)) * sin(alpha*j), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*j));
+			this->addVertex(&vi,raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+			this->addVertex(&vi,raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
+			this->addVertex(&vi,raio * cos(beta*(i+1)) * sin(alpha*j), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*j));
 			//continue;
-			CG_OBJ::addVertex(&vi,raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
-			CG_OBJ::addVertex(&vi,raio * cos(beta*i) * sin(alpha*(j+1)), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*(j+1)));
-			CG_OBJ::addVertex(&vi,raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
+			this->addVertex(&vi,raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+			this->addVertex(&vi,raio * cos(beta*i) * sin(alpha*(j+1)), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*(j+1)));
+			this->addVertex(&vi,raio * cos(beta*(i+1)) * sin(alpha*(j+1)), raio * sin(beta*(i+1)), raio * cos(beta*(i+1)) * cos(alpha*(j+1)));
 		}
 	}
 
 	// desenhar a secção de cima
 	i += 1;
 	for(int j=0; j < fatias; j++){
-		CG_OBJ::addVertex(&vi,raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
-		CG_OBJ::addVertex(&vi,raio * cos(beta*(i-1)) * sin(alpha*j), raio * sin(beta*(i-1)), raio * cos(beta*(i-1)) * cos(alpha*j));
-		CG_OBJ::addVertex(&vi,raio * cos(beta*(i-1)) * sin(alpha*(j+1)), raio * sin(beta*(i-1)), raio * cos(beta*(i-1)) * cos(alpha*(j+1)));
+		this->addVertex(&vi,raio * cos(beta*i) * sin(alpha*j), raio * sin(beta*i), raio * cos(beta*i) * cos(alpha*j));
+		this->addVertex(&vi,raio * cos(beta*(i-1)) * sin(alpha*j), raio * sin(beta*(i-1)), raio * cos(beta*(i-1)) * cos(alpha*j));
+		this->addVertex(&vi,raio * cos(beta*(i-1)) * sin(alpha*(j+1)), raio * sin(beta*(i-1)), raio * cos(beta*(i-1)) * cos(alpha*(j+1)));
 	}
 }
 

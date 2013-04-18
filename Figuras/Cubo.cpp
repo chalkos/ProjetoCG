@@ -8,6 +8,7 @@
 void Cubo::preencherVertices(){
 	float mlado = lado/2;
 	float nx = lado/camadasx;
+	float ny = lado/camadasy;
 	float nz = lado/camadasz;
 
 	int vi=0;
@@ -15,82 +16,89 @@ void Cubo::preencherVertices(){
 	//baixo
 	for(int i=0; i<camadasx; i++) {
 		for(int j=0; j<camadasz; j++) {	
-			CG_OBJ::addVertex(&vi,-mlado + i*nx, -mlado, mlado - j*nz);
-			CG_OBJ::addVertex(&vi,-mlado + i*nx, -mlado, mlado - (j+1)*nz);
-			CG_OBJ::addVertex(&vi,-mlado + (i+1)*nx, -mlado, mlado - (j+1)*nz);
+			this->addVertex(&vi,-mlado + i*nx, -mlado, mlado - j*nz);
+			this->addVertex(&vi,-mlado + i*nx, -mlado, mlado - (j+1)*nz);
+			this->addVertex(&vi,-mlado + (i+1)*nx, -mlado, mlado - (j+1)*nz);
 		
-			CG_OBJ::addVertex(&vi,-mlado + (i+1)*nx, -mlado, mlado - j*nz);
-			CG_OBJ::addVertex(&vi,-mlado + i*nx, -mlado, mlado - j*nz);
-			CG_OBJ::addVertex(&vi,-mlado + (i+1)*nx, -mlado, mlado - (j+1)*nz);
+			this->addVertex(&vi,-mlado + (i+1)*nx, -mlado, mlado - j*nz);
+			this->addVertex(&vi,-mlado + i*nx, -mlado, mlado - j*nz);
+			this->addVertex(&vi,-mlado + (i+1)*nx, -mlado, mlado - (j+1)*nz);
 		}
 	}
 	//cima
 	for(int i=0; i<camadasx; i++) {
 		for(int j=0; j<camadasz; j++) {		
-			CG_OBJ::addVertex(&vi,-mlado + i*nx, mlado, mlado - j*nz);
-			CG_OBJ::addVertex(&vi,-mlado + (i+1)*nx, mlado, mlado - (j+1)*nz);
-			CG_OBJ::addVertex(&vi,-mlado + i*nx, mlado, mlado - (j+1)*nz);
+			this->addVertex(&vi,-mlado + i*nx, mlado, mlado - j*nz);
+			this->addVertex(&vi,-mlado + (i+1)*nx, mlado, mlado - (j+1)*nz);
+			this->addVertex(&vi,-mlado + i*nx, mlado, mlado - (j+1)*nz);
 		
-			CG_OBJ::addVertex(&vi,-mlado + (i+1)*nx, mlado, mlado - j*nz);
-			CG_OBJ::addVertex(&vi,-mlado + (i+1)*nx, mlado, mlado - (j+1)*nz);
-			CG_OBJ::addVertex(&vi,-mlado + i*nx, mlado, mlado - j*nz);
+			this->addVertex(&vi,-mlado + (i+1)*nx, mlado, mlado - j*nz);
+			this->addVertex(&vi,-mlado + (i+1)*nx, mlado, mlado - (j+1)*nz);
+			this->addVertex(&vi,-mlado + i*nx, mlado, mlado - j*nz);
 		}
 	
 	}
+
 	//frente
 	for(int i=0; i<camadasx; i++) {
-		for(int j=0; j<camadasz; j++) {		
-			CG_OBJ::addVertex(&vi,-mlado + (i+1)*nx, mlado - j*nz, mlado);
-			CG_OBJ::addVertex(&vi,-mlado + i*nx, mlado - j*nz, mlado);
-			CG_OBJ::addVertex(&vi,-mlado + i*nx, mlado - (j+1)*nz, mlado);
+		for(int j=0; j<camadasy; j++) {		
+			this->addVertex(&vi,-mlado + (i+1)*nx, mlado - j*ny, mlado);
+			this->addVertex(&vi,-mlado + i*nx, mlado - j*ny, mlado);
+			this->addVertex(&vi,-mlado + i*nx, mlado - (j+1)*ny, mlado);
 		
-			CG_OBJ::addVertex(&vi,-mlado + (i+1)*nx, mlado - j*nz, mlado);
-			CG_OBJ::addVertex(&vi,-mlado + i*nx, mlado - (j+1)*nz, mlado);
-			CG_OBJ::addVertex(&vi,-mlado + (i+1)*nx, mlado - (j+1)*nz, mlado);
+			this->addVertex(&vi,-mlado + (i+1)*nx, mlado - j*ny, mlado);
+			this->addVertex(&vi,-mlado + i*nx, mlado - (j+1)*ny, mlado);
+			this->addVertex(&vi,-mlado + (i+1)*nx, mlado - (j+1)*ny, mlado);
 		}
 	}
 	//atras
 	for(int i=0; i<camadasx; i++) {
-		for(int j=0; j<camadasz; j++) {		
-			CG_OBJ::addVertex(&vi,-mlado + (i+1)*nx, mlado - j*nz, -mlado);
-			CG_OBJ::addVertex(&vi,-mlado + i*nx, mlado - (j+1)*nz, -mlado);
-			CG_OBJ::addVertex(&vi,-mlado + i*nx, mlado - j*nz, -mlado);
+		for(int j=0; j<camadasy; j++) {		
+			this->addVertex(&vi,-mlado + (i+1)*nx, mlado - j*ny, -mlado);
+			this->addVertex(&vi,-mlado + i*nx, mlado - (j+1)*ny, -mlado);
+			this->addVertex(&vi,-mlado + i*nx, mlado - j*ny, -mlado);
 
-			CG_OBJ::addVertex(&vi,-mlado + (i+1)*nx, mlado - j*nz, -mlado);
-			CG_OBJ::addVertex(&vi,-mlado + (i+1)*nx, mlado - (j+1)*nz,-mlado);
-			CG_OBJ::addVertex(&vi,-mlado + i*nx, mlado - (j+1)*nz, -mlado);
+			this->addVertex(&vi,-mlado + (i+1)*nx, mlado - j*ny, -mlado);
+			this->addVertex(&vi,-mlado + (i+1)*nx, mlado - (j+1)*ny,-mlado);
+			this->addVertex(&vi,-mlado + i*nx, mlado - (j+1)*ny, -mlado);
 		}
 	}
-	//direita
-	for(int i=0; i<camadasx; i++) {
-		for(int j=0; j<camadasz; j++) {		
-			CG_OBJ::addVertex(&vi,mlado, -mlado + i*nx, -mlado + j*nz);
-			CG_OBJ::addVertex(&vi,mlado, -mlado + (i+1)*nx, -mlado + j*nz);
-			CG_OBJ::addVertex(&vi,mlado, -mlado + (i+1)*nx, -mlado + (j+1)*nz);
 
-			CG_OBJ::addVertex(&vi,mlado, -mlado + i*nx , -mlado + j*nz);
-			CG_OBJ::addVertex(&vi,mlado, -mlado + (i+1)*nx , -mlado + (j+1)*nz);
-			CG_OBJ::addVertex(&vi,mlado, -mlado + i*nx, -mlado + (j+1)*nz);
+	//direita
+	for(int i=0; i<camadasy; i++) {
+		for(int j=0; j<camadasz; j++) {		
+			this->addVertex(&vi,mlado, -mlado + i*ny, -mlado + j*nz);
+			this->addVertex(&vi,mlado, -mlado + (i+1)*ny, -mlado + j*nz);
+			this->addVertex(&vi,mlado, -mlado + (i+1)*ny, -mlado + (j+1)*nz);
+
+			this->addVertex(&vi,mlado, -mlado + i*ny , -mlado + j*nz);
+			this->addVertex(&vi,mlado, -mlado + (i+1)*ny , -mlado + (j+1)*nz);
+			this->addVertex(&vi,mlado, -mlado + i*ny, -mlado + (j+1)*nz);
 		}
 	}
 	//esquerda
-	for(int i=0; i<camadasx; i++) {
+	for(int i=0; i<camadasy; i++) {
 		for(int j=0; j<camadasz; j++) {		
-			CG_OBJ::addVertex(&vi,-mlado, -mlado + i*nx, -mlado + j*nz);
-			CG_OBJ::addVertex(&vi,-mlado, -mlado + (i+1)*nx, -mlado + (j+1)*nz);
-			CG_OBJ::addVertex(&vi,-mlado, -mlado + (i+1)*nx, -mlado + j*nz);
+			this->addVertex(&vi,-mlado, -mlado + i*ny, -mlado + j*nz);
+			this->addVertex(&vi,-mlado, -mlado + (i+1)*ny, -mlado + (j+1)*nz);
+			this->addVertex(&vi,-mlado, -mlado + (i+1)*ny, -mlado + j*nz);
 
-			CG_OBJ::addVertex(&vi,-mlado, -mlado + i*nx , -mlado + j*nz);
-			CG_OBJ::addVertex(&vi,-mlado, -mlado + i*nx, -mlado + (j+1)*nz);
-			CG_OBJ::addVertex(&vi,-mlado, -mlado + (i+1)*nx , -mlado + (j+1)*nz);
+			this->addVertex(&vi,-mlado, -mlado + i*ny , -mlado + j*nz);
+			this->addVertex(&vi,-mlado, -mlado + i*ny, -mlado + (j+1)*nz);
+			this->addVertex(&vi,-mlado, -mlado + (i+1)*ny , -mlado + (j+1)*nz);
 		}
 	}
 }
 
-Cubo::Cubo(float lado, int camadasx, int camadasz){
+Cubo::Cubo(float lado, int camadasx, int camadasz, int camadasy){
 	this->lado = lado;
 	this->camadasx = camadasx;
+	this->camadasy = camadasy;
 	this->camadasz = camadasz;
 
-	this->guardarOBJ( this->camadasx * this->camadasz * 2 * 6);
+	this->guardarOBJ(
+		this->camadasx * this->camadasz * 4 +  // baixo, cima
+		this->camadasx * this->camadasy * 4 +  // frente, tras
+		this->camadasy * this->camadasz * 4  // esquerda, direita
+		);
 }

@@ -16,13 +16,13 @@ void Plano::preencherVertices(){
 	for(int i=0; i<camadasx; i++) {
 		for(int j=0; j<camadasz; j++) {
 			
-			CG_OBJ::addVertex(&vi,-comprimento + i*x2, 0.0f, comprimento - j*z2);
-			CG_OBJ::addVertex(&vi,-comprimento + (i+1)*x2 , 0.0f, comprimento - (j+1)*z2);
-			CG_OBJ::addVertex(&vi,-comprimento + i*x2, 0.0f, comprimento - (j+1)*z2);
+			this->addVertex(&vi,-comprimento + i*x2, 0.0f, comprimento - j*z2);
+			this->addVertex(&vi,-comprimento + (i+1)*x2 , 0.0f, comprimento - (j+1)*z2);
+			this->addVertex(&vi,-comprimento + i*x2, 0.0f, comprimento - (j+1)*z2);
 		
-			CG_OBJ::addVertex(&vi,-comprimento + i*x2, 0.0f, comprimento - j*z2);
-			CG_OBJ::addVertex(&vi,-comprimento + (i+1)*x2, 0.0f, comprimento - j*z2);
-			CG_OBJ::addVertex(&vi,-comprimento + (i+1)*x2, 0.0f, comprimento - (j+1)*z2);
+			this->addVertex(&vi,-comprimento + i*x2, 0.0f, comprimento - j*z2);
+			this->addVertex(&vi,-comprimento + (i+1)*x2, 0.0f, comprimento - j*z2);
+			this->addVertex(&vi,-comprimento + (i+1)*x2, 0.0f, comprimento - (j+1)*z2);
 		}
 	}
 }

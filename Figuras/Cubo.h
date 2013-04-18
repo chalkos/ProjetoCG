@@ -7,6 +7,7 @@ class Cubo : public CG_OBJ {
 protected:
 	///////////////////// membros
 	int camadasx;
+	int camadasy;
 	int camadasz;
 	float lado;
 	
@@ -14,7 +15,7 @@ protected:
 	void preencherVertices();
 
 public:
-	Cubo(float lado, int camadasx, int camadasz);
+	Cubo(float lado, int camadasx, int camadasz, int camadasy);
 };
 
 #endif // __CUBO_H_INCLUDED__

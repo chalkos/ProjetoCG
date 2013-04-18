@@ -19,9 +19,9 @@ void Cilindro::preencherVertices(){
 
 	// o topo (desenhado em y=altura/2)
 	for(float alpha = 0; alpha < 2*M_PI; alpha += delta){
-		CG_OBJ::addVertex(&vi,0,altura2,0);
-		CG_OBJ::addVertex(&vi,raio * sin(alpha), altura2, raio * cos(alpha));
-		CG_OBJ::addVertex(&vi,raio * sin(alpha+delta), altura2, raio * cos(alpha+delta));
+		this->addVertex(&vi,0,altura2,0);
+		this->addVertex(&vi,raio * sin(alpha), altura2, raio * cos(alpha));
+		this->addVertex(&vi,raio * sin(alpha+delta), altura2, raio * cos(alpha+delta));
 	}
 
 	// as várias secções de altura (para que os triangulos nao fiquem muito esticados)
@@ -31,21 +31,21 @@ void Cilindro::preencherVertices(){
 
 		// desenhar o reclangulo (=2 triangulos) dos lados
 		for(float alpha = 0; alpha < 2*M_PI; alpha += delta){
-			CG_OBJ::addVertex(&vi,raio * sin(alpha), seccao, raio * cos(alpha));
-			CG_OBJ::addVertex(&vi,raio * sin(alpha), seccaoSeg, raio * cos(alpha));
-			CG_OBJ::addVertex(&vi,raio * sin(alpha+delta), seccaoSeg, raio * cos(alpha+delta));
+			this->addVertex(&vi,raio * sin(alpha), seccao, raio * cos(alpha));
+			this->addVertex(&vi,raio * sin(alpha), seccaoSeg, raio * cos(alpha));
+			this->addVertex(&vi,raio * sin(alpha+delta), seccaoSeg, raio * cos(alpha+delta));
 			
-			CG_OBJ::addVertex(&vi,raio * sin(alpha+delta), seccao, raio * cos(alpha+delta));
-			CG_OBJ::addVertex(&vi,raio * sin(alpha), seccao, raio * cos(alpha));
-			CG_OBJ::addVertex(&vi,raio * sin(alpha+delta), seccaoSeg, raio * cos(alpha+delta));
+			this->addVertex(&vi,raio * sin(alpha+delta), seccao, raio * cos(alpha+delta));
+			this->addVertex(&vi,raio * sin(alpha), seccao, raio * cos(alpha));
+			this->addVertex(&vi,raio * sin(alpha+delta), seccaoSeg, raio * cos(alpha+delta));
 		}
 	}
 
 	// a base (desenhado em y= -altura/2)
 	for(float alpha = 0; alpha < 2*M_PI; alpha += delta){
-		CG_OBJ::addVertex(&vi,0,-altura2,0);
-		CG_OBJ::addVertex(&vi,raio * sin(alpha+delta), -altura2, raio * cos(alpha+delta));
-		CG_OBJ::addVertex(&vi,raio * sin(alpha), -altura2, raio * cos(alpha));
+		this->addVertex(&vi,0,-altura2,0);
+		this->addVertex(&vi,raio * sin(alpha+delta), -altura2, raio * cos(alpha+delta));
+		this->addVertex(&vi,raio * sin(alpha), -altura2, raio * cos(alpha));
 	}
 }
 

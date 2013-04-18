@@ -51,6 +51,9 @@
     <ClCompile Include="Figuras\Copo.cpp">
       <Filter>Figuras</Filter>
     </ClCompile>
+    <ClCompile Include="Figuras\Garrafa.cpp">
+      <Filter>Figuras</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities.h">
@@ -81,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Figuras\Copo.h">
+      <Filter>Figuras</Filter>
+    </ClInclude>
+    <ClInclude Include="Figuras\Garrafa.h">
       <Filter>Figuras</Filter>
     </ClInclude>
   </ItemGroup>
