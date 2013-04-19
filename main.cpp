@@ -71,8 +71,8 @@ void renderScene(void) {
 	//Figuras::desenharParedes();
 
 	Figuras::desenharParedes();
-	//Figuras::desenharFigura(23);
 	Figuras::desenharCandeeiroPe();
+
 
 	// End of frame
 	glutSwapBuffers();
