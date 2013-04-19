@@ -107,8 +107,31 @@ void Figuras::desenharMesa(int tipo){
 			glPopMatrix();	
 				
 			break;
-	}
 
+	case 2: //mesa quadrada normal
+			glPushMatrix();
+			glTranslatef(0,4.05,0);glScalef(0.5,0.01,0.5);glColor3f(1,1,0);objetos[2].desenhar();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(1.90,2,1.90);glScalef(0.02,0.4,0.02);glColor3f(1,0,1);objetos[10].desenhar();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(-1.90,2,1.90);glScalef(0.02,0.4,0.02);glColor3f(1,0,1);objetos[10].desenhar();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(1.90,2,-1.90);glScalef(0.02,0.4,0.02);glColor3f(1,0,1);objetos[10].desenhar();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(-1.90,2,-1.90);glScalef(0.02,0.4,0.02);glColor3f(1,0,1);objetos[10].desenhar();
+			glPopMatrix();
+
+
+
+			break;
+
+		
+	}
 }
 
 void Figuras::desenharCadeira(int tipo){
@@ -163,10 +186,7 @@ void Figuras::desenharCadeira(int tipo){
 			glTranslatef(0,6.5,1.5);glScalef(0.3,0.08,0.01);objetos[2].desenhar();
 			glPopMatrix();
 			break;
-	}
 
-	switch (tipo)
-	{
 		case 2: //cadeira de balcao
 			//pernas
 			glPushMatrix();
@@ -203,5 +223,6 @@ void Figuras::desenharCadeira(int tipo){
 			glTranslatef(0,12.1,1.475);glScalef(0.35,0.15,0.05);glColor3f(1,1,0);objetos[2].desenhar();
 			glPopMatrix();
 			break;
+
 	}
 }
