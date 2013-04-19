@@ -88,7 +88,6 @@ void Camera::moverFrente(){
 }
 
 void Camera::moverTras(){
-	//TODO: andar para trás mais lento que andar para a frente
 	posX = posX - Camera::passo * cos(Camera::beta) * sin(Camera::alpha);
 	posY = posY - Camera::passo * sin(Camera::beta);
 	posZ = posZ - Camera::passo * cos(Camera::beta) * cos(Camera::alpha);

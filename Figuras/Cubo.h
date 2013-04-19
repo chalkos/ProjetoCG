@@ -15,7 +15,7 @@ protected:
 	void preencherVertices();
 
 public:
-	Cubo(float lado, int camadasx, int camadasz, int camadasy);
+	Cubo(float lado, int camadasx, int camadasy, int camadasz);
 };
 
 #endif // __CUBO_H_INCLUDED__

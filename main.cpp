@@ -36,7 +36,7 @@ void changeSize(int w, int h) {
     glViewport(0, 0, w, h);
 
 	// Set perspective
-	gluPerspective(60.0f , ratio, 0.01f ,1000.0f);
+	gluPerspective(60.0f , ratio, 0.1f ,400.0f);
 	//gluPerspective (60, ratio, 0.01 , 100.0); //set the perspective (angle of sight, width, height, ,depth)
 
 	// return to the model view matrix mode
@@ -70,8 +70,99 @@ void renderScene(void) {
 
 	//Figuras::desenharParedes();
 
+	glPushMatrix();
+	glScalef(1,0.33,1);
 	Figuras::desenharParedes();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0, 250*0.33, 110);
+	Figuras::desenharCandeeiroSuspenso();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glTranslatef(0, 0, 110);
 	Figuras::desenharCandeeiroPe();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glTranslatef(20, 0, 110);
+	glScalef(4,4,4);
+	Figuras::desenharCadeiraSimples();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-20, 0, 110);
+	glScalef(4,4,4);
+	Figuras::desenharCadeiraBalcao();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(60, 0, 110);
+	glScalef(3,3,3);
+	Figuras::desenharMesaRectangular();
+	glPopMatrix();
+
+	// set de copos de champanhe
+	glPushMatrix();
+	glTranslatef(60, 0, 110);
+	glScalef(3,3,3);
+	glTranslatef(0,6,0);
+	Figuras::desenharCopoChampanhe(); //meio centro
+	glTranslatef(-4,0,0);
+	Figuras::desenharCopoChampanhe(); //direita
+	glTranslatef(8,0,0);
+	Figuras::desenharCopoChampanhe(); //esquerda
+	glTranslatef(-4,0,-2);
+	Figuras::desenharCopoChampanhe(); //perto centro
+	glTranslatef(-4,0,0);
+	Figuras::desenharCopoChampanhe(); //direita
+	glTranslatef(8,0,0);
+	Figuras::desenharCopoChampanhe(); //esquerda
+	glTranslatef(-4,0,4);
+	Figuras::desenharCopoChampanhe(); //longe centro
+	glTranslatef(-4,0,0);
+	Figuras::desenharCopoChampanhe(); //direita
+	glTranslatef(8,0,0);
+	Figuras::desenharCopoChampanhe(); //esquerda
+	glTranslatef(4,0,-2);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-60, 0, 100);
+	glScalef(6,6,6);
+	Figuras::desenharMesaRedonda();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-60, 4*6, 100);
+	Figuras::desenharCopoVinho();
+	glTranslatef(6,0,0);
+	Figuras::desenharCopoVinho();
+	glTranslatef(-12,0,0);
+	Figuras::desenharCopoVinho();
+	glTranslatef(6,0,6);
+	glScalef(1.4,1.4,1.4);
+	Figuras::desenharGarrafaVinho();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-100, 0, 60);
+	glScalef(6,6,6);
+	Figuras::desenharMesaEsplanada();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-100, 4*6, 60);
+	Figuras::desenharCopoSimples();
+	glTranslatef(6,0,0);
+	Figuras::desenharCopoSimples();
+	glTranslatef(-12,0,0);
+	Figuras::desenharCopoSimples();
+	glTranslatef(6,0,6);
+	glScalef(1.4,1.4,1.4);
+	Figuras::desenharGarrafaVinho();
+	glPopMatrix();
 
 
 	// End of frame
@@ -145,7 +236,7 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(800,600);
-	glutCreateWindow("ProjetoCG - Sandbox");
+	glutCreateWindow("ProjetoCG - Showcase");
 		
 
 // registo de funções 

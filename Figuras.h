@@ -9,15 +9,20 @@ private:
 
 public:
 	static void init();
-	static void desenharParedes();
 	static void desenharFigura(int indice);
 
-	static void desenharCopoChampanhe();
-	static void desenharGarrafa();
-	static void desenharMesa(int tipo);
-	static void desenharCadeira(int tipo);
-	static void desenharCandeeiroSuspenso();
-	static void desenharCandeeiroPe();
+	static void desenharParedes();//
+	static void desenharCopoChampanhe();//
+	static void desenharCopoSimples();
+	static void desenharCopoVinho();//
+	static void desenharGarrafaVinho();//
+	static void desenharMesaRectangular();//
+	static void desenharMesaEsplanada();
+	static void desenharMesaRedonda();//
+	static void desenharCadeiraSimples();//
+	static void desenharCadeiraBalcao();//
+	static void desenharCandeeiroSuspenso();//
+	static void desenharCandeeiroPe();//
 };
 
 
