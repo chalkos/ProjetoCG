@@ -16,6 +16,7 @@ void Figuras::init(){
 	objetos[0] = Cubo(250, 25, 25); // paredes
 	objetos[1] = Copo(2,15);
 	objetos[2] = Cubo(10,5,5); 
+	objetos[10] = Cilindro(2,10,10,10);
 }
 
 void Figuras::desenharFigura(int indice){
@@ -139,13 +140,68 @@ void Figuras::desenharCadeira(int tipo){
 			glPopMatrix();
 			//tampo
 			glPushMatrix();
-			glTranslatef(0,2.9,0);glScalef(0.35,0.02,0.35);objetos[2].desenhar();
+			glTranslatef(0,2.9,0);glScalef(0.33,0.02,0.33);objetos[2].desenhar();
 			glPopMatrix();
 			//costas
 			glPushMatrix();
-			glScalef(1,0.01,1);glTranslatef(0,0,0);objetos[2].desenhar();
+			glTranslatef(1.5,5,1.5);glScalef(0.02,0.4,0.02);objetos[2].desenhar();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(-1.5,5,1.5);glScalef(0.02,0.4,0.02);objetos[2].desenhar();
 			glPopMatrix();
 
+			glColor3f(1,0,1);
+			glPushMatrix();
+			glTranslatef(0,4,1.5);glScalef(0.3,0.08,0.01);objetos[2].desenhar();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0,5.25,1.5);glScalef(0.3,0.08,0.01);objetos[2].desenhar();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0,6.5,1.5);glScalef(0.3,0.08,0.01);objetos[2].desenhar();
+			glPopMatrix();
+			break;
+	}
+
+	switch (tipo)
+	{
+		case 2: //cadeira de balcao
+			//pernas
+			glPushMatrix();
+			glTranslatef(-1.5,5,-1.5);glScalef(0.1,1,0.1);objetos[10].desenhar();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(-1.5,6.5,1.5);glScalef(0.1,1.30,0.1);objetos[10].desenhar();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(1.5,5,-1.5);glScalef(0.1,1,0.1);objetos[10].desenhar();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(1.5,6.5,1.5);glScalef(0.1,1.30,0.1);objetos[10].desenhar();
+			glPopMatrix();
+			//reforço
+			glPushMatrix();
+			glTranslatef(0,5,1.5);glRotatef(90,0,0,1);glScalef(0.1,0.3,0.1);objetos[10].desenhar();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(0,5,-1.5);glRotatef(90,0,0,1);glScalef(0.1,0.3,0.1);objetos[10].desenhar();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(1.5,5,0);glRotatef(90,1,0,0);glScalef(0.1,0.3,0.1);objetos[10].desenhar();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(-1.5,5,0);glRotatef(90,1,0,0);glScalef(0.1,0.3,0.1);objetos[10].desenhar();
+			glPopMatrix();
+			//acento
+			glPushMatrix();
+			glTranslatef(0,10.05,0);glScalef(0.35,0.08,0.35);glColor3f(1,0,1);objetos[2].desenhar();
+			glPopMatrix();
+			//costas
+			glPushMatrix();
+			glTranslatef(0,12.1,1.475);glScalef(0.35,0.15,0.05);glColor3f(1,1,0);objetos[2].desenhar();
+			glPopMatrix();
 			break;
 	}
 }
