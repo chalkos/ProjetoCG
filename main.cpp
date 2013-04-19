@@ -1,15 +1,20 @@
+#include <glew.h>
 #include <GL/glut.h>
+
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdio.h>
 
-#include "Primitivas.h"
+#include "Input.h"
+#include "Camera.h"
 
-float angley = 0;
-float anglex = 0;
-float translate[3] = {0,0,0};
-int drawMode_face = GL_FRONT; //
+// Figuras
+#include "Figuras.h"
+
+int drawMode_face = GL_FRONT_AND_BACK;
 int drawMode_mode = GL_LINE;
-int tipoPrimitiva = 2;
+int tipoPrimitiva = 3;
+
 
 void changeSize(int w, int h) {
 
@@ -23,6 +28,7 @@ void changeSize(int w, int h) {
 
 	// Set the projection matrix as current
 	glMatrixMode(GL_PROJECTION);
+
 	// Load Identity Matrix
 	glLoadIdentity();
 	
@@ -30,10 +36,19 @@ void changeSize(int w, int h) {
     glViewport(0, 0, w, h);
 
 	// Set perspective
-	gluPerspective(45.0f ,ratio, 1.0f ,1000.0f);
+	gluPerspective(60.0f , ratio, 0.1f ,400.0f);
+	//gluPerspective (60, ratio, 0.01 , 100.0); //set the perspective (angle of sight, width, height, ,depth)
 
 	// return to the model view matrix mode
 	glMatrixMode(GL_MODELVIEW);
+
+
+
+	//////////////////////////////////////////
+
+    glLoadIdentity ();
+    
+    glMatrixMode (GL_MODELVIEW); //set the matrix back to model
 }
 
 
@@ -45,68 +60,113 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(10*sin(anglex)*cos(angley), 10*sin(angley), 10*cos(anglex)*cos(angley),
-		      0.0,1.0,0.0,
-			  0.0f,1.0f,0.0f);
 
+	// posicionar a camara
+	Camera::lookAt();
+			  
 	// opções
-    //glCullFace(ver);
+    //glCullFace(GL_BACK);  // não desenhar triangulos que não estão visiveis
 	glPolygonMode(drawMode_face,drawMode_mode);
-	//GL_FRONT, GL_BACK, GL_FRONT_AND_BACK
-	//GL_FILL, GL_LINE, GL_POINT
 
-	// pôr instruções de desenho aqui
-	//glRotatef(angley,0,1,0); // rodar o espaço antes de colocar os triangulos
-	//glRotatef(anglex,1,0,0);
-	glTranslatef(translate[0],translate[1],translate[2]);
+	//Figuras::desenharParedes();
 
-	switch (tipoPrimitiva) {
-		case 1: Primitivas::criarPlano(5,4,3); break;
-		case 2: Primitivas::criarCubo(3,4); break;
-		case 3: Primitivas::criarEsfera(2,20,20); break;
-		case 4: Primitivas::criarCilindro(2, 5, 25); break;
-	}
+	glPushMatrix();
+	glScalef(1,0.33,1);
+	Figuras::desenharParedes();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0, 250*0.33, 110);
+	Figuras::desenharCandeeiroSuspenso();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glTranslatef(0, 0, 110);
+	Figuras::desenharCandeeiroPe();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glTranslatef(20, 0, 110);
+	glScalef(4,4,4);
+	Figuras::desenharCadeiraSimples();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-20, 0, 110);
+	glScalef(4,4,4);
+	Figuras::desenharCadeiraBalcao();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(60, 0, 110);
+	glScalef(3,3,3);
+	Figuras::desenharMesaRectangular();
+	glPopMatrix();
+
+	// set de copos de champanhe
+	glPushMatrix();
+	glTranslatef(60, 0, 110);
+	glScalef(3,3,3);
+	glTranslatef(0,6,0);
+	Figuras::desenharCopoChampanhe(); //meio centro
+	glTranslatef(-4,0,0);
+	Figuras::desenharCopoChampanhe(); //direita
+	glTranslatef(8,0,0);
+	Figuras::desenharCopoChampanhe(); //esquerda
+	glTranslatef(-4,0,-2);
+	Figuras::desenharCopoChampanhe(); //perto centro
+	glTranslatef(-4,0,0);
+	Figuras::desenharCopoChampanhe(); //direita
+	glTranslatef(8,0,0);
+	Figuras::desenharCopoChampanhe(); //esquerda
+	glTranslatef(-4,0,4);
+	Figuras::desenharCopoChampanhe(); //longe centro
+	glTranslatef(-4,0,0);
+	Figuras::desenharCopoChampanhe(); //direita
+	glTranslatef(8,0,0);
+	Figuras::desenharCopoChampanhe(); //esquerda
+	glTranslatef(4,0,-2);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-60, 0, 100);
+	glScalef(6,6,6);
+	Figuras::desenharMesaRedonda();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-60, 4*6, 100);
+	Figuras::desenharCopoVinho();
+	glTranslatef(6,0,0);
+	Figuras::desenharCopoVinho();
+	glTranslatef(-12,0,0);
+	Figuras::desenharCopoVinho();
+	glTranslatef(6,0,6);
+	glScalef(1.4,1.4,1.4);
+	Figuras::desenharGarrafaVinho();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-100, 0, 60);
+	glScalef(6,6,6);
+	Figuras::desenharMesaEsplanada();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-100, 4*6, 60);
+	Figuras::desenharCopoSimples();
+	glTranslatef(6,0,0);
+	Figuras::desenharCopoSimples();
+	glTranslatef(-12,0,0);
+	Figuras::desenharCopoSimples();
+	glTranslatef(6,0,6);
+	glScalef(1.4,1.4,1.4);
+	Figuras::desenharGarrafaVinho();
+	glPopMatrix();
+
 
 	// End of frame
 	glutSwapBuffers();
-}
-
-
-
-// escrever função de processamento do teclado
-void keyPress(unsigned char tecla, int x, int y){
-	if( tecla == 'w' ){
-		translate[2] -= 0.1;
-	}else if( tecla == 's' ){
-		translate[2] += 0.1;
-	}else if( tecla == 'a' ){
-		translate[0] -= 0.1;
-	}else if( tecla == 'd' ){
-		translate[0] += 0.1;
-	}
-}
-
-void specialKeyPress(int tecla, int x, int y){
-	if( tecla == GLUT_KEY_LEFT ){
-		anglex -= 3.1415/16;
-	}else if( tecla == GLUT_KEY_RIGHT ){
-		anglex += 3.1415/16;
-	}else if( tecla == GLUT_KEY_UP ){
-		//if( angley < -3.1415/2 ) angley *= -1;
-		angley += 3.1415/16;
-	}else if( tecla == GLUT_KEY_DOWN ){
-		//if( angley > 3.1415/2 ) angley *= -1;
-		angley -= 3.1415/16;
-	}
-	glutPostRedisplay(); //redesenhar
-}
-
-void mouseButton(int botão, int estado, int x, int y){
-
-}
-
-void mouseMove(int x, int y){
-
 }
 
 
@@ -155,20 +215,6 @@ void drawModeMenuCreate(int id_op){
 	glutPostRedisplay(); //redesenhar
 }
 
-
-// acções do menu de colorir
-void colorirMenuCreate(int id_op){
-	switch(id_op){
-		case 1:
-			Primitivas::setColorir(true);
-			break;
-		case 2:
-			Primitivas::setColorir(false);
-			break;
-	}
-	glutPostRedisplay(); //redesenhar
-}
-
 // acções do menu de mudar primitiva
 void primitivaMenuCreate(int id_op){
 	tipoPrimitiva = id_op;
@@ -190,7 +236,7 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(800,600);
-	glutCreateWindow("ProjetoCG - Sandbox");
+	glutCreateWindow("ProjetoCG - Showcase");
 		
 
 // registo de funções 
@@ -199,11 +245,10 @@ int main(int argc, char **argv) {
 	glutReshapeFunc(changeSize);
 
 // pôr aqui registo da funções do teclado e rato
-	glutKeyboardFunc(keyPress);
-	glutSpecialFunc(specialKeyPress);
-	glutMouseFunc(mouseButton);
-	glutMotionFunc(mouseMove);
-	glutPassiveMotionFunc(mouseMove);
+	Input::init();
+
+	// inicializar a câmara na posição: (x,y,z)
+	Camera::init(0,5,-10);
 
 
 // pôr aqui a criação do menu
@@ -218,10 +263,6 @@ int main(int argc, char **argv) {
 	glutAddMenuEntry("FRONT AND BACK - LINE", 8);
 	glutAddMenuEntry("FRONT AND BACK - DOT", 9);
 
-	int colorirMenuID = glutCreateMenu(colorirMenuCreate);
-	glutAddMenuEntry("Cores aleatórias", 1);
-	glutAddMenuEntry("Branco sobre Preto", 2);
-
 	int primitivaMenuID = glutCreateMenu(primitivaMenuCreate);
 	glutAddMenuEntry("Plano", 1);
 	glutAddMenuEntry("Cubo", 2);
@@ -230,25 +271,26 @@ int main(int argc, char **argv) {
 
 	int mainMenuID = glutCreateMenu(mainMenuCreate);
 	glutAddSubMenu("Modo de preenchimento",drawModeMenuID);
-	glutAddSubMenu("Colorir",colorirMenuID);
-	glutAddSubMenu("Primitiva",primitivaMenuID);
-
-	//GL_FRONT, GL_BACK, GL_FRONT_AND_BACK
-	//GL_FILL, GL_LINE, GL_POINT
+	//glutAddSubMenu("Primitiva",primitivaMenuID);
 
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 	glutSetMenu(mainMenuID);
 
-	//glutPostRedisplay() //redesenhar
 
+	// glew init
+	glewInit();
 
-// alguns settings para OpenGL
+	// alguns settings para OpenGL
 	glEnable(GL_DEPTH_TEST);
 	//glEnable(GL_CULL_FACE);
 	//glFrontFace(GL_CCW); //esquema de mão direita
+
+
+	// preparar objetos
+	Figuras::init();
 	
-// entrar no ciclo do GLUT 
+	// entrar no ciclo do GLUT 
 	glutMainLoop();
 	
 	return 1;
