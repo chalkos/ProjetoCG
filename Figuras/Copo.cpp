@@ -7,7 +7,7 @@
 **********************************/
 
 void Copo::preencherVertices(){
-	this->revolutionSolid(x, y, this->pontos, this->fatias);
+	this->revolutionSolidClose(x, y, this->pontos, this->fatias);
 }
 
 Copo::Copo(int tipo, int detalhe){

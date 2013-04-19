@@ -15,7 +15,7 @@ protected:
 	void preencherVertices();
 
 public:
-	Cilindro(float raio, float altura, unsigned fatias, unsigned seccoes);
+	Cilindro(float raio, float altura, int fatias, int seccoes);
 };
 
 #endif // __CILINDRO_H_INCLUDED__

@@ -8,16 +8,26 @@
 #include "Figuras\Cilindro.h"
 #include "Figuras\Esfera.h"
 #include "Figuras\Copo.h"
-#include "Figuras\Garrafa.h"
+#include "Figuras\SolidoRevolucao.h"
 
 CG_OBJ Figuras::objetos[50];
 
 void Figuras::init(){
 	CG_OBJ::prepararBuffer(50);
+
+	
 	objetos[0] = Cubo(250, 25, 25, 25); // paredes
 	objetos[1] = Copo(2,15);
 	objetos[2] = Cubo(10,5,5,5); 
 	objetos[3] = Cubo(10,5,2,10);
+
+	objetos[20] = SolidoRevolucao(mesa,15);
+	objetos[21] = SolidoRevolucao(garrafa, 15);
+	objetos[22] = SolidoRevolucao(candeeiro, 15);
+	objetos[23] = SolidoRevolucao(abajour, 15);
+	objetos[24] = Cilindro(8,0.5,15,1);
+	objetos[25] = Cilindro(1,30.5,8,15);
+	objetos[26] = Cilindro(0.2,20,8, 20);
 
 	objetos[40] = Copo(2, 15);
 }
@@ -26,6 +36,7 @@ void Figuras::desenharFigura(int indice){
 	glPushMatrix();
 	glColor3f(0, 1.0, 0);
 	//glScalef(0.05,0.05,0.05);
+	//glScalef(1,-1,1);
 	objetos[indice].desenhar();
 	glPopMatrix();
 }
@@ -42,7 +53,7 @@ void Figuras::desenharGarrafa(){
 	glPushMatrix();
 	glColor3f(0, 1.0, 0);
 	glScalef(0.05,0.05,0.05);
-	objetos[2].desenhar();
+	objetos[21].desenhar();
 	glPopMatrix();
 }
 
@@ -124,9 +135,13 @@ void Figuras::desenharMesa(int tipo){
 			glTranslatef(0,50,-900);
 			glColor3f(0,1,0);
 			objetos[2].desenhar();
-			glPopMatrix();	
+			glPopMatrix();
 				
 			break;
+
+		case 2:
+			glColor3f(0,1,0);
+			objetos[20].desenhar();
 	}
 
 }
@@ -169,4 +184,45 @@ void Figuras::desenharCadeira(int tipo){
 
 			break;
 	}
+}
+
+void Figuras::desenharCandeeiroSuspenso(){
+	glPushMatrix();
+	glColor3f(0, 1.0, 0);
+	glScalef(0.05,0.05,0.05);
+	glScalef(1,-1,1);
+	objetos[22].desenhar();
+	glPopMatrix();
+}
+
+void Figuras::desenharCandeeiroPe(){
+	glColor3f(0, 1.0, 0);
+	
+	glPushMatrix();
+	glTranslatef(0,0.25,0);
+	objetos[24].desenhar();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glTranslatef(0,15.75,0);
+	objetos[25].desenhar();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glTranslatef(0,30.5,0);
+	objetos[23].desenhar();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glRotatef(90, 1, 0 , 0);
+	glTranslatef(0, 0, -30.7);
+	objetos[26].desenhar();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glRotatef(90, 1, 0 , 0);
+	glTranslatef(0, 0, -30.7);
+	glRotatef(90, 0, 0 , 1);
+	objetos[26].desenhar();
+	glPopMatrix();
 }

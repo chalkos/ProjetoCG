@@ -51,7 +51,7 @@
     <ClCompile Include="Figuras\Copo.cpp">
       <Filter>Figuras</Filter>
     </ClCompile>
-    <ClCompile Include="Figuras\Garrafa.cpp">
+    <ClCompile Include="Figuras\SolidoRevolucao.cpp">
       <Filter>Figuras</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,7 +86,7 @@
     <ClInclude Include="Figuras\Copo.h">
       <Filter>Figuras</Filter>
     </ClInclude>
-    <ClInclude Include="Figuras\Garrafa.h">
+    <ClInclude Include="Figuras\SolidoRevolucao.h">
       <Filter>Figuras</Filter>
     </ClInclude>
   </ItemGroup>

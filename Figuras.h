@@ -16,6 +16,8 @@ public:
 	static void desenharGarrafa();
 	static void desenharMesa(int tipo);
 	static void desenharCadeira(int tipo);
+	static void desenharCandeeiroSuspenso();
+	static void desenharCandeeiroPe();
 };
 
 

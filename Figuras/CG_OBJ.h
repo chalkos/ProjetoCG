@@ -35,7 +35,8 @@ protected:
 	virtual void preencherVertices();
 
 	// preenche o array de vértices de acordo com coordenadas XY e faz um sólido de revolução
-	void revolutionSolid(float *x, float *y, int count, int fatias);
+	void revolutionSolidClose(float *x, float *y, int count, int fatias);
+	void revolutionSolidOpen(float *x, float *y, int count, int fatias);
 
 public:
 	/////////////// static

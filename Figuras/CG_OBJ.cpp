@@ -64,7 +64,7 @@ void CG_OBJ::prepararBuffer(int maxBuffers){
 	glGenBuffers(CG_OBJ::maxBuffers, CG_OBJ::buffers);
 }
 
-void CG_OBJ::revolutionSolid(float *x, float *y, int count, int fatias){
+void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias){
 	float delta = 2 * M_PI / fatias;
 	
 	int vi = 0;
@@ -112,6 +112,35 @@ void CG_OBJ::revolutionSolid(float *x, float *y, int count, int fatias){
 		this->addVertex(&vi,x[ri],y[ri],0);
 		this->addVertex(&vi,x[ri-1] * sin(alpha), y[ri-1], x[ri-1] * cos(alpha));
 		this->addVertex(&vi,x[ri-1] * sin(alphaDelta), y[ri-1], x[ri-1] * cos(alphaDelta));
+	}
+}
+
+void CG_OBJ::revolutionSolidOpen(float *x, float *y, int count, int fatias){
+	float delta = 2 * M_PI / fatias;
+	
+	int vi = 0;
+
+	int ri = 0; // iterador de fase no sólido de revolução
+
+	float alpha;
+	float alphaDelta;
+
+	// as várias secções de altura (para que os triangulos nao fiquem muito esticados)
+	for(ri=0; ri < count-2; ri++){
+
+		// desenhar o reclangulo (=2 triangulos) dos lados
+		for(int fatia=0; fatia < fatias; fatia++){
+			alpha = delta * fatia;
+			alphaDelta = delta * (fatia+1);
+
+			this->addVertex(&vi,x[ri] * sin(alpha), y[ri], x[ri] * cos(alpha));
+			this->addVertex(&vi,x[ri+1] * sin(alphaDelta), y[ri+1], x[ri+1] * cos(alphaDelta));
+			this->addVertex(&vi,x[ri+1] * sin(alpha), y[ri+1], x[ri+1] * cos(alpha));
+			
+			this->addVertex(&vi,x[ri] * sin(alphaDelta), y[ri], x[ri] * cos(alphaDelta));
+			this->addVertex(&vi,x[ri+1] * sin(alphaDelta), y[ri+1], x[ri+1] * cos(alphaDelta));
+			this->addVertex(&vi,x[ri] * sin(alpha), y[ri], x[ri] * cos(alpha));
+		}
 	}
 }
 
