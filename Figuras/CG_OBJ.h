@@ -18,6 +18,8 @@ protected:
 	static int nBuffers;
 
 	void addVertex(int *indice, float x, float y, float z);
+	void addNormal(int *indice, float x, float y, float z);
+	void addTexture(int *indice, float x, float y);
 
 	////////////// non-static
 	int nTriangulos; // numero de triangulos
@@ -27,6 +29,8 @@ protected:
 	int bufferPos;   // posição no buffer onde está o objecto
 
 	float *vertexB;  // array de coordenadas
+	float *normalB;  // array de normais
+	float *textureB; // array de coordenadas de textura
 
 	// inicializa alguns valores para depois ser preenchido o array de coordenadas
 	void guardarOBJ(int nTriangulos);

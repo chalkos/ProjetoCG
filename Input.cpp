@@ -14,7 +14,8 @@ using namespace std;
 
 
 bool Input::keyDown[256];
-
+float Input::teste1 = 0;
+float Input::teste2 = 3.1415;
 
 void Input::init(){
 	// se isto não estiver definido, ao deixar uma tecla premida ele manda muitos sinais TeclaPressionada,TeclaNãoPressionada
@@ -59,6 +60,8 @@ void Input::keyPress(unsigned char tecla, int x, int y){
 		Camera::passoMaior();
 	if(tecla == '-')
 		Camera::passoMenor();
+
+	
 	
 	keyDown[tecla] = true;
 	return;
@@ -78,7 +81,29 @@ void Input::timer(int value){
 	if( keyDown['d'] || keyDown['D'] )
 		Camera::moverDireita();
 
+	// variável para testes
+	if( keyDown['j'] || keyDown['J'] ){
+		Input::teste1 -= 0.2;
+		cout << "[-] teste1 = " << Input::teste1 << endl;
+	}
+	
+	if( keyDown['u'] || keyDown['U'] ){
+		Input::teste1 += 0.2;
+		cout << "[+] teste1 = " << Input::teste1 << endl;
+	}
+
+	if( keyDown['k'] || keyDown['K'] ){
+		Input::teste2 -= 0.02;
+		cout << "[-] teste = " << Input::teste2 << endl;
+	}
+	
+	if( keyDown['i'] || keyDown['I'] ){
+		Input::teste2 += 0.02;
+		cout << "[+] teste = " << Input::teste2 << endl;
+	}
+
 
 		
     glutTimerFunc(10, Input::timer, 0);
 }
+

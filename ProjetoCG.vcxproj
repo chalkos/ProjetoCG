@@ -21,7 +21,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -92,7 +92,6 @@
     <ClCompile Include="Figuras.cpp" />
     <ClCompile Include="Figuras\CG_OBJ.cpp" />
     <ClCompile Include="Figuras\Cilindro.cpp" />
-    <ClCompile Include="Figuras\Copo.cpp" />
     <ClCompile Include="Figuras\Cubo.cpp" />
     <ClCompile Include="Figuras\Esfera.cpp" />
     <ClCompile Include="Figuras\Plano.cpp" />
@@ -106,7 +105,6 @@
     <ClInclude Include="Figuras.h" />
     <ClInclude Include="Figuras\CG_OBJ.h" />
     <ClInclude Include="Figuras\Cilindro.h" />
-    <ClInclude Include="Figuras\Copo.h" />
     <ClInclude Include="Figuras\Cubo.h" />
     <ClInclude Include="Figuras\Esfera.h" />
     <ClInclude Include="Figuras\Plano.h" />

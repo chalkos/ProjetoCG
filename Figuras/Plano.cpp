@@ -12,6 +12,7 @@ void Plano::preencherVertices(){
 	comprimento /= 2;
 
 	int vi = 0;
+	int ni = 0;
 	
 	for(int i=0; i<camadasx; i++) {
 		for(int j=0; j<camadasz; j++) {
@@ -23,6 +24,14 @@ void Plano::preencherVertices(){
 			this->addVertex(&vi,-comprimento + i*x2, 0.0f, comprimento - j*z2);
 			this->addVertex(&vi,-comprimento + (i+1)*x2, 0.0f, comprimento - j*z2);
 			this->addVertex(&vi,-comprimento + (i+1)*x2, 0.0f, comprimento - (j+1)*z2);
+			
+			this->addNormal(&ni, 0,1,0);
+			this->addNormal(&ni, 0,1,0);
+			this->addNormal(&ni, 0,1,0);
+
+			this->addNormal(&ni, 0,1,0);
+			this->addNormal(&ni, 0,1,0);
+			this->addNormal(&ni, 0,1,0);
 		}
 	}
 }

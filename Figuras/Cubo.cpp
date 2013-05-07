@@ -12,6 +12,7 @@ void Cubo::preencherVertices(){
 	float nz = lado/camadasz;
 
 	int vi=0;
+	int ni=0;
 
 	//baixo
 	for(int i=0; i<camadasx; i++) {
@@ -23,6 +24,15 @@ void Cubo::preencherVertices(){
 			this->addVertex(&vi,-mlado + (i+1)*nx, -mlado, mlado - j*nz);
 			this->addVertex(&vi,-mlado + i*nx, -mlado, mlado - j*nz);
 			this->addVertex(&vi,-mlado + (i+1)*nx, -mlado, mlado - (j+1)*nz);
+
+			
+			this->addNormal(&ni,0,-1,0);
+			this->addNormal(&ni,0,-1,0);
+			this->addNormal(&ni,0,-1,0);
+
+			this->addNormal(&ni,0,-1,0);
+			this->addNormal(&ni,0,-1,0);
+			this->addNormal(&ni,0,-1,0);
 		}
 	}
 	//cima
@@ -35,6 +45,15 @@ void Cubo::preencherVertices(){
 			this->addVertex(&vi,-mlado + (i+1)*nx, mlado, mlado - j*nz);
 			this->addVertex(&vi,-mlado + (i+1)*nx, mlado, mlado - (j+1)*nz);
 			this->addVertex(&vi,-mlado + i*nx, mlado, mlado - j*nz);
+
+			
+			this->addNormal(&ni,0,1,0);
+			this->addNormal(&ni,0,1,0);
+			this->addNormal(&ni,0,1,0);
+
+			this->addNormal(&ni,0,1,0);
+			this->addNormal(&ni,0,1,0);
+			this->addNormal(&ni,0,1,0);
 		}
 	
 	}
@@ -49,6 +68,15 @@ void Cubo::preencherVertices(){
 			this->addVertex(&vi,-mlado + (i+1)*nx, mlado - j*ny, mlado);
 			this->addVertex(&vi,-mlado + i*nx, mlado - (j+1)*ny, mlado);
 			this->addVertex(&vi,-mlado + (i+1)*nx, mlado - (j+1)*ny, mlado);
+
+			
+			this->addNormal(&ni,0,0,1);
+			this->addNormal(&ni,0,0,1);
+			this->addNormal(&ni,0,0,1);
+
+			this->addNormal(&ni,0,0,1);
+			this->addNormal(&ni,0,0,1);
+			this->addNormal(&ni,0,0,1);
 		}
 	}
 	//atras
@@ -61,6 +89,15 @@ void Cubo::preencherVertices(){
 			this->addVertex(&vi,-mlado + (i+1)*nx, mlado - j*ny, -mlado);
 			this->addVertex(&vi,-mlado + (i+1)*nx, mlado - (j+1)*ny,-mlado);
 			this->addVertex(&vi,-mlado + i*nx, mlado - (j+1)*ny, -mlado);
+
+			
+			this->addNormal(&ni,0,0,-1);
+			this->addNormal(&ni,0,0,-1);
+			this->addNormal(&ni,0,0,-1);
+
+			this->addNormal(&ni,0,0,-1);
+			this->addNormal(&ni,0,0,-1);
+			this->addNormal(&ni,0,0,-1);
 		}
 	}
 
@@ -74,6 +111,15 @@ void Cubo::preencherVertices(){
 			this->addVertex(&vi,mlado, -mlado + i*ny , -mlado + j*nz);
 			this->addVertex(&vi,mlado, -mlado + (i+1)*ny , -mlado + (j+1)*nz);
 			this->addVertex(&vi,mlado, -mlado + i*ny, -mlado + (j+1)*nz);
+
+			
+			this->addNormal(&ni,1,0,0);
+			this->addNormal(&ni,1,0,0);
+			this->addNormal(&ni,1,0,0);
+
+			this->addNormal(&ni,1,0,0);
+			this->addNormal(&ni,1,0,0);
+			this->addNormal(&ni,1,0,0);
 		}
 	}
 	//esquerda
@@ -86,6 +132,15 @@ void Cubo::preencherVertices(){
 			this->addVertex(&vi,-mlado, -mlado + i*ny , -mlado + j*nz);
 			this->addVertex(&vi,-mlado, -mlado + i*ny, -mlado + (j+1)*nz);
 			this->addVertex(&vi,-mlado, -mlado + (i+1)*ny , -mlado + (j+1)*nz);
+
+			
+			this->addNormal(&ni,-1,0,0);
+			this->addNormal(&ni,-1,0,0);
+			this->addNormal(&ni,-1,0,0);
+
+			this->addNormal(&ni,-1,0,0);
+			this->addNormal(&ni,-1,0,0);
+			this->addNormal(&ni,-1,0,0);
 		}
 	}
 }

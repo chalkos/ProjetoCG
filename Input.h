@@ -13,5 +13,9 @@ public:
 	static void KeyUp(unsigned char tecla, int x, int y);
 
 	static void timer(int value);
+
+	// variável de testes
+	static float teste1;
+	static float teste2;
 };
 

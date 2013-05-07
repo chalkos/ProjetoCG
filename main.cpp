@@ -12,8 +12,10 @@
 #include "Figuras.h"
 
 int drawMode_face = GL_FRONT_AND_BACK;
-int drawMode_mode = GL_LINE;
+int drawMode_mode = GL_FILL;
 int tipoPrimitiva = 3;
+
+float teste = 0;
 
 
 void changeSize(int w, int h) {
@@ -51,28 +53,10 @@ void changeSize(int w, int h) {
     glMatrixMode (GL_MODELVIEW); //set the matrix back to model
 }
 
-
-
-void renderScene(void) {
-
-	// clear buffers
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// set the camera
-	glLoadIdentity();
-
-	// posicionar a camara
-	Camera::lookAt();
-			  
-	// opções
-    //glCullFace(GL_BACK);  // não desenhar triangulos que não estão visiveis
-	glPolygonMode(drawMode_face,drawMode_mode);
-
-	//Figuras::desenharParedes();
-
+void desenharMontra(){
 	glPushMatrix();
 	glScalef(1,0.33,1);
-	Figuras::desenharParedes();
+	//Figuras::desenharParedes();
 	glPopMatrix();
 
 	glPushMatrix();
@@ -163,7 +147,69 @@ void renderScene(void) {
 	glScalef(1.4,1.4,1.4);
 	Figuras::desenharGarrafaVinho();
 	glPopMatrix();
+}
 
+void renderScene(void) {
+
+	// clear buffers
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// set the camera
+	glLoadIdentity();
+
+	// posicionar a camara
+	//Camera::lookAt(-1,0,-1);
+	Camera::lookAt();
+			  
+	// opções
+    //glCullFace(GL_BACK);  // não desenhar triangulos que não estão visiveis
+	glPolygonMode(drawMode_face,drawMode_mode);
+
+	//Figuras::desenharParedes();
+	
+	// arrays da luz
+
+	GLfloat amb[3] = {1,0,0};
+	GLfloat diff[3] = {0.8,0.8,0.8};
+	
+	GLfloat pos[4] = {125*sin(Input::teste2), Input::teste1 ,110 + 125*cos(Input::teste2), 1.0};
+	//GLfloat pos[4] = {30*sin(Input::teste2), Input::teste1 ,30*cos(Input::teste2), 1.0};
+
+	glLightfv(GL_LIGHT0, GL_POSITION, pos); // posição da luz
+	glLightfv(GL_LIGHT0, GL_AMBIENT, amb); // cores da luz
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diff); // cores da luz
+
+	glEnable(GL_LIGHTING); //ligar o quadro
+	glEnable(GL_LIGHT0); //ligar a luz #0
+
+	glPushMatrix();
+	glTranslatef(125*sin(Input::teste2), Input::teste1 ,100 + 125*cos(Input::teste2));
+	//glTranslatef(30*sin(Input::teste2), Input::teste1 ,30*cos(Input::teste2));
+	Figuras::desenharFigura(figEsfera,1,1,1);
+	glPopMatrix();
+
+	
+	amb[0] = 0.2;
+	amb[1] = 0.2;
+	amb[2] = 0.2;
+	glLightfv(GL_LIGHT0, GL_AMBIENT, amb); // cores da luz
+
+
+	//Figuras::desenharFigura(figCilindroTesteLuz,1,1,1);
+	//Figuras::desenharFigura(figTesteLuz, 1,1,1);
+	//Figuras::desenharFigura(figCopoVinho, 0.03,0.03,0.03);
+	//Figuras::desenharMesaRedonda();
+	//Figuras::desenharGarrafaVinho();
+	//Figuras::desenharCandeeiroSuspenso();
+	//Figuras::desenharFigura(figAbajourParaCandeeiroDePe, 1,1,1);
+	//Figuras::desenharCandeeiroPe();
+	//Figuras::desenharCopoSimples();
+	//Figuras::desenharCopoChampanhe();
+
+	desenharMontra();
+
+	//Figuras::desenharFigura(figGarrafaVinho, 0.2,0.2,0.2);
+	
 
 	// End of frame
 	glutSwapBuffers();
@@ -236,7 +282,7 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(800,600);
-	glutCreateWindow("ProjetoCG - Showcase");
+	glutCreateWindow("ProjetoCG - Sandbox");
 		
 
 // registo de funções 
@@ -249,6 +295,7 @@ int main(int argc, char **argv) {
 
 	// inicializar a câmara na posição: (x,y,z)
 	Camera::init(0,5,-10);
+	//Camera::init( 20, 35, 20);
 
 
 // pôr aqui a criação do menu

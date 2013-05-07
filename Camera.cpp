@@ -23,6 +23,27 @@ float Camera::beta;
 
 float Camera::passo = 0.5;//0.20;
 
+
+void Camera::moveTo(float x, float y, float z){
+	Camera::posX = x;
+	Camera::posY = y;
+	Camera::posZ = z;
+}
+
+void Camera::lookAt(){
+	// direcção da câmara usando os ângulos
+	Camera::lookAt(cos(Camera::beta) * sin(Camera::alpha),
+					sin(Camera::beta),
+					cos(Camera::beta) * cos(Camera::alpha));
+}
+
+void Camera::lookAt(float dx, float dy, float dz){
+	// transpor o mundo, rodar o mundo, colocar câmara
+	gluLookAt(posX, posY, posZ,    // posição da câmara
+		posX+dx, posY+dy, posZ+dz, // ponto para onde a câmara está apontada
+		0.0f, 1.0f, 0.0f);         // “up vector” (0.0f, 1.0f, 0.0f)
+}
+
 void Camera::passoMaior(){
 	if( Camera::passo > 0.5 )
 		Camera::passo += 0.1;
@@ -65,20 +86,7 @@ void Camera::toggleFPS(){
 	}
 }
 
-void Camera::lookAt(){
-	// direcção da câmara
-	float dx,dy,dz;
-	dx = cos(Camera::beta) * sin(Camera::alpha);
-	dy = sin(Camera::beta);
-	dz = cos(Camera::beta) * cos(Camera::alpha);
 
-	// transpor o mundo, rodar o mundo, colocar câmara
-	gluLookAt(posX, posY, posZ,    // posição da câmara
-		posX+dx, posY+dy, posZ+dz, // ponto para onde a câmara está apontada
-		0.0f, 1.0f, 0.0f);         // “up vector” (0.0f, 1.0f, 0.0f)
-
-
-}
 
 
 void Camera::moverFrente(){

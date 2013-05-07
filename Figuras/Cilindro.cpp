@@ -16,6 +16,7 @@ void Cilindro::preencherVertices(){
 	float altura2 = altura/2;
 
 	int vi = 0;
+	int ni = 0;
 
 	float alpha;
 	float alphaDelta;
@@ -28,6 +29,10 @@ void Cilindro::preencherVertices(){
 		this->addVertex(&vi,0,altura2,0);
 		this->addVertex(&vi,raio * sin(alpha), altura2, raio * cos(alpha));
 		this->addVertex(&vi,raio * sin(alphaDelta), altura2, raio * cos(alphaDelta));
+		
+		this->addNormal(&ni, 0, 1, 0);
+		this->addNormal(&ni, 0, 1, 0);
+		this->addNormal(&ni, 0, 1, 0);
 	}
 
 	// as várias secções de altura (para que os triangulos nao fiquem muito esticados)
@@ -41,12 +46,19 @@ void Cilindro::preencherVertices(){
 			alphaDelta = delta * (fatia+1);
 
 			this->addVertex(&vi,raio * sin(alpha), seccao, raio * cos(alpha));
+			this->addNormal(&ni, sin(alpha), 0, cos(alpha));
 			this->addVertex(&vi,raio * sin(alpha), seccaoSeg, raio * cos(alpha));
+			this->addNormal(&ni, sin(alpha), 0, cos(alpha));
 			this->addVertex(&vi,raio * sin(alphaDelta), seccaoSeg, raio * cos(alphaDelta));
+			this->addNormal(&ni, sin(alphaDelta), 0, cos(alphaDelta));
+			
 			
 			this->addVertex(&vi,raio * sin(alphaDelta), seccao, raio * cos(alphaDelta));
+			this->addNormal(&ni, sin(alphaDelta), 0, cos(alphaDelta));
 			this->addVertex(&vi,raio * sin(alpha), seccao, raio * cos(alpha));
+			this->addNormal(&ni, sin(alpha), 0, cos(alpha));
 			this->addVertex(&vi,raio * sin(alphaDelta), seccaoSeg, raio * cos(alphaDelta));
+			this->addNormal(&ni, sin(alphaDelta), 0, cos(alphaDelta));
 		}
 	}
 
@@ -58,6 +70,10 @@ void Cilindro::preencherVertices(){
 		this->addVertex(&vi,0,-altura2,0);
 		this->addVertex(&vi,raio * sin(alphaDelta), -altura2, raio * cos(alphaDelta));
 		this->addVertex(&vi,raio * sin(alpha), -altura2, raio * cos(alpha));
+
+		this->addNormal(&ni, 0, -1, 0);
+		this->addNormal(&ni, 0, -1, 0);
+		this->addNormal(&ni, 0, -1, 0);
 	}
 }
 

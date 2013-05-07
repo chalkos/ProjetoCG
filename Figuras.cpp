@@ -7,62 +7,43 @@
 #include "Figuras\Cubo.h"
 #include "Figuras\Cilindro.h"
 #include "Figuras\Esfera.h"
-#include "Figuras\Copo.h"
 #include "Figuras\SolidoRevolucao.h"
 
 #define NUM_FIGURAS 50
 
 CG_OBJ Figuras::objetos[NUM_FIGURAS];
 
-enum indiceFiguras {
-	// paredes
-	figParedes,
 
-	// objetos simples (formados por apenas uma figura)
-	figMesaRedonda,
-	figGarrafaVinho,
-	figCandeeiroSuspenso,
-	figCopoChampanhe,
-	figCopoSimples,
-	figCopoVinho,
-
-	// mesa e cadeiras
-	figCubo_10_5camadas,
-	figCilindro_r2_10camadas,
-
-	// necessárias para o candeeiro de pe
-	figAbajourParaCandeeiroDePe,
-	figCilindro_BaseDeCandeeiroDePe,
-	figCilindro_TroncoDeCandeeiroDePe,
-	figCilindro_SuporteDeAbajourDeCandeeiroDePe,
-};
 
 void Figuras::init(){
 	CG_OBJ::prepararBuffer(NUM_FIGURAS);
 
 	
 	objetos[figParedes] = Cubo(250, 25,25*0.33,25); // paredes
-	objetos[figCopoSimples] = Copo(1,15);
-	objetos[figCopoChampanhe] = Copo(2,15);
-	objetos[figCopoVinho] = Copo(3,15);
+	objetos[figCopoSimples] = SolidoRevolucao(copoSimples, 50);
+	objetos[figCopoChampanhe] = SolidoRevolucao(copoChampanhe, 50);
+	objetos[figCopoVinho] = SolidoRevolucao(copoVinho, 50);
 
 	objetos[figCubo_10_5camadas] = Cubo(10,5,5,5);
 	objetos[figCilindro_r2_10camadas] = Cilindro(2,10,10,10);
 
+	objetos[figTesteLuz] = SolidoRevolucao(testeLuz2, 60);//Cilindro(10,60,150,150);//Esfera(10,30,30);
+	objetos[figCilindroTesteLuz] = SolidoRevolucao(cilindrotesteLuz, 30);
+	objetos[figEsfera] = Esfera(10, 50, 50);
+
 	objetos[figMesaRedonda] = SolidoRevolucao(mesa,15);
 	objetos[figGarrafaVinho] = SolidoRevolucao(garrafa, 15);
-	objetos[figCandeeiroSuspenso] = SolidoRevolucao(candeeiro, 15);
-	objetos[figAbajourParaCandeeiroDePe] = SolidoRevolucao(abajour, 15);
+	objetos[figCandeeiroSuspenso] = SolidoRevolucao(candeeiro, 50);
+	objetos[figAbajourParaCandeeiroDePe] = SolidoRevolucao(abajour, 50);
 	objetos[figCilindro_BaseDeCandeeiroDePe] = Cilindro(8,0.5,15,1);
 	objetos[figCilindro_TroncoDeCandeeiroDePe] = Cilindro(1,30.5,8,15);
 	objetos[figCilindro_SuporteDeAbajourDeCandeeiroDePe] = Cilindro(0.2,20,8, 20);
 }
 
-void Figuras::desenharFigura(int indice){
+void Figuras::desenharFigura(int indice, float scaleX, float scaleY, float scaleZ){
 	glPushMatrix();
 	glColor3f(0, 1.0, 0);
-	//glScalef(0.05,0.05,0.05);
-	//glScalef(1,-1,1);
+	glScalef(scaleX, scaleY, scaleZ);
 	objetos[indice].desenhar();
 	glPopMatrix();
 }

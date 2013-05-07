@@ -48,9 +48,6 @@
     <ClCompile Include="Figuras.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Figuras\Copo.cpp">
-      <Filter>Figuras</Filter>
-    </ClCompile>
     <ClCompile Include="Figuras\SolidoRevolucao.cpp">
       <Filter>Figuras</Filter>
     </ClCompile>
@@ -82,9 +79,6 @@
     </ClInclude>
     <ClInclude Include="Figuras.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Figuras\Copo.h">
-      <Filter>Figuras</Filter>
     </ClInclude>
     <ClInclude Include="Figuras\SolidoRevolucao.h">
       <Filter>Figuras</Filter>
