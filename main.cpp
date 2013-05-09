@@ -1,6 +1,9 @@
 #include <glew.h>
 #include <GL/glut.h>
 
+#include <IL/il.h>
+
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdio.h>
@@ -10,6 +13,13 @@
 
 // Figuras
 #include "Figuras.h"
+
+
+// texturas
+#include "Textura.h"
+
+#include "Light.h"
+
 
 int drawMode_face = GL_FRONT_AND_BACK;
 int drawMode_mode = GL_FILL;
@@ -137,7 +147,7 @@ void desenharMontra(){
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(-100, 4*6, 60);
+	glTranslatef(-100, 4.1*6, 60);
 	Figuras::desenharCopoSimples();
 	glTranslatef(6,0,0);
 	Figuras::desenharCopoSimples();
@@ -150,6 +160,10 @@ void desenharMontra(){
 }
 
 void renderScene(void) {
+
+	
+	Input::timer();
+
 
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -167,35 +181,35 @@ void renderScene(void) {
 
 	//Figuras::desenharParedes();
 	
-	// arrays da luz
-
-	GLfloat amb[3] = {1,0,0};
-	GLfloat diff[3] = {0.8,0.8,0.8};
+	// desenhar a fonte de luz
 	
-	GLfloat pos[4] = {125*sin(Input::teste2), Input::teste1 ,110 + 125*cos(Input::teste2), 1.0};
-	//GLfloat pos[4] = {30*sin(Input::teste2), Input::teste1 ,30*cos(Input::teste2), 1.0};
+	
 
-	glLightfv(GL_LIGHT0, GL_POSITION, pos); // posição da luz
-	glLightfv(GL_LIGHT0, GL_AMBIENT, amb); // cores da luz
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diff); // cores da luz
+	// ligar e posicionar as luzes
+	Light::enable(GL_LIGHTING);
+	Light::enable(GL_LIGHT0);
 
-	glEnable(GL_LIGHTING); //ligar o quadro
-	glEnable(GL_LIGHT0); //ligar a luz #0
+	//Light::posicao(GL_LIGHT0, 125*sin(Input::teste2), Input::teste1 ,110 + 125*cos(Input::teste2), 1.0);
+	Light::posicao(GL_LIGHT0, 30*sin(Input::teste2), Input::teste1 ,30*cos(Input::teste2), 1.0);
 
+	Light::ambiente(GL_LIGHT0, 1,1,1);
+	Light::difusa(GL_LIGHT0, 1,1,1);
+	
 	glPushMatrix();
-	glTranslatef(125*sin(Input::teste2), Input::teste1 ,100 + 125*cos(Input::teste2));
-	//glTranslatef(30*sin(Input::teste2), Input::teste1 ,30*cos(Input::teste2));
-	Figuras::desenharFigura(figEsfera,1,1,1);
+	//glTranslatef(125*sin(Input::teste2), Input::teste1 ,100 + 125*cos(Input::teste2));
+	glTranslatef(30*sin(Input::teste2), Input::teste1 ,30*cos(Input::teste2));
+	Textura::setTextura(texLava1);
+	Figuras::desenharFigura(figEsfera,0.1, 0.1,0.1);
 	glPopMatrix();
+	
+	Light::ambiente(GL_LIGHT0, 0.2,0.2,0.2);
+	Light::difusa(GL_LIGHT0, 0.9,0.9,0.9);
+
 
 	
-	amb[0] = 0.2;
-	amb[1] = 0.2;
-	amb[2] = 0.2;
-	glLightfv(GL_LIGHT0, GL_AMBIENT, amb); // cores da luz
-
-
-	//Figuras::desenharFigura(figCilindroTesteLuz,1,1,1);
+	Textura::setTextura(texMadeira);
+	//Figuras::desenharFigura(figCilindro_r2_10camadas,1,1,1);
+	//Figuras::desenharFigura(figFormaCilindricaTesteLuz,1,1,1);
 	//Figuras::desenharFigura(figTesteLuz, 1,1,1);
 	//Figuras::desenharFigura(figCopoVinho, 0.03,0.03,0.03);
 	//Figuras::desenharMesaRedonda();
@@ -205,11 +219,16 @@ void renderScene(void) {
 	//Figuras::desenharCandeeiroPe();
 	//Figuras::desenharCopoSimples();
 	//Figuras::desenharCopoChampanhe();
+	//Figuras::desenharFigura(figPlano, 1,1,1);
 
 	desenharMontra();
 
+	//Figuras::desenharFigura(figCubo_10_5camadas,1,1,1);
+	//Figuras::desenharFigura(figEsfera,1,1,1);
 	//Figuras::desenharFigura(figGarrafaVinho, 0.2,0.2,0.2);
 	
+	Textura::unsetTextura();
+	Light::disable(GL_LIGHTING);
 
 	// End of frame
 	glutSwapBuffers();
@@ -327,6 +346,11 @@ int main(int argc, char **argv) {
 
 	// glew init
 	glewInit();
+
+	// DevIL init
+	ilInit();
+	Textura::init(); //antes de inicializar as Figuras
+	
 
 	// alguns settings para OpenGL
 	glEnable(GL_DEPTH_TEST);

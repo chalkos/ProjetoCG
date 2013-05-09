@@ -1,3 +1,6 @@
+#ifndef __CAMERA_H_INCLUDED__
+#define __CAMERA_H_INCLUDED__
+
 class Camera{
 
 private:
@@ -37,3 +40,6 @@ public:
 	static void passoMenor();
 	
 };
+
+
+#endif // __CAMERA_H_INCLUDED__

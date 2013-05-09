@@ -18,10 +18,11 @@ void SolidoRevolucao::preencherVertices(){
 }
 
 SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
+	this->invertTextureCoords = false;
+
 	this->pontos = 0;
 	this->fatias = detalhe;
 	if( this->fatias < 3 ) this->fatias = 3;
-	if( this->fatias > 100 ) this->fatias = 100;
 
 	int i=0;
 	int j=0; //para confirmar que têm o mesmo numero de coordenadas X e Y
@@ -57,7 +58,7 @@ SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
 		x[i++] = 4;
 		x[i++] = 4;
 		x[i++] = 4;
-
+		
 		x[i++] = 0;
 
 		
@@ -87,7 +88,7 @@ SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
 		y[i++] = 4;
 		y[i++] = 4;
 		y[i++] = 4;
-
+		
 		y[i++] = 4;  
 		break;
 
@@ -204,6 +205,7 @@ SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
 
 	case abajour:
 		this->fechado = false;
+		this->invertTextureCoords = true;
 
 		x[i++] = 10;
 		x[i++] = 10.5;
@@ -222,49 +224,17 @@ SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
 
 	case testeLuz:
 		this->fechado = true;
-
+		
 		x[i++] = 0;
-		x[i++] = 48;
-		x[i++] = 84;
-		x[i++] = 111;
-		x[i++] = 131;
-		x[i++] = 135;
-		x[i++] = 132;
-		x[i++] = 122;
-		x[i++] = 115;
-		x[i++] = 114;
-		x[i++] = 118;
-		x[i++] = 126;
-		x[i++] = 137;
-		x[i++] = 139;
-		x[i++] = 134;
-		x[i++] = 120;
-		x[i++] = 97;
-		x[i++] = 65;
-		x[i++] = 31;
+		x[i++] = 10;
+		x[i++] = 10;
 		x[i++] = 0;
 
 		j=i; i=0;
 		y[i++] = 0;
-		y[i++] = 8;
-		y[i++] = 26;
-		y[i++] = 49;
-		y[i++] = 71;
-		y[i++] = 89;
-		y[i++] = 106;
-		y[i++] = 128;
-		y[i++] = 147;
-		y[i++] = 160;
-		y[i++] = 177;
-		y[i++] = 194;
-		y[i++] = 208;
-		y[i++] = 225;
-		y[i++] = 244;
-		y[i++] = 262;
-		y[i++] = 282;
-		y[i++] = 303;
-		y[i++] = 314;
-		y[i++] = 317;
+		y[i++] = 0;
+		y[i++] = 10;
+		y[i++] = 10;
 
 		break;
 	case testeLuz2:
@@ -365,11 +335,11 @@ SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
 		y[i++] = 5;
 		y[i++] = 5;
 		
-		y[i++] = 0.1;
-		y[i++] = 0.1;
-		y[i++] = 0.1;
+		y[i++] = 0.3;
+		y[i++] = 0.3;
+		y[i++] = 0.3;
 
-		y[i++] = 0.1;
+		y[i++] = 0.3;
 		break;
 
 	case copoChampanhe:
@@ -442,6 +412,10 @@ SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
 	}
 
 	this->pontos = i;
+
+	comprimento = 0;
+	for(i=0; i<this->pontos-1; i++)
+		comprimento += sqrt( (x[i+1] - x[i])*(x[i+1] - x[i]) + (y[i+1]-y[i])*(y[i+1]-y[i]) ); // sqrt(  (x2-x1)^2 + (y2-y1)^2  )
 		
 	if( this->fechado )
 		this->guardarOBJ( this->fatias * 2 + (this->fatias) * (this->pontos-3) * 2 );

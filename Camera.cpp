@@ -21,7 +21,7 @@ float Camera::posZ;
 float Camera::alpha;
 float Camera::beta;
 
-float Camera::passo = 0.5;//0.20;
+float Camera::passo = 0.02;
 
 
 void Camera::moveTo(float x, float y, float z){

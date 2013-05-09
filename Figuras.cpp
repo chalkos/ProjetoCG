@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include <glew.h>
 #include <GL/glut.h>
 
@@ -9,16 +11,15 @@
 #include "Figuras\Esfera.h"
 #include "Figuras\SolidoRevolucao.h"
 
-#define NUM_FIGURAS 50
+//#define NUM_FIGURAS 50
 
-CG_OBJ Figuras::objetos[NUM_FIGURAS];
-
-
+CG_OBJ *Figuras::objetos = NULL;
 
 void Figuras::init(){
-	CG_OBJ::prepararBuffer(NUM_FIGURAS);
+	Figuras::objetos = (CG_OBJ*)malloc(sizeof(CG_OBJ) * figCOUNT_ENUM);
 
-	
+	CG_OBJ::prepararBuffer(figCOUNT_ENUM);
+
 	objetos[figParedes] = Cubo(250, 25,25*0.33,25); // paredes
 	objetos[figCopoSimples] = SolidoRevolucao(copoSimples, 50);
 	objetos[figCopoChampanhe] = SolidoRevolucao(copoChampanhe, 50);
@@ -27,11 +28,12 @@ void Figuras::init(){
 	objetos[figCubo_10_5camadas] = Cubo(10,5,5,5);
 	objetos[figCilindro_r2_10camadas] = Cilindro(2,10,10,10);
 
-	objetos[figTesteLuz] = SolidoRevolucao(testeLuz2, 60);//Cilindro(10,60,150,150);//Esfera(10,30,30);
-	objetos[figCilindroTesteLuz] = SolidoRevolucao(cilindrotesteLuz, 30);
-	objetos[figEsfera] = Esfera(10, 50, 50);
+	objetos[figTesteLuz] = SolidoRevolucao(testeLuz, 3);//Cilindro(10,60,150,150);//Esfera(10,30,30);
+	objetos[figFormaCilindricaTesteLuz] = SolidoRevolucao(cilindrotesteLuz, 30);
+	objetos[figEsfera] = Esfera(10, 3,3);
+	objetos[figPlano] = Plano(10,1,1);
 
-	objetos[figMesaRedonda] = SolidoRevolucao(mesa,15);
+	objetos[figMesaRedonda] = SolidoRevolucao(mesa,50);
 	objetos[figGarrafaVinho] = SolidoRevolucao(garrafa, 15);
 	objetos[figCandeeiroSuspenso] = SolidoRevolucao(candeeiro, 50);
 	objetos[figAbajourParaCandeeiroDePe] = SolidoRevolucao(abajour, 50);
@@ -73,7 +75,7 @@ void Figuras::desenharCopoVinho(){
 
 void Figuras::desenharGarrafaVinho(){
 	glPushMatrix();
-	glColor3f(0, 1.0, 0);
+	glColor3f(1, 0.0, 0);
 	glScalef(0.05,0.05,0.05);
 	objetos[figGarrafaVinho].desenhar();
 	glPopMatrix();

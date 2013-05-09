@@ -19,21 +19,26 @@ enum indiceFiguras {
 	figCubo_10_5camadas,
 	figCilindro_r2_10camadas,
 
-	// testes luz
+	// testes luz e amostras
 	figTesteLuz,
-	figCilindroTesteLuz,
+	figFormaCilindricaTesteLuz,
 	figEsfera,
+	figPlano,
 
 	// necessárias para o candeeiro de pe
 	figAbajourParaCandeeiroDePe,
 	figCilindro_BaseDeCandeeiroDePe,
 	figCilindro_TroncoDeCandeeiroDePe,
 	figCilindro_SuporteDeAbajourDeCandeeiroDePe,
+
+
+	// não alterar
+	figCOUNT_ENUM
 };
 
 class Figuras{
 private:
-	static CG_OBJ objetos[];
+	static CG_OBJ *objetos;
 
 public:
 	static void init();

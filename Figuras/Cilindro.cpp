@@ -17,6 +17,7 @@ void Cilindro::preencherVertices(){
 
 	int vi = 0;
 	int ni = 0;
+	int ti = 0;
 
 	float alpha;
 	float alphaDelta;
@@ -33,6 +34,14 @@ void Cilindro::preencherVertices(){
 		this->addNormal(&ni, 0, 1, 0);
 		this->addNormal(&ni, 0, 1, 0);
 		this->addNormal(&ni, 0, 1, 0);
+		
+		this->addTextureCoord(&ti, 0.5, 0.5);
+		this->addTextureCoord(&ti, 0.5 + 0.5*cos(alpha), 0.5 + 0.5*sin(alpha));
+		this->addTextureCoord(&ti, 0.5 + 0.5*cos(alphaDelta), 0.5 + 0.5*sin(alphaDelta));
+
+		/*this->addTextureCoord(&ti, fatia/(float)fatias, 0);
+		this->addTextureCoord(&ti, fatia/(float)fatias, 1);
+		this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1);*/
 	}
 
 	// as várias secções de altura (para que os triangulos nao fiquem muito esticados)
@@ -47,18 +56,31 @@ void Cilindro::preencherVertices(){
 
 			this->addVertex(&vi,raio * sin(alpha), seccao, raio * cos(alpha));
 			this->addNormal(&ni, sin(alpha), 0, cos(alpha));
+
 			this->addVertex(&vi,raio * sin(alpha), seccaoSeg, raio * cos(alpha));
 			this->addNormal(&ni, sin(alpha), 0, cos(alpha));
+
 			this->addVertex(&vi,raio * sin(alphaDelta), seccaoSeg, raio * cos(alphaDelta));
 			this->addNormal(&ni, sin(alphaDelta), 0, cos(alphaDelta));
 			
-			
+			this->addTextureCoord(&ti, fatia/(float)fatias, i/(float)seccoes);
+			this->addTextureCoord(&ti, fatia/(float)fatias, (i+1)/(float)seccoes);
+			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, (i+1)/(float)seccoes);
+
+
+
 			this->addVertex(&vi,raio * sin(alphaDelta), seccao, raio * cos(alphaDelta));
 			this->addNormal(&ni, sin(alphaDelta), 0, cos(alphaDelta));
+
 			this->addVertex(&vi,raio * sin(alpha), seccao, raio * cos(alpha));
 			this->addNormal(&ni, sin(alpha), 0, cos(alpha));
+
 			this->addVertex(&vi,raio * sin(alphaDelta), seccaoSeg, raio * cos(alphaDelta));
 			this->addNormal(&ni, sin(alphaDelta), 0, cos(alphaDelta));
+			
+			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, i/(float)seccoes);
+			this->addTextureCoord(&ti, fatia/(float)fatias, i/(float)seccoes);
+			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, (i+1)/(float)seccoes);
 		}
 	}
 
@@ -74,10 +96,15 @@ void Cilindro::preencherVertices(){
 		this->addNormal(&ni, 0, -1, 0);
 		this->addNormal(&ni, 0, -1, 0);
 		this->addNormal(&ni, 0, -1, 0);
+		
+		this->addTextureCoord(&ti, 0.5, 0.5);
+		this->addTextureCoord(&ti, 0.5 + 0.5*cos(alphaDelta), 0.5 + 0.5*sin(alphaDelta));
+		this->addTextureCoord(&ti, 0.5 + 0.5*cos(alpha), 0.5 + 0.5*sin(alpha));
 	}
 }
 
 Cilindro::Cilindro(float raio, float altura, int fatias, int seccoes){
+	this->invertTextureCoords = false;
 	this->raio = raio;
 	this->altura = altura;
 	this->fatias = fatias;

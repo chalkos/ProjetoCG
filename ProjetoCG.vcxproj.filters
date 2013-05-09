@@ -51,6 +51,12 @@
     <ClCompile Include="Figuras\SolidoRevolucao.cpp">
       <Filter>Figuras</Filter>
     </ClCompile>
+    <ClCompile Include="Textura.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities.h">
@@ -83,5 +89,22 @@
     <ClInclude Include="Figuras\SolidoRevolucao.h">
       <Filter>Figuras</Filter>
     </ClInclude>
+    <ClInclude Include="Textura.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Texturas\madeira.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\planetaTerra.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\lava1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

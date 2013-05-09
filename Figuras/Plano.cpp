@@ -13,6 +13,7 @@ void Plano::preencherVertices(){
 
 	int vi = 0;
 	int ni = 0;
+	int ti = 0;
 	
 	for(int i=0; i<camadasx; i++) {
 		for(int j=0; j<camadasz; j++) {
@@ -32,11 +33,20 @@ void Plano::preencherVertices(){
 			this->addNormal(&ni, 0,1,0);
 			this->addNormal(&ni, 0,1,0);
 			this->addNormal(&ni, 0,1,0);
+			
+			this->addTextureCoord(&ti, i/(float)camadasx, j/(float)camadasz);
+			this->addTextureCoord(&ti, (i+1)/(float)camadasx, (j+1)/(float)camadasz);
+			this->addTextureCoord(&ti, i/(float)camadasx, (j+1)/(float)camadasz);
+			
+			this->addTextureCoord(&ti, i/(float)camadasx, j/(float)camadasz);
+			this->addTextureCoord(&ti, (i+1)/(float)camadasx, j/(float)camadasz);
+			this->addTextureCoord(&ti, (i+1)/(float)camadasx, (j+1)/(float)camadasz);
 		}
 	}
 }
 
 Plano::Plano(float comprimento, int camadasx, int camadasz){
+	this->invertTextureCoords = false;
 	this->comprimento = comprimento;
 	this->camadasx = camadasx;
 	this->camadasz = camadasz;

@@ -19,9 +19,12 @@ protected:
 
 	void addVertex(int *indice, float x, float y, float z);
 	void addNormal(int *indice, float x, float y, float z);
-	void addTexture(int *indice, float x, float y);
+	void addTextureCoord(int *indice, float x, float y);
 
 	////////////// non-static
+	bool invertTextureCoords; // trocar x e y
+	float comprimento; // altura dos solidos de revolucao
+
 	int nTriangulos; // numero de triangulos
 	int nVertices;   // numero de vertices
 	int nFloats;     // numero de floats
@@ -29,6 +32,7 @@ protected:
 	int bufferPos;   // posição no buffer onde está o objecto
 
 	float *vertexB;  // array de coordenadas
+	unsigned int *vertexI;    // array de indices de coordenadas
 	float *normalB;  // array de normais
 	float *textureB; // array de coordenadas de textura
 
@@ -46,6 +50,9 @@ public:
 	/////////////// static
 	static GLuint *buffers;
 	static void prepararBuffer(int maxBuffers);
+
+	// trata as coordenadas repetidas
+	void preencherIndices();
 	
 
 	/////////////// non-static
