@@ -50,10 +50,7 @@ protected:
 	float *especular;
 	float *ambiente;
 	float *difusa;
-
-
-
-
+	float shininess;
 
 
 public:
@@ -78,10 +75,12 @@ public:
 	void setEspecular(float r, float g, float b);
 	void setAmbiente(float r, float g, float b);
 	void setDifusa(float r, float g, float b);
+	void setShininess(float s);
 	void resetEmissiva();
 	void resetEspecular();
 	void resetAmbiente();
 	void resetDifusa();
+	void resetShininess();
 };
 
 

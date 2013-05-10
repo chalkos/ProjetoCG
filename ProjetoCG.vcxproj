@@ -137,6 +137,8 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
     </Image>
     <Image Include="Texturas\relva.png" />
+    <Image Include="Texturas\shinyBrushedMetal.png" />
+    <Image Include="Texturas\shinyMetal.png" />
     <Image Include="Texturas\sol.jpg">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>

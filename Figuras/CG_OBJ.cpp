@@ -65,6 +65,7 @@ void CG_OBJ::guardarOBJ(int nTriangulos){
 	this->especular = NULL;
 	this->ambiente = NULL;
 	this->difusa = NULL;
+	this->shininess = 0;
 
 	// preencher os vértices
 	this->preencherVertices();
@@ -347,6 +348,8 @@ void CG_OBJ::desenhar(){
 		mudouMaterial = true;
 	}
 	
+	glMaterialfv(GL_FRONT,GL_SHININESS,&this->shininess);
+	
 	//  Desenhar
 	//glDrawArrays(GL_TRIANGLES, 0, this->nVertices);
 	glDrawElements(GL_TRIANGLES, this->nVertices ,GL_UNSIGNED_INT, vertexI); //com indices
@@ -384,6 +387,15 @@ void CG_OBJ::setDifusa(float r, float g, float b){
 	this->difusa[0] = r;
 	this->difusa[1] = g;
 	this->difusa[2] = b;
+}
+
+
+void CG_OBJ::setShininess(float s){
+	this->shininess = s;
+}
+
+void CG_OBJ::resetShininess(){
+	this->shininess = 0;
 }
 
 void CG_OBJ::resetEmissiva(){

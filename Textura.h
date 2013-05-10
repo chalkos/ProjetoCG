@@ -13,6 +13,8 @@ enum TipoTextura {
 	texSol,
 	texErvas,
 	texRelva,
+	texShinyMetal,
+	texShinyBrushedMetal,
 
 	// não acrescentar nada depois deste elemento
 	texCOUNT_ENUM

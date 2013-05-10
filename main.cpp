@@ -107,6 +107,7 @@ void desenharMontra(){
 	glPopMatrix();
 
 	// set de copos de champanhe
+	Textura::setTextura(texShinyBrushedMetal);
 	glPushMatrix();
 	glTranslatef(60, 0, 50);
 	glScalef(3,3,3);
@@ -130,13 +131,15 @@ void desenharMontra(){
 	Figuras::desenharCopoChampanhe(); //esquerda
 	glTranslatef(4,0,-2);
 	glPopMatrix();
-
+	
+	Textura::setTextura(texMadeira);
 	glPushMatrix();
 	glTranslatef(-60, 0, 30);
 	glScalef(6,6,6);
 	Figuras::desenharMesaRedonda();
 	glPopMatrix();
-
+	
+	Textura::setTextura(texShinyBrushedMetal);
 	glPushMatrix();
 	glTranslatef(-60, 4*6, 30);
 	Figuras::desenharCopoVinho();
@@ -148,7 +151,8 @@ void desenharMontra(){
 	glScalef(1.4,1.4,1.4);
 	Figuras::desenharGarrafaVinho();
 	glPopMatrix();
-
+	
+	Textura::setTextura(texMadeira);
 	glPushMatrix();
 	glTranslatef(-60, 0, -30);
 	glScalef(6,6,6);
@@ -156,6 +160,7 @@ void desenharMontra(){
 	glPopMatrix();
 
 	glPushMatrix();
+	Textura::setTextura(texShinyBrushedMetal);
 	glTranslatef(-60, 4.1*6, -30);
 	Figuras::desenharCopoSimples();
 	glTranslatef(6,0,0);

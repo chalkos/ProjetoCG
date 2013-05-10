@@ -124,5 +124,11 @@
     <Image Include="Texturas\relva.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Texturas\shinyMetal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\shinyBrushedMetal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
