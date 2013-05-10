@@ -7,7 +7,7 @@ enum ProfilerData {
 	proCarregarTexturas,
 	proFrame,
 	
-	// não alterar
+	// não acrescentar nada depois deste elemento
 	proCOUNT_ENUM
 };
 

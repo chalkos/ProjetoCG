@@ -14,7 +14,7 @@ enum TipoTextura {
 	texErvas,
 	texRelva,
 
-	// não alterar
+	// não acrescentar nada depois deste elemento
 	texCOUNT_ENUM
 };
 
@@ -27,6 +27,7 @@ public:
 	static int getHeight(TipoTextura tipoTextura);
 	static void setTextura(TipoTextura tipoTextura, float sx=1, float sy=1, float graus=0); //set textura, escala e rotação
 	static void setTextura(float sx, float sy, float graus=0); //set escala e rotação
+	static void translate(float x, float y);
 	static void unsetTextura();
 
 	// non-static

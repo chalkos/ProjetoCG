@@ -125,3 +125,14 @@ void Textura::setTextura(TipoTextura tipoTextura, float sx, float sy, float grau
 void Textura::unsetTextura(){
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+void Textura::translate(float x, float y){
+	glMatrixMode(GL_TEXTURE);
+
+	// apaga as modificações anteriores
+	glLoadIdentity();
+
+	glTranslatef(x, y, 0);
+	
+	glMatrixMode(GL_MODELVIEW);
+}

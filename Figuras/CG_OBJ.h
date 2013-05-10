@@ -45,10 +45,22 @@ protected:
 	void revolutionSolidClose(float *x, float *y, int count, int fatias);
 	void revolutionSolidOpen(float *x, float *y, int count, int fatias);
 
+	// várias propriedades
+	float *emissiva;
+	float *especular;
+	float *ambiente;
+	float *difusa;
+
+
+
+
+
+
 public:
 	/////////////// static
 	static GLuint *buffers;
 	static void prepararBuffer(int maxBuffers);
+	static void resetMaterialPoperties();
 
 	// trata as coordenadas repetidas
 	void preencherIndices();
@@ -59,6 +71,17 @@ public:
 
 	// obtém o numero máximo de buffers actual
 	static int getMaxBuffers();
+
+	
+
+	void setEmissiva(float r, float g, float b);
+	void setEspecular(float r, float g, float b);
+	void setAmbiente(float r, float g, float b);
+	void setDifusa(float r, float g, float b);
+	void resetEmissiva();
+	void resetEspecular();
+	void resetAmbiente();
+	void resetDifusa();
 };
 
 

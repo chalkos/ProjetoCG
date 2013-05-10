@@ -198,22 +198,23 @@ void renderScene(void) {
 	Light::enable(GL_LIGHTING);
 	Light::enable(GL_LIGHT0);
 
+	Light::ambiente(GL_LIGHT0, 0.2,0.2,0.2);
+	Light::difusa(GL_LIGHT0, 0.9,0.9,0.9);
+
 	//Light::posicao(GL_LIGHT0, 125*sin(Input::teste2), Input::teste1 ,110 + 125*cos(Input::teste2), 1.0);
 	Light::posicao(GL_LIGHT0, Input::teste3*sin(Input::teste2), Input::teste1 ,Input::teste3*cos(Input::teste2), 1.0);
-
-	Light::ambiente(GL_LIGHT0, 1,1,1);
-	Light::difusa(GL_LIGHT0, 1,1,1);
 	
 	glPushMatrix();
 	//glTranslatef(125*sin(Input::teste2), Input::teste1 ,100 + 125*cos(Input::teste2));
 	glTranslatef(Input::teste3*sin(Input::teste2), Input::teste1 ,Input::teste3*cos(Input::teste2));
 	Textura::setTextura(texLava1);
-	Figuras::desenharFigura(figEsfera,0.1, 0.1,0.1);
+	Figuras::desenharEmissorLuz();
 	glPopMatrix();
 	
-	Light::ambiente(GL_LIGHT0, 0.2,0.2,0.2);
-	Light::difusa(GL_LIGHT0, 0.9,0.9,0.9);
 
+	//double sided light
+	//glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+	
 
 	Textura::setTextura(texMadeira);
 	//Figuras::desenharFigura(figCilindro_r2_10camadas,1,1,1);

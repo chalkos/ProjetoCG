@@ -33,8 +33,8 @@ void Figuras::init(){
 
 	objetos[figTesteLuz] = SolidoRevolucao(testeLuz, 3);//Cilindro(10,60,150,150);//Esfera(10,30,30);
 	objetos[figFormaCilindricaTesteLuz] = SolidoRevolucao(cilindrotesteLuz, 30);
-	objetos[figEsfera] = Esfera(10, 50,50);
 	objetos[figPlano] = Plano(10,1,1);
+	objetos[figEmissorLuz] = Esfera(2, 20,20);
 
 	objetos[figMesaRedonda] = SolidoRevolucao(mesa,50);
 	objetos[figGarrafaVinho] = SolidoRevolucao(garrafa, 15);
@@ -51,6 +51,22 @@ void Figuras::desenharFigura(int indice, float scaleX, float scaleY, float scale
 	glScalef(scaleX, scaleY, scaleZ);
 	objetos[indice].desenhar();
 	glPopMatrix();
+
+}
+
+void Figuras::desenharEmissorLuz(){
+	glPushMatrix();
+	int tempo = glutGet(GLUT_ELAPSED_TIME);
+	Textura::translate(tempo/(float)10000/2,tempo/(float)10000);
+
+	objetos[figEmissorLuz].setAmbiente(0,0,0);
+	objetos[figEmissorLuz].setDifusa(0,0,0);
+	objetos[figEmissorLuz].setEspecular(0,0,0);
+	objetos[figEmissorLuz].setEmissiva(1,1,1);
+	objetos[figEmissorLuz].desenhar();
+
+	glPopMatrix();
+	Textura::setTextura(1,1,0);
 }
 
 void Figuras::desenharCopoChampanhe(){

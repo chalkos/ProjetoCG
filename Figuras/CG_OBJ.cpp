@@ -61,6 +61,10 @@ void CG_OBJ::guardarOBJ(int nTriangulos){
 	this->normalB = (float*)malloc(sizeof(float) * this->nFloats);
 	this->textureB = (float*)malloc(sizeof(float) * this->nVertices * 2);
 
+	this->emissiva = NULL;
+	this->especular = NULL;
+	this->ambiente = NULL;
+	this->difusa = NULL;
 
 	// preencher os vértices
 	this->preencherVertices();
@@ -320,11 +324,101 @@ void CG_OBJ::desenhar(){
 	glTexCoordPointer(2,GL_FLOAT,0,0);
 
 	//glMaterialfv(GL_FRONT, componente, array);
-	//glMaterialf(GL_FRONT,GL_AMBIENT_AND_DIFFUSE,valor);
 
+	bool mudouMaterial = false;
+
+	if( this->emissiva != NULL ){
+		glMaterialfv(GL_FRONT,GL_EMISSION,this->emissiva);
+		mudouMaterial = true;
+	}
+
+	if( this->especular != NULL  ){
+		glMaterialfv(GL_FRONT,GL_SPECULAR,this->especular);
+		mudouMaterial = true;
+	}
+
+	if(	this->ambiente != NULL  ){
+		glMaterialfv(GL_FRONT,GL_AMBIENT,this->ambiente);
+		mudouMaterial = true;
+	}
+
+	if( this->difusa != NULL  ){
+		glMaterialfv(GL_FRONT,GL_DIFFUSE,this->difusa);
+		mudouMaterial = true;
+	}
+	
 	//  Desenhar
 	//glDrawArrays(GL_TRIANGLES, 0, this->nVertices);
 	glDrawElements(GL_TRIANGLES, this->nVertices ,GL_UNSIGNED_INT, vertexI); //com indices
+	if(mudouMaterial)
+		resetMaterialPoperties();
+}
+
+void CG_OBJ::setEmissiva(float r, float g, float b){
+	if( this->emissiva != NULL ) resetEmissiva();
+	this->emissiva = (float*)malloc(sizeof(float)*3);
+	this->emissiva[0] = r;
+	this->emissiva[1] = g;
+	this->emissiva[2] = b;
+}
+
+void CG_OBJ::setEspecular(float r, float g, float b){
+	if( this->especular != NULL ) resetEspecular();
+	this->especular = (float*)malloc(sizeof(float)*3);
+	this->especular[0] = r;
+	this->especular[1] = g;
+	this->especular[2] = b;
+}
+
+void CG_OBJ::setAmbiente(float r, float g, float b){
+	if( this->ambiente != NULL ) resetAmbiente();
+	this->ambiente = (float*)malloc(sizeof(float)*3);
+	this->ambiente[0] = r;
+	this->ambiente[1] = g;
+	this->ambiente[2] = b;
+}
+
+void CG_OBJ::setDifusa(float r, float g, float b){
+	if( this->difusa != NULL ) resetDifusa();
+	this->difusa = (float*)malloc(sizeof(float)*3);
+	this->difusa[0] = r;
+	this->difusa[1] = g;
+	this->difusa[2] = b;
+}
+
+void CG_OBJ::resetEmissiva(){
+	free(this->emissiva);
+	this->emissiva = NULL;
+}
+
+void CG_OBJ::resetEspecular(){
+	free(this->especular);
+	this->especular = NULL;
+}
+
+void CG_OBJ::resetAmbiente(){
+	free(this->ambiente);
+	this->ambiente = NULL;
+}
+
+void CG_OBJ::resetDifusa(){
+	free(this->difusa);
+	this->difusa = NULL;
+}
+
+void CG_OBJ::resetMaterialPoperties(){
+	// valores predefinidos de acordo com
+	// http://msdn.microsoft.com/en-us/library/windows/desktop/dd373945(v=vs.85).aspx
+
+	float amb[3] = {0.2, 0.2, 0.2}; //ambiente
+	float dif[3] = {0.8, 0.8, 0.8}; //difusa
+	float esp[3] = {0.0, 0.0, 0.0}; //especular
+	float emi[3] = {0.0, 0.0, 0.0}; //emissiva
+
+	glMaterialfv(GL_FRONT,GL_EMISSION,emi);
+	glMaterialfv(GL_FRONT,GL_SPECULAR,esp);
+	glMaterialfv(GL_FRONT,GL_AMBIENT,amb);
+	glMaterialfv(GL_FRONT,GL_DIFFUSE,dif);
 }
 
 /////////////// abstract

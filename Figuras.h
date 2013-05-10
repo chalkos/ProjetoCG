@@ -25,8 +25,8 @@ enum indiceFiguras {
 	// testes luz e amostras
 	figTesteLuz,
 	figFormaCilindricaTesteLuz,
-	figEsfera,
 	figPlano,
+	figEmissorLuz,
 
 	// necessárias para o candeeiro de pe
 	figAbajourParaCandeeiroDePe,
@@ -35,7 +35,7 @@ enum indiceFiguras {
 	figCilindro_SuporteDeAbajourDeCandeeiroDePe,
 
 
-	// não alterar
+	// não acrescentar nada depois deste elemento
 	figCOUNT_ENUM
 };
 
@@ -47,18 +47,19 @@ public:
 	static void init();
 	static void desenharFigura(int indice, float scaleX, float scaleY, float scaleZ);
 
-	static void desenharParedes();//
-	static void desenharCopoChampanhe();//
+	static void desenharParedes();
+	static void desenharCopoChampanhe();
 	static void desenharCopoSimples();
-	static void desenharCopoVinho();//
-	static void desenharGarrafaVinho();//
-	static void desenharMesaRectangular();//
+	static void desenharCopoVinho();
+	static void desenharGarrafaVinho();
+	static void desenharMesaRectangular();
 	static void desenharMesaEsplanada();
-	static void desenharMesaRedonda();//
-	static void desenharCadeiraSimples();//
-	static void desenharCadeiraBalcao();//
-	static void desenharCandeeiroSuspenso();//
-	static void desenharCandeeiroPe();//
+	static void desenharMesaRedonda();
+	static void desenharCadeiraSimples();
+	static void desenharCadeiraBalcao();
+	static void desenharCandeeiroSuspenso();
+	static void desenharCandeeiroPe();
+	static void desenharEmissorLuz();
 };
 
 
