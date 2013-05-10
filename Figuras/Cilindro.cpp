@@ -104,7 +104,6 @@ void Cilindro::preencherVertices(){
 }
 
 Cilindro::Cilindro(float raio, float altura, int fatias, int seccoes){
-	this->invertTextureCoords = false;
 	this->raio = raio;
 	this->altura = altura;
 	this->fatias = fatias;

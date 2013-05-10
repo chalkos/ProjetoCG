@@ -42,13 +42,8 @@ void CG_OBJ::addNormal(int *indice, float x, float y, float z){
 }
 
 void CG_OBJ::addTextureCoord(int *indice, float x, float y){
-	if( this->invertTextureCoords ){
-		textureB[(*indice)++] = y;
-		textureB[(*indice)++] = x;
-	}else{
-		textureB[(*indice)++] = x;
-		textureB[(*indice)++] = y;
-	}
+	textureB[(*indice)++] = x;
+	textureB[(*indice)++] = y;
 }
 
 void CG_OBJ::guardarOBJ(int nTriangulos){
@@ -329,7 +324,7 @@ void CG_OBJ::desenhar(){
 
 	//  Desenhar
 	//glDrawArrays(GL_TRIANGLES, 0, this->nVertices);
-	glDrawElements(GL_TRIANGLES, this->nVertices ,GL_UNSIGNED_INT, vertexI);
+	glDrawElements(GL_TRIANGLES, this->nVertices ,GL_UNSIGNED_INT, vertexI); //com indices
 }
 
 /////////////// abstract

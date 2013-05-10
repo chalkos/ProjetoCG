@@ -11,7 +11,7 @@
 #include "Figuras\Esfera.h"
 #include "Figuras\SolidoRevolucao.h"
 
-//#define NUM_FIGURAS 50
+#include "Textura.h"
 
 CG_OBJ *Figuras::objetos = NULL;
 
@@ -21,6 +21,9 @@ void Figuras::init(){
 	CG_OBJ::prepararBuffer(figCOUNT_ENUM);
 
 	objetos[figParedes] = Cubo(250, 25,25*0.33,25); // paredes
+	objetos[figParedeChao] = Plano(250, 25, 25);
+	objetos[figParedeFrente] = Plano(250, 25, 25*0.33);
+	objetos[figParedeLado] = Plano(250, 25*0.33, 25);
 	objetos[figCopoSimples] = SolidoRevolucao(copoSimples, 50);
 	objetos[figCopoChampanhe] = SolidoRevolucao(copoChampanhe, 50);
 	objetos[figCopoVinho] = SolidoRevolucao(copoVinho, 50);
@@ -30,7 +33,7 @@ void Figuras::init(){
 
 	objetos[figTesteLuz] = SolidoRevolucao(testeLuz, 3);//Cilindro(10,60,150,150);//Esfera(10,30,30);
 	objetos[figFormaCilindricaTesteLuz] = SolidoRevolucao(cilindrotesteLuz, 30);
-	objetos[figEsfera] = Esfera(10, 3,3);
+	objetos[figEsfera] = Esfera(10, 50,50);
 	objetos[figPlano] = Plano(10,1,1);
 
 	objetos[figMesaRedonda] = SolidoRevolucao(mesa,50);
@@ -54,6 +57,7 @@ void Figuras::desenharCopoChampanhe(){
 	glPushMatrix();
 	glColor3f(0, 0.5, 0.5);
 	glScalef(0.02,0.02,0.02);
+	Textura::setTextura(1,1,0);
 	objetos[figCopoChampanhe].desenhar();
 	glPopMatrix();
 }
@@ -61,6 +65,7 @@ void Figuras::desenharCopoChampanhe(){
 void Figuras::desenharCopoSimples(){
 	glPushMatrix();
 	glColor3f(0.3, 0.8, 0.5);
+	Textura::setTextura(1,1,0);
 	objetos[figCopoSimples].desenhar();
 	glPopMatrix();
 }
@@ -69,6 +74,7 @@ void Figuras::desenharCopoVinho(){
 	glPushMatrix();
 	glColor3f(0.9, 0.1, 0.1);
 	glScalef(0.015,0.015,0.015);
+	Textura::setTextura(1,1,0);
 	objetos[figCopoVinho].desenhar();
 	glPopMatrix();
 }
@@ -77,16 +83,58 @@ void Figuras::desenharGarrafaVinho(){
 	glPushMatrix();
 	glColor3f(1, 0.0, 0);
 	glScalef(0.05,0.05,0.05);
+	Textura::setTextura(1,1,90);
 	objetos[figGarrafaVinho].desenhar();
 	glPopMatrix();
 }
 
 void Figuras::desenharParedes(){
 	glPushMatrix();
-	glColor3f(0.2, 0.2, 0.2);
-	glTranslatef(0, 250/2, 0);
+	Textura::setTextura(2,2,0);
+	objetos[figParedeChao].desenhar();
+	glTranslatef(0,250,0);
+
+	glRotatef(180, 1,0,0);
+	Textura::setTextura(2,2,0);
+	objetos[figParedeChao].desenhar();
+	glPopMatrix();
+
+	glPushMatrix();
+	glRotatef(-90, 0, 0, 1);
+	glTranslatef(-250/2.0, -250/2.0, 0);
+	Textura::setTextura(2*0.33,2,0);
+	objetos[figParedeLado].desenhar();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glRotatef(90, 0, 0, 1);
+	glTranslatef(250/2.0, -250/2.0, 0);
+	Textura::setTextura(2*0.33,2,0);
+	objetos[figParedeLado].desenhar();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glRotatef(90, 1, 0, 0);
+	glTranslatef(0, -250/2.0, -250/2.0);
+	Textura::setTextura(2,2*0.33,0);
+	objetos[figParedeFrente].desenhar();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glRotatef(-90, 1, 0, 0);
+	glTranslatef(0, -250/2.0, 250/2.0);
+	Textura::setTextura(2,2*0.33,0);
+	objetos[figParedeFrente].desenhar();
+	glPopMatrix();
+
+
+	
+	
+	
+	/*glTranslatef(0, 250/2, 0);
 	glScalef(-1,-1,-1);
-	objetos[figParedes].desenhar();
+	Textura::setTextura(5,5,0);
+	objetos[figParedes].desenhar();*/
 	glPopMatrix();
 }
 
@@ -101,16 +149,16 @@ void Figuras::desenharMesaEsplanada(){
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(1.90,2,1.90);glScalef(0.02,0.4,0.02);glColor3f(1,0,1);objetos[figCilindro_r2_10camadas].desenhar();
+	glTranslatef(1.90,2,1.90);glScalef(0.065,0.4,0.065);glColor3f(1,0,1);objetos[figCilindro_r2_10camadas].desenhar();
 	glPopMatrix();
 	glPushMatrix();
-	glTranslatef(-1.90,2,1.90);glScalef(0.02,0.4,0.02);glColor3f(1,0,1);objetos[figCilindro_r2_10camadas].desenhar();
+	glTranslatef(-1.90,2,1.90);glScalef(0.065,0.4,0.065);glColor3f(1,0,1);objetos[figCilindro_r2_10camadas].desenhar();
 	glPopMatrix();
 	glPushMatrix();
-	glTranslatef(1.90,2,-1.90);glScalef(0.02,0.4,0.02);glColor3f(1,0,1);objetos[figCilindro_r2_10camadas].desenhar();
+	glTranslatef(1.90,2,-1.90);glScalef(0.065,0.4,0.065);glColor3f(1,0,1);objetos[figCilindro_r2_10camadas].desenhar();
 	glPopMatrix();
 	glPushMatrix();
-	glTranslatef(-1.90,2,-1.90);glScalef(0.02,0.4,0.02);glColor3f(1,0,1);objetos[figCilindro_r2_10camadas].desenhar();
+	glTranslatef(-1.90,2,-1.90);glScalef(0.065,0.4,0.065);glColor3f(1,0,1);objetos[figCilindro_r2_10camadas].desenhar();
 	glPopMatrix();
 }
 
@@ -180,7 +228,9 @@ void Figuras::desenharMesaRectangular(){
 }
 
 void Figuras::desenharCadeiraBalcao(){
+	
 	//pernas
+	Textura::setTextura(1,3,90);
 	glPushMatrix();
 	glTranslatef(-1.5,5,-1.5);glScalef(0.1,1,0.1);objetos[figCilindro_r2_10camadas].desenhar();
 	glPopMatrix();
@@ -193,7 +243,9 @@ void Figuras::desenharCadeiraBalcao(){
 	glPushMatrix();
 	glTranslatef(1.5,6.5,1.5);glScalef(0.1,1.30,0.1);objetos[figCilindro_r2_10camadas].desenhar();
 	glPopMatrix();
+
 	//reforço
+	Textura::setTextura(1,1,90);
 	glPushMatrix();
 	glTranslatef(0,5,1.5);glRotatef(90,0,0,1);glScalef(0.1,0.3,0.1);objetos[figCilindro_r2_10camadas].desenhar();
 	glPopMatrix();
@@ -206,7 +258,9 @@ void Figuras::desenharCadeiraBalcao(){
 	glPushMatrix();
 	glTranslatef(-1.5,5,0);glRotatef(90,1,0,0);glScalef(0.1,0.3,0.1);objetos[figCilindro_r2_10camadas].desenhar();
 	glPopMatrix();
+
 	//acento
+	Textura::setTextura(1,1,0);
 	glPushMatrix();
 	glTranslatef(0,10.05,0);glScalef(0.35,0.08,0.35);glColor3f(1,0,1);objetos[figCubo_10_5camadas].desenhar();
 	glPopMatrix();
@@ -217,7 +271,6 @@ void Figuras::desenharCadeiraBalcao(){
 }
 
 void Figuras::desenharCadeiraSimples(){
-	glColor3f(0, 0.8, 0.8);
 
 	//pernas
 	glPushMatrix();
@@ -232,6 +285,8 @@ void Figuras::desenharCadeiraSimples(){
 	glPushMatrix();
 	glScalef(0.02,0.3,0.02);glTranslatef(-75,5,-75);objetos[figCubo_10_5camadas].desenhar();
 	glPopMatrix();
+
+	
 	//reforço
 	glPushMatrix();
 	glTranslatef(0,1,0);glScalef(0.3,0.02,0.02);objetos[figCubo_10_5camadas].desenhar();
@@ -270,31 +325,42 @@ void Figuras::desenharCadeiraSimples(){
 
 void Figuras::desenharCandeeiroSuspenso(){
 	glPushMatrix();
-	glColor3f(1.0, 1.0, 0);
+
+	glRotatef(180,1,0,0);
+
 	glScalef(0.05,0.05,0.05);
-	glScalef(1,-1,1);
+	//glScalef(1,-1,1);
+	
+	Textura::setTextura(1,1,90);
 	objetos[figCandeeiroSuspenso].desenhar();
 	glPopMatrix();
+	
+	Textura::setTextura(1,1,0);
 }
 
 void Figuras::desenharCandeeiroPe(){
 	glColor3f(0.4, 0.8, 0.3);
 	
+	
+	Textura::setTextura(0.5,0.5,0);
 	glPushMatrix();
 	glTranslatef(0,0.25,0);
 	objetos[figCilindro_BaseDeCandeeiroDePe].desenhar();
 	glPopMatrix();
 	
+	Textura::setTextura(1,3,90);
 	glPushMatrix();
 	glTranslatef(0,15.75,0);
 	objetos[figCilindro_TroncoDeCandeeiroDePe].desenhar();
 	glPopMatrix();
 	
+	Textura::setTextura(1,1,0);
 	glPushMatrix();
 	glTranslatef(0,30.5,0);
 	objetos[figAbajourParaCandeeiroDePe].desenhar();
 	glPopMatrix();
 	
+	Textura::setTextura(1,3,90);
 	glPushMatrix();
 	glRotatef(90, 1, 0 , 0);
 	glTranslatef(0, 0, -30.7);
@@ -302,4 +368,6 @@ void Figuras::desenharCandeeiroPe(){
 	glRotatef(90, 0, 0 , 1);
 	objetos[figCilindro_SuporteDeAbajourDeCandeeiroDePe].desenhar();
 	glPopMatrix();
+	
+	Textura::setTextura(1,1,0);
 }

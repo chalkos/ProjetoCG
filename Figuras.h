@@ -6,6 +6,9 @@
 enum indiceFiguras {
 	// paredes
 	figParedes,
+	figParedeChao,
+	figParedeLado,
+	figParedeFrente,
 
 	// objetos simples (formados por apenas uma figura)
 	figMesaRedonda,

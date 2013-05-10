@@ -24,13 +24,18 @@ void Textura::init(){
 
 	// definir os nomes de ficheiro das texturas
 	strcpy( Textura::filenames[texMadeira], "Texturas/madeira.png" );
-	strcpy( Textura::filenames[texMetal], "Texturas/madeira.png" );
+	strcpy( Textura::filenames[texFolhas], "Texturas/folhas.png" );
 	strcpy( Textura::filenames[texPlanetaTerra], "Texturas/planetaTerra.jpg" );
 	strcpy( Textura::filenames[texLava1], "Texturas/lava1.png" );
+	strcpy( Textura::filenames[texSol], "Texturas/sol.jpg" );
+	strcpy( Textura::filenames[texErvas], "Texturas/ervas.png" );
+	strcpy( Textura::filenames[texRelva], "Texturas/relva.png" );
 
-	// gerar identificadores de imagem e textura
+	// gerar identificadores de imagem
 	Textura::imageIds = (ILuint*)malloc(sizeof(ILuint) * texCOUNT_ENUM);
 	ilGenImages( texCOUNT_ENUM, Textura::imageIds);
+
+	// gerar identificadores de textura e definir algumas propriedades
 	Textura::textureIds = (GLuint*)malloc(sizeof(GLuint) * texCOUNT_ENUM);
 	glGenTextures( texCOUNT_ENUM, Textura::textureIds);
 
@@ -59,20 +64,12 @@ Textura::Textura(TipoTextura tipoTextura){
 
 	// definição de parâmetros de textura
 	glBindTexture(GL_TEXTURE_2D,textureIds[tipoTextura]);
-	switch( tipoTextura ){
-	case texMadeira:
-	case texMetal:
-	case texPlanetaTerra:
-	case texLava1:
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		break;
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	default:
-		break;
-	}
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->getWidth(), this->getHeight(), 0, 
 		GL_RGBA, GL_UNSIGNED_BYTE, this->imageData);
 }
@@ -93,8 +90,36 @@ int Textura::getHeight(TipoTextura tipoTextura){
 	return Textura::texturas[tipoTextura].getHeight();
 }
 
-void Textura::setTextura(TipoTextura tipoTextura){
+void Textura::setTextura(float sx, float sy, float graus){
+	glMatrixMode(GL_TEXTURE);
+
+	// apaga as modificações anteriores
+	glLoadIdentity();
+
+	// aplica a escala
+	glScalef(sx,sy,1);
+
+	// aplica a rotação (CCW)
+	glRotatef(graus, 0, 0, 1);
+	
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void Textura::setTextura(TipoTextura tipoTextura, float sx, float sy, float graus){
 	glBindTexture(GL_TEXTURE_2D, textureIds[tipoTextura]);
+	
+	glMatrixMode(GL_TEXTURE);
+
+	// apaga as modificações anteriores
+	glLoadIdentity();
+
+	// aplica a escala
+	glScalef(sx,sy,1);
+
+	// aplica a rotação (CCW)
+	glRotatef(graus, 0, 0, 1);
+	
+	glMatrixMode(GL_MODELVIEW);
 }
 
 void Textura::unsetTextura(){

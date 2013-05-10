@@ -9,7 +9,6 @@
 
 **********************************/
 void Esfera::preencherVertices(){
-	this->invertTextureCoords = true;
 
 	float alpha = 2 * M_PI / fatias;
 	float beta = M_PI / seccoes;
@@ -92,7 +91,6 @@ void Esfera::preencherVertices(){
 }
 
 Esfera::Esfera(float raio, unsigned fatias, unsigned seccoes){
-	this->invertTextureCoords = false;
 	this->raio = raio;
 	this->fatias = fatias;
 	this->seccoes = seccoes;

@@ -1,3 +1,23 @@
+/****************************************************************
+ *	Controlos:
+ *	
+ *	AWSD - movimento
+ *	movimento do rato - olhar
+ *  barra de espaços - libertar/prender o rato
+ *	
+ *	U/J - subir/descer a luz de testes
+ *	I/K - rodar a luz de testes em volta da cena
+ *	O/L - aumentar/diminuir a distancia da luz de testes à origem XZ
+ *	
+ *	[+] - aumentar a velocidade de movimento
+ *	[-] - reduzir a velocidade de movimento
+ *
+ *	 Z  - alternar entre ver apenas_linhas / texturas
+ *
+ *	ESC - sair da aplicação
+ ****************************************************************/
+
+#include <windows.h>
 #include <glew.h>
 #include <GL/glut.h>
 
@@ -13,16 +33,10 @@
 
 // Figuras
 #include "Figuras.h"
-
-
-// texturas
 #include "Textura.h"
-
 #include "Light.h"
+#include "Profiler.h"
 
-
-int drawMode_face = GL_FRONT_AND_BACK;
-int drawMode_mode = GL_FILL;
 int tipoPrimitiva = 3;
 
 float teste = 0;
@@ -53,53 +67,48 @@ void changeSize(int w, int h) {
 
 	// return to the model view matrix mode
 	glMatrixMode(GL_MODELVIEW);
-
-
-
-	//////////////////////////////////////////
-
-    glLoadIdentity ();
-    
-    glMatrixMode (GL_MODELVIEW); //set the matrix back to model
 }
 
 void desenharMontra(){
+	
+	Textura::setTextura(texRelva);
 	glPushMatrix();
 	glScalef(1,0.33,1);
-	//Figuras::desenharParedes();
+	Figuras::desenharParedes();
 	glPopMatrix();
 
+	Textura::setTextura(texMadeira);
 	glPushMatrix();
-	glTranslatef(0, 250*0.33, 110);
+	glTranslatef(0, 250*0.33, 25);
 	Figuras::desenharCandeeiroSuspenso();
 	glPopMatrix();
 	
 	glPushMatrix();
-	glTranslatef(0, 0, 110);
+	glTranslatef(0, 0, 50);
 	Figuras::desenharCandeeiroPe();
 	glPopMatrix();
 	
 	glPushMatrix();
-	glTranslatef(20, 0, 110);
+	glTranslatef(20, 0, 50);
 	glScalef(4,4,4);
 	Figuras::desenharCadeiraSimples();
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(-20, 0, 110);
+	glTranslatef(-20, 0, 50);
 	glScalef(4,4,4);
 	Figuras::desenharCadeiraBalcao();
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(60, 0, 110);
+	glTranslatef(60, 0, 50);
 	glScalef(3,3,3);
 	Figuras::desenharMesaRectangular();
 	glPopMatrix();
 
 	// set de copos de champanhe
 	glPushMatrix();
-	glTranslatef(60, 0, 110);
+	glTranslatef(60, 0, 50);
 	glScalef(3,3,3);
 	glTranslatef(0,6,0);
 	Figuras::desenharCopoChampanhe(); //meio centro
@@ -123,13 +132,13 @@ void desenharMontra(){
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(-60, 0, 100);
+	glTranslatef(-60, 0, 30);
 	glScalef(6,6,6);
 	Figuras::desenharMesaRedonda();
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(-60, 4*6, 100);
+	glTranslatef(-60, 4*6, 30);
 	Figuras::desenharCopoVinho();
 	glTranslatef(6,0,0);
 	Figuras::desenharCopoVinho();
@@ -141,13 +150,13 @@ void desenharMontra(){
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(-100, 0, 60);
+	glTranslatef(-60, 0, -30);
 	glScalef(6,6,6);
 	Figuras::desenharMesaEsplanada();
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(-100, 4.1*6, 60);
+	glTranslatef(-60, 4.1*6, -30);
 	Figuras::desenharCopoSimples();
 	glTranslatef(6,0,0);
 	Figuras::desenharCopoSimples();
@@ -160,9 +169,9 @@ void desenharMontra(){
 }
 
 void renderScene(void) {
-
+	Profiler::startFrame();
 	
-	Input::timer();
+	Input::processInput();
 
 
 	// clear buffers
@@ -174,30 +183,30 @@ void renderScene(void) {
 	// posicionar a camara
 	//Camera::lookAt(-1,0,-1);
 	Camera::lookAt();
+
 			  
 	// opções
-    //glCullFace(GL_BACK);  // não desenhar triangulos que não estão visiveis
-	glPolygonMode(drawMode_face,drawMode_mode);
-
-	//Figuras::desenharParedes();
-	
-	// desenhar a fonte de luz
-	
-	
+	if( Input::apenasLinhas ){
+		// desactivou o culling na classe Input
+		glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+	}else{
+		// activou o culling na classe Input
+		glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+	}
 
 	// ligar e posicionar as luzes
 	Light::enable(GL_LIGHTING);
 	Light::enable(GL_LIGHT0);
 
 	//Light::posicao(GL_LIGHT0, 125*sin(Input::teste2), Input::teste1 ,110 + 125*cos(Input::teste2), 1.0);
-	Light::posicao(GL_LIGHT0, 30*sin(Input::teste2), Input::teste1 ,30*cos(Input::teste2), 1.0);
+	Light::posicao(GL_LIGHT0, Input::teste3*sin(Input::teste2), Input::teste1 ,Input::teste3*cos(Input::teste2), 1.0);
 
 	Light::ambiente(GL_LIGHT0, 1,1,1);
 	Light::difusa(GL_LIGHT0, 1,1,1);
 	
 	glPushMatrix();
 	//glTranslatef(125*sin(Input::teste2), Input::teste1 ,100 + 125*cos(Input::teste2));
-	glTranslatef(30*sin(Input::teste2), Input::teste1 ,30*cos(Input::teste2));
+	glTranslatef(Input::teste3*sin(Input::teste2), Input::teste1 ,Input::teste3*cos(Input::teste2));
 	Textura::setTextura(texLava1);
 	Figuras::desenharFigura(figEsfera,0.1, 0.1,0.1);
 	glPopMatrix();
@@ -206,7 +215,6 @@ void renderScene(void) {
 	Light::difusa(GL_LIGHT0, 0.9,0.9,0.9);
 
 
-	
 	Textura::setTextura(texMadeira);
 	//Figuras::desenharFigura(figCilindro_r2_10camadas,1,1,1);
 	//Figuras::desenharFigura(figFormaCilindricaTesteLuz,1,1,1);
@@ -228,68 +236,24 @@ void renderScene(void) {
 	//Figuras::desenharFigura(figGarrafaVinho, 0.2,0.2,0.2);
 	
 	Textura::unsetTextura();
+
 	Light::disable(GL_LIGHTING);
+
+	// ----------------
+	// escrever texto
+	// ----------------
+	Camera::setOrthographicProjection();
+	glColor3f(1,0,0);
+	glPushMatrix();
+	glLoadIdentity();
+	char texto[100];
+	sprintf(texto, "FPS: %.2f", Profiler::getFPS());
+	Camera::renderString(5,10,0,Fonts::BITMAP_HELVETICA_10,texto);
+	glPopMatrix();
+	Camera::restorePerspectiveProjection();
 
 	// End of frame
 	glutSwapBuffers();
-}
-
-
-// acções do menu de modo de desenho
-void drawModeMenuCreate(int id_op){
-	switch(id_op){
-		case 1:
-			drawMode_face = GL_FRONT;
-			drawMode_mode = GL_FILL;
-			break;
-		case 2:
-			drawMode_face = GL_FRONT;
-			drawMode_mode = GL_LINE;
-			break;
-		case 3:
-			drawMode_face = GL_FRONT;
-			drawMode_mode = GL_POINT;
-			break;
-		
-		case 4:
-			drawMode_face = GL_BACK;
-			drawMode_mode = GL_FILL;
-			break;
-		case 5:
-			drawMode_face = GL_BACK;
-			drawMode_mode = GL_LINE;
-			break;
-		case 6:
-			drawMode_face = GL_BACK;
-			drawMode_mode = GL_POINT;
-			break;
-		
-		case 7:
-			drawMode_face = GL_FRONT_AND_BACK;
-			drawMode_mode = GL_FILL;
-			break;
-		case 8:
-			drawMode_face = GL_FRONT_AND_BACK;
-			drawMode_mode = GL_LINE;
-			break;
-		case 9:
-			drawMode_face = GL_FRONT_AND_BACK;
-			drawMode_mode = GL_POINT;
-			break;
-	}
-	glutPostRedisplay(); //redesenhar
-}
-
-// acções do menu de mudar primitiva
-void primitivaMenuCreate(int id_op){
-	tipoPrimitiva = id_op;
-	glutPostRedisplay(); //redesenhar
-}
-
-// acções do menu principal
-void mainMenuCreate(int id_op){
-	
-	glutPostRedisplay(); //redesenhar
 }
 
 
@@ -301,7 +265,7 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(800,600);
-	glutCreateWindow("ProjetoCG - Sandbox");
+	glutCreateWindow("ProjetoCG - Fase 3");
 		
 
 // registo de funções 
@@ -314,35 +278,6 @@ int main(int argc, char **argv) {
 
 	// inicializar a câmara na posição: (x,y,z)
 	Camera::init(0,5,-10);
-	//Camera::init( 20, 35, 20);
-
-
-// pôr aqui a criação do menu
-	int drawModeMenuID = glutCreateMenu(drawModeMenuCreate);
-	glutAddMenuEntry("FRONT - FILL", 1);
-	glutAddMenuEntry("FRONT - LINE", 2);
-	glutAddMenuEntry("FRONT - DOT", 3);
-	glutAddMenuEntry("BACK - FILL", 4);
-	glutAddMenuEntry("BACK - LINE", 5);
-	glutAddMenuEntry("BACK - DOT", 6);
-	glutAddMenuEntry("FRONT AND BACK - FILL", 7);
-	glutAddMenuEntry("FRONT AND BACK - LINE", 8);
-	glutAddMenuEntry("FRONT AND BACK - DOT", 9);
-
-	int primitivaMenuID = glutCreateMenu(primitivaMenuCreate);
-	glutAddMenuEntry("Plano", 1);
-	glutAddMenuEntry("Cubo", 2);
-	glutAddMenuEntry("Esfera", 3);
-	glutAddMenuEntry("Cilindro", 4);
-
-	int mainMenuID = glutCreateMenu(mainMenuCreate);
-	glutAddSubMenu("Modo de preenchimento",drawModeMenuID);
-	//glutAddSubMenu("Primitiva",primitivaMenuID);
-
-	glutAttachMenu(GLUT_RIGHT_BUTTON);
-
-	glutSetMenu(mainMenuID);
-
 
 	// glew init
 	glewInit();
@@ -354,15 +289,34 @@ int main(int argc, char **argv) {
 
 	// alguns settings para OpenGL
 	glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	//glFrontFace(GL_CCW); //esquema de mão direita
 
 
 	// preparar objetos
 	Figuras::init();
+
+
+	Profiler::init();
+
+	/*
+	Profiler::start(proStartup);
+	Sleep(5000);
+	printf("passaram %d\n", Profiler::diff(proStartup));
+	Profiler::pause(proStartup);
+	Sleep(5000);
+	printf("passaram %d\n", Profiler::diff(proStartup));
+	Profiler::start(proStartup);
+	Sleep(5000);
+	printf("passaram %d\n", Profiler::diff(proStartup));*/
+
+
+
+
 	
 	// entrar no ciclo do GLUT 
 	glutMainLoop();
+	
 	
 	return 1;
 }

@@ -22,7 +22,6 @@ protected:
 	void addTextureCoord(int *indice, float x, float y);
 
 	////////////// non-static
-	bool invertTextureCoords; // trocar x e y
 	float comprimento; // altura dos solidos de revolucao
 
 	int nTriangulos; // numero de triangulos

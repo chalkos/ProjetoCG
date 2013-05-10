@@ -196,7 +196,6 @@ void Cubo::preencherVertices(){
 }
 
 Cubo::Cubo(float lado, int camadasx, int camadasy, int camadasz){
-	this->invertTextureCoords = false;
 	this->lado = lado;
 	this->camadasx = camadasx;
 	this->camadasy = camadasy;

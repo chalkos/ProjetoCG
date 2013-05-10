@@ -57,6 +57,9 @@
     <ClCompile Include="Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Profiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities.h">
@@ -95,6 +98,9 @@
     <ClInclude Include="Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Profiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texturas\madeira.png">
@@ -104,6 +110,18 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Texturas\lava1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\sol.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\folhas.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\ervas.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\relva.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

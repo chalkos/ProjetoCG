@@ -18,7 +18,6 @@ void SolidoRevolucao::preencherVertices(){
 }
 
 SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
-	this->invertTextureCoords = false;
 
 	this->pontos = 0;
 	this->fatias = detalhe;
@@ -205,7 +204,6 @@ SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
 
 	case abajour:
 		this->fechado = false;
-		this->invertTextureCoords = true;
 
 		x[i++] = 10;
 		x[i++] = 10.5;

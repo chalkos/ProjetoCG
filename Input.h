@@ -12,10 +12,12 @@ public:
 	static void keyPress(unsigned char tecla, int x, int y);
 	static void KeyUp(unsigned char tecla, int x, int y);
 
-	static void timer();
+	static void processInput();
 
 	// variável de testes
 	static float teste1;
 	static float teste2;
+	static float teste3;
+	static bool apenasLinhas;
 };
 

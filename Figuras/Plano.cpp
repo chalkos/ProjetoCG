@@ -46,7 +46,6 @@ void Plano::preencherVertices(){
 }
 
 Plano::Plano(float comprimento, int camadasx, int camadasz){
-	this->invertTextureCoords = false;
 	this->comprimento = comprimento;
 	this->camadasx = camadasx;
 	this->camadasz = camadasz;

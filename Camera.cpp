@@ -21,8 +21,45 @@ float Camera::posZ;
 float Camera::alpha;
 float Camera::beta;
 
-float Camera::passo = 0.02;
+float Camera::passo = 0.5;
 
+void Camera::renderString( float x, float y, int spacing, Fonts font, char *string) {
+	char *c;
+	int x1=x;
+
+	for (c=string; *c != '\0'; c++) {
+		glRasterPos2f(x1,y);
+		glutBitmapCharacter((void*)font, *c);
+		x1 = x1 + glutBitmapWidth((void*)font,*c) + spacing;
+	}
+}
+
+void Camera::setOrthographicProjection() {
+	// switch to projection mode
+	glMatrixMode(GL_PROJECTION);
+
+	// save previous matrix which contains the
+	//settings for the perspective projection
+	glPushMatrix();
+
+	// reset matrix
+	glLoadIdentity();
+
+	// set a 2D orthographic projection
+	gluOrtho2D(0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0);
+
+	// switch back to modelview mode
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void Camera::restorePerspectiveProjection() {
+	glMatrixMode(GL_PROJECTION);
+	// restore previous projection matrix
+	glPopMatrix();
+
+	// get back to modelview mode
+	glMatrixMode(GL_MODELVIEW);
+}
 
 void Camera::moveTo(float x, float y, float z){
 	Camera::posX = x;
@@ -45,24 +82,17 @@ void Camera::lookAt(float dx, float dy, float dz){
 }
 
 void Camera::passoMaior(){
-	if( Camera::passo > 0.5 )
-		Camera::passo += 0.1;
-	else
-		Camera::passo += 0.05;
+	Camera::passo += 0.01;
 
 	cout << "Passo: " << Camera::passo << endl;
 }
 
 void Camera::passoMenor(){
-	if( Camera::passo > 0.5 )
-		Camera::passo -= 0.1;
-	else if( Camera::passo > 0.10 )
-		Camera::passo -= 0.05;
-	else
-		Camera::passo -= 0.005;
-	
-	if( Camera::passo <= 0.01 )
-		Camera::passo = 0;
+	Camera::passo -= 0.01;
+
+	if( Camera::passo < 0 )
+		Camera::passo = 0.001;
+
 	cout << "Passo: " << Camera::passo << endl;
 }
 

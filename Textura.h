@@ -1,11 +1,18 @@
 #ifndef __TEXTURA_H_INCLUDED__
 #define __TEXTURA_H_INCLUDED__
 
+#include <GL/glut.h>
+
+#include <IL/il.h>
+
 enum TipoTextura {
 	texMadeira,
-	texMetal,
+	texFolhas,
 	texPlanetaTerra,
 	texLava1,
+	texSol,
+	texErvas,
+	texRelva,
 
 	// não alterar
 	texCOUNT_ENUM
@@ -18,7 +25,8 @@ public:
 	static void init();
 	static int getWidth(TipoTextura tipoTextura);
 	static int getHeight(TipoTextura tipoTextura);
-	static void setTextura(TipoTextura tipoTextura);
+	static void setTextura(TipoTextura tipoTextura, float sx=1, float sy=1, float graus=0); //set textura, escala e rotação
+	static void setTextura(float sx, float sy, float graus=0); //set escala e rotação
 	static void unsetTextura();
 
 	// non-static
@@ -29,10 +37,11 @@ public:
 
 private:
 	// static
-	static char **filenames;
-	static ILuint *imageIds;
 	static GLuint *textureIds;
 	static Textura *texturas;
+	static ILuint *imageIds;
+	static char **filenames;
+
 
 	// non-static
 	int t, tw, th;
