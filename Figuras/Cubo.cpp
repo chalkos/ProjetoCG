@@ -35,13 +35,13 @@ void Cubo::preencherVertices(){
 			this->addNormal(&ni,0,-1,0);
 			this->addNormal(&ni,0,-1,0);
 			
-			this->addTextureCoord(&ti, i/(float)camadasx, j/(float)camadasz);
-			this->addTextureCoord(&ti, i/(float)camadasx, (j+1)/(float)camadasz);
-			this->addTextureCoord(&ti, (i+1)/(float)camadasx, (j+1)/(float)camadasz);
+			this->addTextureCoord(&ti, 0, 0);
+			this->addTextureCoord(&ti, 0, 1);
+			this->addTextureCoord(&ti, 1, 1);
 			
-			this->addTextureCoord(&ti, (i+1)/(float)camadasx, j/(float)camadasz);
-			this->addTextureCoord(&ti, i/(float)camadasx, j/(float)camadasz);
-			this->addTextureCoord(&ti, (i+1)/(float)camadasx, (j+1)/(float)camadasz);
+			this->addTextureCoord(&ti, 1, 0);
+			this->addTextureCoord(&ti, 0, 0);
+			this->addTextureCoord(&ti, 1, 1);
 		}
 	}
 	//cima
@@ -65,13 +65,13 @@ void Cubo::preencherVertices(){
 			this->addNormal(&ni,0,1,0);
 
 			
-			this->addTextureCoord(&ti, i/(float)camadasx, j/(float)camadasz);
-			this->addTextureCoord(&ti, (i+1)/(float)camadasx, (j+1)/(float)camadasz);
-			this->addTextureCoord(&ti, i/(float)camadasx, (j+1)/(float)camadasz);
+			this->addTextureCoord(&ti, 0, 0);
+			this->addTextureCoord(&ti, 1, 1);
+			this->addTextureCoord(&ti, 0, 1);
 			
-			this->addTextureCoord(&ti, (i+1)/(float)camadasx, j/(float)camadasz);
-			this->addTextureCoord(&ti, (i+1)/(float)camadasx, (j+1)/(float)camadasz);
-			this->addTextureCoord(&ti, i/(float)camadasx, j/(float)camadasz);
+			this->addTextureCoord(&ti, 1, 0);
+			this->addTextureCoord(&ti, 1, 1);
+			this->addTextureCoord(&ti, 0, 0);
 		}
 	
 	}
@@ -96,13 +96,13 @@ void Cubo::preencherVertices(){
 			this->addNormal(&ni,0,0,1);
 			this->addNormal(&ni,0,0,1);
 
-			this->addTextureCoord(&ti, (i+1)/(float)camadasx, j/(float)camadasy);
-			this->addTextureCoord(&ti, i/(float)camadasx, j/(float)camadasy);
-			this->addTextureCoord(&ti, i/(float)camadasx, (j+1)/(float)camadasy);
+			this->addTextureCoord(&ti, 1, 0);
+			this->addTextureCoord(&ti, 0, 0);
+			this->addTextureCoord(&ti, 0, 1);
 			
-			this->addTextureCoord(&ti, (i+1)/(float)camadasx, j/(float)camadasy);
-			this->addTextureCoord(&ti, i/(float)camadasx, (j+1)/(float)camadasy);
-			this->addTextureCoord(&ti, (i+1)/(float)camadasx, (j+1)/(float)camadasy);
+			this->addTextureCoord(&ti, 1, 0);
+			this->addTextureCoord(&ti, 0, 1);
+			this->addTextureCoord(&ti, 1, 1);
 		}
 	}
 	//atras
@@ -125,13 +125,13 @@ void Cubo::preencherVertices(){
 			this->addNormal(&ni,0,0,-1);
 			this->addNormal(&ni,0,0,-1);
 
-			this->addTextureCoord(&ti, (i+1)/(float)camadasx, j/(float)camadasy);
-			this->addTextureCoord(&ti, i/(float)camadasx, (j+1)/(float)camadasy);
-			this->addTextureCoord(&ti, i/(float)camadasx, j/(float)camadasy);
+			this->addTextureCoord(&ti, 1, 0);
+			this->addTextureCoord(&ti, 0, 1);
+			this->addTextureCoord(&ti, 0, 0);
 			
-			this->addTextureCoord(&ti, (i+1)/(float)camadasx, j/(float)camadasy);
-			this->addTextureCoord(&ti, (i+1)/(float)camadasx, (j+1)/(float)camadasy);
-			this->addTextureCoord(&ti, i/(float)camadasx, (j+1)/(float)camadasy);
+			this->addTextureCoord(&ti, 1, 0);
+			this->addTextureCoord(&ti, 1, 1);
+			this->addTextureCoord(&ti, 0, 1);
 		}
 	}
 
@@ -155,13 +155,13 @@ void Cubo::preencherVertices(){
 			this->addNormal(&ni,1,0,0);
 			this->addNormal(&ni,1,0,0);
 
-			this->addTextureCoord(&ti, j/(float)camadasz, 1-i/(float)camadasy);
-			this->addTextureCoord(&ti, j/(float)camadasz, 1-(i+1)/(float)camadasy);
-			this->addTextureCoord(&ti, (j+1)/(float)camadasz, 1-(i+1)/(float)camadasy);
+			this->addTextureCoord(&ti, 0, 1);
+			this->addTextureCoord(&ti, 0, 0);
+			this->addTextureCoord(&ti, 1, 0);
 			
-			this->addTextureCoord(&ti, j/(float)camadasz, 1-i/(float)camadasy);
-			this->addTextureCoord(&ti, (j+1)/(float)camadasz, 1-(i+1)/(float)camadasy);
-			this->addTextureCoord(&ti, (j+1)/(float)camadasz, 1-i/(float)camadasy);
+			this->addTextureCoord(&ti, 0, 1);
+			this->addTextureCoord(&ti, 1, 0);
+			this->addTextureCoord(&ti, 1, 1);
 		}
 	}
 	//esquerda
@@ -184,13 +184,13 @@ void Cubo::preencherVertices(){
 			this->addNormal(&ni,-1,0,0);
 			this->addNormal(&ni,-1,0,0);
 
-			this->addTextureCoord(&ti, j/(float)camadasz, 1-i/(float)camadasy);
-			this->addTextureCoord(&ti, (j+1)/(float)camadasz, 1-(i+1)/(float)camadasy);
-			this->addTextureCoord(&ti, j/(float)camadasz, 1-(i+1)/(float)camadasy);
+			this->addTextureCoord(&ti, 0, 1);
+			this->addTextureCoord(&ti, 1, 0);
+			this->addTextureCoord(&ti, 0, 0);
 			
-			this->addTextureCoord(&ti, j/(float)camadasz, 1-i/(float)camadasy);
-			this->addTextureCoord(&ti, (j+1)/(float)camadasz, 1-i/(float)camadasy);
-			this->addTextureCoord(&ti, (j+1)/(float)camadasz, 1-(i+1)/(float)camadasy);
+			this->addTextureCoord(&ti, 0, 1);
+			this->addTextureCoord(&ti, 1, 1);
+			this->addTextureCoord(&ti, 1, 0);
 		}
 	}
 }

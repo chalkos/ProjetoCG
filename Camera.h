@@ -15,6 +15,8 @@ class Camera{
 
 private:
 	static bool modoFPS;
+	static bool frustumNeedsUpdate;
+	static bool frustumCullingEnabled;
 	
 	// posição da câmara
 	static float posX;
@@ -26,13 +28,22 @@ private:
 	static float beta;
 
 	static float passo; // tamanho de "dar um passo" numa direcção
-
 	
+	// frustum culling
+	static float dnear; //distancia ao near
+	static float dfar; //distancia ao far
+	static float fov; //fov, parametro do gluPerspective
+	static float ratio; //racio entre o comprimento e largura da janela
+	static float Wnear, Hnear; // comprimento e largura do plano near
+	static float up[3]; // vector up, como definido no gluLookAt
+	static float center[3]; // ponto para onde a câmara está apontada
+	static float frustum[]; // os 6 planos do frustum
 
 public:
 	static void init(float x, float y, float z);
 	static void lookAt();
 	static void toggleFPS();
+	static void changeSize(int w, int h);
 	
 	// movimento
 	static void moverFrente();
@@ -53,6 +64,12 @@ public:
 	static void setOrthographicProjection();
 	static void restorePerspectiveProjection();
 	static void renderString( float x, float y, int spacing, Fonts font, char *string);
+
+	//frustum culling
+	static void updateFrustum();
+	static bool pointInFrustum(float x, float y, float z);
+	static bool pointInFrustum(float *p);
+	static void toggleFrustumCulling();
 	
 };
 

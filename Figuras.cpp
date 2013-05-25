@@ -30,6 +30,9 @@ void Figuras::init(){
 
 	objetos[figCubo_10_5camadas] = Cubo(10,5,5,5);
 	objetos[figCilindro_r2_10camadas] = Cilindro(2,10,10,10);
+	
+	objetos[figMesaPerna] = Cubo(10, 1, 5, 1);
+	objetos[figMesaTampo] = Cubo(10, 2, 1, 1);
 
 	objetos[figTesteLuz] = SolidoRevolucao(testeLuz, 3);//Cilindro(10,60,150,150);//Esfera(10,30,30);
 	objetos[figFormaCilindricaTesteLuz] = SolidoRevolucao(cilindrotesteLuz, 30);
@@ -43,7 +46,6 @@ void Figuras::init(){
 	objetos[figCilindro_BaseDeCandeeiroDePe] = Cilindro(8,0.5,15,1);
 	objetos[figCilindro_TroncoDeCandeeiroDePe] = Cilindro(1,30.5,8,15);
 	objetos[figCilindro_SuporteDeAbajourDeCandeeiroDePe] = Cilindro(0.2,20,8, 20);
-
 
 	// definição de propriedades do material
 	// "sol"
@@ -192,40 +194,41 @@ void Figuras::desenharMesaEsplanada(){
 }
 
 void Figuras::desenharMesaRectangular(){
-	glColor3f(0.1,0.7,0.1);
 	//tampo
 	glPushMatrix();
 	glTranslatef(0,5.5,0);
 	glScalef(2,0.1,1);
-	objetos[figCubo_10_5camadas].desenhar();
+	objetos[figMesaTampo].desenhar();
 	glPopMatrix();
 
-	
-	glColor3f(0.4,0.7,0);
 	//pernas
-	glPushMatrix();
-	glScalef(0.1,0.5,0.1);
-	glTranslatef(90,5,40);
-	objetos[figCubo_10_5camadas].desenhar();
-	glPopMatrix();
+	Textura::setTextura(0.4, 1);
 
-	glPushMatrix();
-	glScalef(0.1,0.5,0.1);
-	glTranslatef(-90,5,-40);
-	objetos[figCubo_10_5camadas].desenhar();
-	glPopMatrix();
+		glPushMatrix();
+		glScalef(0.1,0.5,0.1);
+		glTranslatef(90,5,40);
+		objetos[figMesaPerna].desenhar();
+		glPopMatrix();
 
-	glPushMatrix();
-	glScalef(0.1,0.5,0.1);
-	glTranslatef(90,5,-40);
-	objetos[figCubo_10_5camadas].desenhar();
-	glPopMatrix();
+		glPushMatrix();
+		glScalef(0.1,0.5,0.1);
+		glTranslatef(-90,5,-40);
+		objetos[figMesaPerna].desenhar();
+		glPopMatrix();
 
-	glPushMatrix();
-	glScalef(0.1,0.5,0.1);
-	glTranslatef(-90,5,40);
-	objetos[figCubo_10_5camadas].desenhar();
-	glPopMatrix();
+		glPushMatrix();
+		glScalef(0.1,0.5,0.1);
+		glTranslatef(90,5,-40);
+		objetos[figMesaPerna].desenhar();
+		glPopMatrix();
+
+		glPushMatrix();
+		glScalef(0.1,0.5,0.1);
+		glTranslatef(-90,5,40);
+		objetos[figMesaPerna].desenhar();
+		glPopMatrix();
+	
+	Textura::setTextura(1, 1);
 
 	glColor3f(0,0.7,0.4);
 	//barras laterias

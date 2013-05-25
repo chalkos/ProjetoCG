@@ -74,6 +74,9 @@ Textura::Textura(TipoTextura tipoTextura){
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->getWidth(), this->getHeight(), 0, 
 		GL_RGBA, GL_UNSIGNED_BYTE, this->imageData);
+	
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, this->getWidth(), this->getHeight(),
+		GL_RGBA, GL_UNSIGNED_BYTE, this->imageData);
 }
 
 int Textura::getWidth(){

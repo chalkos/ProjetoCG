@@ -55,13 +55,17 @@ void Input::keyPress(unsigned char tecla, int x, int y){
 	if(tecla == 32)
 		Camera::toggleFPS();
 
-
+	
 	if(tecla == 'z' || tecla == 'Z'){
 		apenasLinhas = !apenasLinhas;
 		if( apenasLinhas )
 			glDisable(GL_CULL_FACE);
 		else
 			glEnable(GL_CULL_FACE);
+	}
+
+	if(tecla == 'x' || tecla == 'X'){
+		Camera::toggleFrustumCulling();
 	}
 	
 	

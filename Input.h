@@ -1,3 +1,6 @@
+#ifndef __INPUT_H_INCLUDED__
+#define __INPUT_H_INCLUDED__
+
 class Input{
 private:
 	static bool keyDown[256];
@@ -21,3 +24,4 @@ public:
 	static bool apenasLinhas;
 };
 
+#endif // __INPUT_H_INCLUDED__

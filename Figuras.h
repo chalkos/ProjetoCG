@@ -22,6 +22,13 @@ enum indiceFiguras {
 	figCubo_10_5camadas,
 	figCilindro_r2_10camadas,
 
+	// mesa
+	figMesaPerna,
+	figMesaReforçoComprido,
+	figMesaReforçoCurto,
+	figMesaTampo,
+	
+
 	// testes luz e amostras
 	figTesteLuz,
 	figFormaCilindricaTesteLuz,

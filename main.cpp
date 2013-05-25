@@ -13,6 +13,7 @@
  *	[-] - reduzir a velocidade de movimento
  *
  *	 Z  - alternar entre ver apenas_linhas / texturas
+ *   X  - activar/desactivar Frustum Culling
  *
  *	ESC - sair da aplicação
  ****************************************************************/
@@ -40,34 +41,6 @@
 int tipoPrimitiva = 3;
 
 float teste = 0;
-
-
-void changeSize(int w, int h) {
-
-	// Prevent a divide by zero, when window is too short
-	// (you cant make a window with zero width).
-	if(h == 0)
-		h = 1;
-
-	// compute window's aspect ratio 
-	float ratio = w * 1.0 / h;
-
-	// Set the projection matrix as current
-	glMatrixMode(GL_PROJECTION);
-
-	// Load Identity Matrix
-	glLoadIdentity();
-	
-	// Set the viewport to be the entire window
-    glViewport(0, 0, w, h);
-
-	// Set perspective
-	gluPerspective(60.0f , ratio, 0.1f ,400.0f);
-	//gluPerspective (60, ratio, 0.01 , 100.0); //set the perspective (angle of sight, width, height, ,depth)
-
-	// return to the model view matrix mode
-	glMatrixMode(GL_MODELVIEW);
-}
 
 void desenharMontra(){
 	
@@ -235,6 +208,8 @@ void renderScene(void) {
 	//Figuras::desenharCopoChampanhe();
 	//Figuras::desenharFigura(figPlano, 1,1,1);
 
+	//Figuras::desenharFigura(figMesaPerna, 1, 5, 1);
+
 	desenharMontra();
 
 	//Figuras::desenharFigura(figCubo_10_5camadas,1,1,1);
@@ -277,7 +252,7 @@ int main(int argc, char **argv) {
 // registo de funções 
 	glutDisplayFunc(renderScene);
 	glutIdleFunc(renderScene);
-	glutReshapeFunc(changeSize);
+	glutReshapeFunc(Camera::changeSize);
 
 // pôr aqui registo da funções do teclado e rato
 	Input::init();
