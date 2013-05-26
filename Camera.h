@@ -1,6 +1,8 @@
 #ifndef __CAMERA_H_INCLUDED__
 #define __CAMERA_H_INCLUDED__
 
+#include "Vec3.h"
+
 enum Fonts {
 	BITMAP_8_BY_13 = (int)GLUT_BITMAP_8_BY_13,
 	BITMAP_9_BY_15 = (int)GLUT_BITMAP_9_BY_15,
@@ -15,13 +17,9 @@ class Camera{
 
 private:
 	static bool modoFPS;
-	static bool frustumNeedsUpdate;
-	static bool frustumCullingEnabled;
 	
 	// posição da câmara
-	static float posX;
-	static float posY;
-	static float posZ;
+	static Vec3 pos;
 
 	// orientação horizontal e vertical
 	static float alpha;
@@ -34,10 +32,8 @@ private:
 	static float dfar; //distancia ao far
 	static float fov; //fov, parametro do gluPerspective
 	static float ratio; //racio entre o comprimento e largura da janela
-	static float Wnear, Hnear; // comprimento e largura do plano near
-	static float up[3]; // vector up, como definido no gluLookAt
-	static float center[3]; // ponto para onde a câmara está apontada
-	static float frustum[]; // os 6 planos do frustum
+	static Vec3 up; // vector up, como definido no gluLookAt
+	static Vec3 center; // ponto para onde a câmara está apontada
 
 public:
 	static void init(float x, float y, float z);
@@ -65,11 +61,6 @@ public:
 	static void restorePerspectiveProjection();
 	static void renderString( float x, float y, int spacing, Fonts font, char *string);
 
-	//frustum culling
-	static void updateFrustum();
-	static bool pointInFrustum(float x, float y, float z);
-	static bool pointInFrustum(float *p);
-	static void toggleFrustumCulling();
 	
 };
 

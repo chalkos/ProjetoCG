@@ -1,8 +1,8 @@
-#include <glew.h>
-#include <GL/glut.h>
-
 #ifndef __LIGHT_H_INCLUDED__
 #define __LIGHT_H_INCLUDED__
+
+#include <glew.h>
+#include <GL/glut.h>
 
 class Light{
 public:

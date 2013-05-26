@@ -10,6 +10,7 @@ using namespace std;
 
 #include "Input.h"
 #include "Camera.h"
+#include "Frustum.h"
 
 
 
@@ -65,7 +66,7 @@ void Input::keyPress(unsigned char tecla, int x, int y){
 	}
 
 	if(tecla == 'x' || tecla == 'X'){
-		Camera::toggleFrustumCulling();
+		Frustum::toggleFrustumCulling();
 	}
 	
 	
