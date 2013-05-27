@@ -32,6 +32,7 @@ void Textura::init(){
 	strcpy( Textura::filenames[texRelva], "Texturas/relva.png" );
 	strcpy( Textura::filenames[texShinyMetal], "Texturas/shinyMetal.png" );
 	strcpy( Textura::filenames[texShinyBrushedMetal], "Texturas/shinyBrushedMetal.png" );
+	strcpy( Textura::filenames[texParedePedra], "Texturas/paredePedra.png" );
 
 	// gerar identificadores de imagem
 	Textura::imageIds = (ILuint*)malloc(sizeof(ILuint) * texCOUNT_ENUM);

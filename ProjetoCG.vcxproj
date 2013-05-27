@@ -95,6 +95,7 @@
     <ClCompile Include="Figuras\Cilindro.cpp" />
     <ClCompile Include="Figuras\Cubo.cpp" />
     <ClCompile Include="Figuras\Esfera.cpp" />
+    <ClCompile Include="Figuras\Complexo.cpp" />
     <ClCompile Include="Figuras\Plano.cpp" />
     <ClCompile Include="Figuras\SolidoRevolucao.cpp" />
     <ClCompile Include="Frustum.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Figuras\Cilindro.h" />
     <ClInclude Include="Figuras\Cubo.h" />
     <ClInclude Include="Figuras\Esfera.h" />
+    <ClInclude Include="Figuras\Complexo.h" />
     <ClInclude Include="Figuras\Plano.h" />
     <ClInclude Include="Figuras\SolidoRevolucao.h" />
     <ClInclude Include="Frustum.h" />
@@ -137,6 +139,10 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
     </Image>
     <Image Include="Texturas\madeira.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+    </Image>
+    <Image Include="Texturas\paredePedra.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
     </Image>

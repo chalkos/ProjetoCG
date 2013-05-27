@@ -72,6 +72,9 @@
     <ClCompile Include="BoundingVolume.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Figuras\Complexo.cpp">
+      <Filter>Figuras</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities.h">
@@ -125,6 +128,9 @@
     <ClInclude Include="BoundingVolume.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Figuras\Complexo.h">
+      <Filter>Figuras</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texturas\madeira.png">
@@ -152,6 +158,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Texturas\shinyBrushedMetal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\paredePedra.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

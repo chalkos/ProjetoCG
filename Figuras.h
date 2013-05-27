@@ -3,44 +3,17 @@
 
 #include "Figuras\CG_OBJ.h"
 
+#define u 10 // undidade
+#define m 5 // metade
+#define q 2.5 // um quarto
+#define o 1.25 // um oitavo
+#define p 0.01 // distancia pequena
+
 enum indiceFiguras {
-	// paredes
-	figParedes,
-	figParedeChao,
-	figParedeLado,
-	figParedeFrente,
-
-	// objetos simples (formados por apenas uma figura)
-	figMesaRedonda,
-	figGarrafaVinho,
-	figCandeeiroSuspenso,
-	figCopoChampanhe,
-	figCopoSimples,
-	figCopoVinho,
-
-	// mesa e cadeiras
-	figCubo_10_5camadas,
-	figCilindro_r2_10camadas,
-
-	// mesa
-	figMesaPerna,
-	figMesaReforçoComprido,
-	figMesaReforçoCurto,
-	figMesaTampo,
+	figParedePedra,
+	figRelva,
 	
-
-	// testes luz e amostras
-	figTesteLuz,
-	figFormaCilindricaTesteLuz,
-	figPlano,
 	figEmissorLuz,
-
-	// necessárias para o candeeiro de pe
-	figAbajourParaCandeeiroDePe,
-	figCilindro_BaseDeCandeeiroDePe,
-	figCilindro_TroncoDeCandeeiroDePe,
-	figCilindro_SuporteDeAbajourDeCandeeiroDePe,
-
 
 	// não acrescentar nada depois deste elemento
 	figCOUNT_ENUM
@@ -53,20 +26,10 @@ private:
 public:
 	static void init();
 	static void desenharFigura(int indice, float scaleX, float scaleY, float scaleZ);
-
-	static void desenharParedes();
-	static void desenharCopoChampanhe();
-	static void desenharCopoSimples();
-	static void desenharCopoVinho();
-	static void desenharGarrafaVinho();
-	static void desenharMesaRectangular();
-	static void desenharMesaEsplanada();
-	static void desenharMesaRedonda();
-	static void desenharCadeiraSimples();
-	static void desenharCadeiraBalcao();
-	static void desenharCandeeiroSuspenso();
-	static void desenharCandeeiroPe();
+	
 	static void desenharEmissorLuz();
+	//static void desenhar
+	static void desenharParedePedra();
 };
 
 

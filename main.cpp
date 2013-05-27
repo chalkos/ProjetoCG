@@ -42,110 +42,6 @@ int tipoPrimitiva = 3;
 
 float teste = 0;
 
-void desenharMontra(){
-	
-	Textura::setTextura(texRelva);
-	glPushMatrix();
-	glScalef(1,0.33,1);
-	Figuras::desenharParedes();
-	glPopMatrix();
-
-	Textura::setTextura(texMadeira);
-	glPushMatrix();
-	glTranslatef(0, 250*0.33, 25);
-	Figuras::desenharCandeeiroSuspenso();
-	glPopMatrix();
-	
-	glPushMatrix();
-	glTranslatef(0, 0, 50);
-	Figuras::desenharCandeeiroPe();
-	glPopMatrix();
-	
-	glPushMatrix();
-	glTranslatef(20, 0, 50);
-	glScalef(4,4,4);
-	Figuras::desenharCadeiraSimples();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(-20, 0, 50);
-	glScalef(4,4,4);
-	Figuras::desenharCadeiraBalcao();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(60, 0, 50);
-	glScalef(3,3,3);
-	Figuras::desenharMesaRectangular();
-	glPopMatrix();
-
-	// set de copos de champanhe
-	Textura::setTextura(texShinyBrushedMetal);
-	glPushMatrix();
-	glTranslatef(60, 0, 50);
-	glScalef(3,3,3);
-	glTranslatef(0,6,0);
-	Figuras::desenharCopoChampanhe(); //meio centro
-	glTranslatef(-4,0,0);
-	Figuras::desenharCopoChampanhe(); //direita
-	glTranslatef(8,0,0);
-	Figuras::desenharCopoChampanhe(); //esquerda
-	glTranslatef(-4,0,-2);
-	Figuras::desenharCopoChampanhe(); //perto centro
-	glTranslatef(-4,0,0);
-	Figuras::desenharCopoChampanhe(); //direita
-	glTranslatef(8,0,0);
-	Figuras::desenharCopoChampanhe(); //esquerda
-	glTranslatef(-4,0,4);
-	Figuras::desenharCopoChampanhe(); //longe centro
-	glTranslatef(-4,0,0);
-	Figuras::desenharCopoChampanhe(); //direita
-	glTranslatef(8,0,0);
-	Figuras::desenharCopoChampanhe(); //esquerda
-	glTranslatef(4,0,-2);
-	glPopMatrix();
-	
-	Textura::setTextura(texMadeira);
-	glPushMatrix();
-	glTranslatef(-60, 0, 30);
-	glScalef(6,6,6);
-	Figuras::desenharMesaRedonda();
-	glPopMatrix();
-	
-	Textura::setTextura(texShinyBrushedMetal);
-	glPushMatrix();
-	glTranslatef(-60, 4*6, 30);
-	Figuras::desenharCopoVinho();
-	glTranslatef(6,0,0);
-	Figuras::desenharCopoVinho();
-	glTranslatef(-12,0,0);
-	Figuras::desenharCopoVinho();
-	glTranslatef(6,0,6);
-	glScalef(1.4,1.4,1.4);
-	Figuras::desenharGarrafaVinho();
-	glPopMatrix();
-	
-	Textura::setTextura(texMadeira);
-	glPushMatrix();
-	glTranslatef(-60, 0, -30);
-	glScalef(6,6,6);
-	Figuras::desenharMesaEsplanada();
-	glPopMatrix();
-
-	glPushMatrix();
-	Textura::setTextura(texShinyBrushedMetal);
-	glTranslatef(-60, 4.1*6, -30);
-	Figuras::desenharCopoSimples();
-	glTranslatef(6,0,0);
-	Figuras::desenharCopoSimples();
-	glTranslatef(-12,0,0);
-	Figuras::desenharCopoSimples();
-	glTranslatef(6,0,6);
-	glScalef(1.4,1.4,1.4);
-	Figuras::desenharGarrafaVinho();
-	glPopMatrix();
-}
-
 void renderScene(void) {
 	Profiler::startFrame();
 	
@@ -171,7 +67,10 @@ void renderScene(void) {
 		// activou o culling na classe Input
 		glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 	}
+	
+	glColor3f(1,1,1);
 
+	/*
 	// ligar e posicionar as luzes
 	Light::enable(GL_LIGHTING);
 	Light::enable(GL_LIGHT0);
@@ -182,43 +81,20 @@ void renderScene(void) {
 	//Light::posicao(GL_LIGHT0, 125*sin(Input::teste2), Input::teste1 ,110 + 125*cos(Input::teste2), 1.0);
 	Light::posicao(GL_LIGHT0, Input::teste3*sin(Input::teste2), Input::teste1 ,Input::teste3*cos(Input::teste2), 1.0);
 	
+	
 	glPushMatrix();
 	//glTranslatef(125*sin(Input::teste2), Input::teste1 ,100 + 125*cos(Input::teste2));
 	glTranslatef(Input::teste3*sin(Input::teste2), Input::teste1 ,Input::teste3*cos(Input::teste2));
 	Textura::setTextura(texLava1);
 	Figuras::desenharEmissorLuz();
 	glPopMatrix();
-	
+	*/
 
-	//double sided light
-	//glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-	
-
-	Textura::setTextura(texMadeira);
-	//Figuras::desenharFigura(figCilindro_r2_10camadas,1,1,1);
-	//Figuras::desenharFigura(figFormaCilindricaTesteLuz,1,1,1);
-	//Figuras::desenharFigura(figTesteLuz, 1,1,1);
-	//Figuras::desenharFigura(figCopoVinho, 0.03,0.03,0.03);
-	//Figuras::desenharMesaRedonda();
-	//Figuras::desenharGarrafaVinho();
-	//Figuras::desenharCandeeiroSuspenso();
-	//Figuras::desenharFigura(figAbajourParaCandeeiroDePe, 1,1,1);
-	//Figuras::desenharCandeeiroPe();
-	//Figuras::desenharCopoSimples();
-	//Figuras::desenharCopoChampanhe();
-	//Figuras::desenharFigura(figPlano, 1,1,1);
-
-	//Figuras::desenharFigura(figMesaPerna, 1, 5, 1);
-
-	desenharMontra();
-
-	//Figuras::desenharFigura(figCubo_10_5camadas,1,1,1);
-	//Figuras::desenharFigura(figEsfera,1,1,1);
-	//Figuras::desenharFigura(figGarrafaVinho, 0.2,0.2,0.2);
+	Figuras::desenharParedePedra();
 	
 	Textura::unsetTextura();
 
-	Light::disable(GL_LIGHTING);
+	//Light::disable(GL_LIGHTING);
 
 	// ----------------
 	// escrever texto
@@ -246,7 +122,7 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(800,600);
-	glutCreateWindow("ProjetoCG - Fase 3");
+	glutCreateWindow("ProjetoCG - Bar");
 		
 
 // registo de funções 
@@ -258,7 +134,7 @@ int main(int argc, char **argv) {
 	Input::init();
 
 	// inicializar a câmara na posição: (x,y,z)
-	Camera::init(0,5,-10);
+	Camera::init(-4, 5, -4);
 
 	// glew init
 	glewInit();
