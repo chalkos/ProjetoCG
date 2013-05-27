@@ -24,13 +24,16 @@ Complexo::Complexo( tipoComplexo t ){
 			+ 2*6*2 // parede2
 			+ 2*6*2 // parede3
 			+ 2*2 // parede4
-			+ 2*8 // parede5
+			+ 2*4 // parede5
+			+ 2*6 // parede6
 			;
 		break;
 	}
 
 	this->guardarOBJ( n );
 }
+
+
 
 void Complexo::vParedePedra(){
 	int vi = 0;
@@ -42,7 +45,6 @@ void Complexo::vParedePedra(){
 #pragma region parede1
 	this->addVertex(&vi, -o, 0, o, -o, a, o, -o, a, -u*4);
 	this->addVertex(&vi, -o, 0, o, -o, a, -u*4, -o, 0, -u*4);
-	
 	this->addVertex(&vi, o, 0, -u*4, o, a, -u*4, o, a, -o);
 	this->addVertex(&vi, o, 0, -u*4, o, a, -o, o, 0, -o);
 			
@@ -59,7 +61,6 @@ void Complexo::vParedePedra(){
 	for(int i=8; i<36; i+=4){
 		this->addVertex(&vi, -o, 0, -u*i, -o, a, -u*i, -o, a, -u*(i+4));
 		this->addVertex(&vi, -o, 0, -u*i, -o, a, -u*(i+4), -o, 0, -u*(i+4));
-		
 		this->addVertex(&vi, o, 0, -u*(i+4), o, a, -u*(i+4), o, a, -u*i);
 		this->addVertex(&vi, o, 0, -u*(i+4), o, a, -u*i, o, 0, -u*i);
 			
@@ -76,7 +77,6 @@ void Complexo::vParedePedra(){
 	
 	this->addVertex(&vi, -o, 0, -u*36, -o, a, -u*36, -o, a, -u*40-o);
 	this->addVertex(&vi, -o, 0, -u*36, -o, a, -u*40-o, -o, 0, -u*40-o);
-		
 	this->addVertex(&vi, o, 0, -u*40+o, o, a, -u*40+o, o, a, -u*36);
 	this->addVertex(&vi, o, 0, -u*40+o, o, a, -u*36, o, 0, -u*36);
 			
@@ -218,8 +218,8 @@ void Complexo::vParedePedra(){
 	this->addTextureCoord(&ti, 1, 1.5, 0, 0, 0, 1.5);
 #pragma endregion parede4
 
-	// 8 triangulos para a parede comprida da casa de banho feminina
-	// mais 8 triangulos para a parte interior dessa parede
+	// 4 triangulos para a parede comprida da casa de banho feminina
+	// mais 4 triangulos para a parte interior dessa parede
 #pragma region parede5
 	this->addVertex(&vi,
 		24*u+o, 0, -36*u-o,
@@ -280,5 +280,53 @@ void Complexo::vParedePedra(){
 
 #pragma endregion parede5
 
+	// 6 triangulos para a parede do fundo da casa de banho feminina
+	// mais 6 triangulos para a parte interior dessa parede
+#pragma region parede6
+	// parede exterior
+	addVertex(&vi, 38*u+o, 0, -36*u-o, 38*u+o, a, -36*u-o, 38*u+o, a, -30*u);
+	addVertex(&vi, 38*u+o, 0, -36*u-o, 38*u+o, a, -30*u, 38*u+o, 0, -30*u);
+	addNormal(&ni, 1,0,0, 1,0,0, 1,0,0);
+	addNormal(&ni, 1,0,0, 1,0,0, 1,0,0);
+	addTextureCoord(&ti, 12.5,1.5, 12.5,0, 11,0);
+	addTextureCoord(&ti, 12.5,1.5, 11,0, 11,1.5);
+	
+	addVertex(&vi, 38*u+o, 0, -30*u, 38*u+o, a, -30*u, 38*u+o, a, -24*u);
+	addVertex(&vi, 38*u+o, 0, -30*u, 38*u+o, a, -24*u, 38*u+o, 0, -24*u);
+	addNormal(&ni, 1,0,0, 1,0,0, 1,0,0);
+	addNormal(&ni, 1,0,0, 1,0,0, 1,0,0);
+	addTextureCoord(&ti, 11,1.5, 11,0, 9.5,0);
+	addTextureCoord(&ti, 11,1.5, 9.5,0, 9.5,1.5);
+	
+	addVertex(&vi, 38*u+o, 0, -24*u, 38*u+o, a, -24*u, 38*u+o, a, -18*u+o);
+	addVertex(&vi, 38*u+o, 0, -24*u, 38*u+o, a, -18*u+o, 38*u+o, 0, -18*u+o);
+	addNormal(&ni, 1,0,0, 1,0,0, 1,0,0);
+	addNormal(&ni, 1,0,0, 1,0,0, 1,0,0);
+	addTextureCoord(&ti, 9.5,1.5, 9.5,0, 8,0);
+	addTextureCoord(&ti, 9.5,1.5, 8,0, 8,1.5);
 
+	// parede interior
+	addVertex(&vi, 38*u-o, 0, -30*u, 38*u-o, a, -30*u, 38*u-o, a, -36*u+o);
+	addVertex(&vi, 38*u-o, 0, -30*u, 38*u-o, a, -36*u+o, 38*u-o, 0, -36*u+o);
+	addNormal(&ni, -1,0,0, -1,0,0, -1,0,0);
+	addNormal(&ni, -1,0,0, -1,0,0, -1,0,0);
+	addTextureCoord(&ti, 11,1.5, 11,0, 12.5,0);
+	addTextureCoord(&ti, 11,1.5, 12.5,0, 12.5,1.5);
+	
+	addVertex(&vi, 38*u-o, 0, -24*u, 38*u-o, a, -24*u, 38*u-o, a, -30*u);
+	addVertex(&vi, 38*u-o, 0, -24*u, 38*u-o, a, -30*u, 38*u-o, 0, -30*u);
+	addNormal(&ni, -1,0,0, -1,0,0, -1,0,0);
+	addNormal(&ni, -1,0,0, -1,0,0, -1,0,0);
+	addTextureCoord(&ti, 9.5,1.5, 9.5,0, 11,0);
+	addTextureCoord(&ti, 9.5,1.5, 11,0, 11,1.5);
+	
+	addVertex(&vi, 38*u-o, 0, -18*u-o, 38*u-o, a, -18*u-o, 38*u-o, a, -24*u);
+	addVertex(&vi, 38*u-o, 0, -18*u-o, 38*u-o, a, -24*u, 38*u-o, 0, -24*u);
+	addNormal(&ni, -1,0,0, -1,0,0, -1,0,0);
+	addNormal(&ni, -1,0,0, -1,0,0, -1,0,0);
+	addTextureCoord(&ti, 8,1.5, 8,0, 9.5,0);
+	addTextureCoord(&ti, 8,1.5, 9.5,0, 9.5,1.5);
+#pragma endregion parede6
+
+	
 }
