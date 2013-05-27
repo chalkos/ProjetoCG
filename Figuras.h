@@ -3,6 +3,7 @@
 
 #include "Figuras\CG_OBJ.h"
 
+#define a 60 // altura das paredes (6*u)
 #define u 10 // undidade
 #define m 5 // metade
 #define q 2.5 // um quarto

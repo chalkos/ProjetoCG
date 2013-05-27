@@ -46,6 +46,24 @@ void CG_OBJ::addTextureCoord(int *indice, float x, float y){
 	textureB[(*indice)++] = y;
 }
 
+void CG_OBJ::addVertex(int *indice, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3){
+	addVertex( indice, x1, y1, z1);
+	addVertex( indice, x2, y2, z2);
+	addVertex( indice, x3, y3, z3);
+}
+
+void CG_OBJ::addNormal(int *indice, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3){
+	addNormal( indice, x1, y1, z1);
+	addNormal( indice, x2, y2, z2);
+	addNormal( indice, x3, y3, z3);
+}
+
+void CG_OBJ::addTextureCoord(int *indice, float x1, float y1, float x2, float y2, float x3, float y3){
+	addTextureCoord( indice, x1, y1);
+	addTextureCoord( indice, x2, y2);
+	addTextureCoord( indice, x3, y3);
+}
+
 void CG_OBJ::guardarOBJ(int nTriangulos){
 	// escolher o buffer
 	this->bufferPos = CG_OBJ::nBuffers;

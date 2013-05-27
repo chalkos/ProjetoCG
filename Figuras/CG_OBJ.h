@@ -20,6 +20,10 @@ protected:
 	void addVertex(int *indice, float x, float y, float z);
 	void addNormal(int *indice, float x, float y, float z);
 	void addTextureCoord(int *indice, float x, float y);
+	
+	void addVertex(int *indice, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3);
+	void addNormal(int *indice, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3);
+	void addTextureCoord(int *indice, float x1, float y1, float x2, float y2, float x3, float y3);
 
 	////////////// non-static
 	float comprimento; // altura dos solidos de revolucao
