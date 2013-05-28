@@ -5,6 +5,8 @@
 
 enum tipoComplexo {
 	complexoParedePedra,
+	complexoMadeiraVertical,
+	complexoMadeiraHorizontal,
 };
 
 class Complexo : public CG_OBJ {
@@ -17,6 +19,8 @@ protected:
 
 	///////////////////// os vários modelos
 	void vParedePedra();
+	void vMadeiraHorizontal();
+	void vMadeiraVertical();
 
 public:
 	Complexo(tipoComplexo t);
