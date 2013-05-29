@@ -8,7 +8,7 @@ private:
 public:
 	Vec3();
 	Vec3(Vec3 *elem);
-	Vec3(float a, float b, float c);
+	Vec3(float A, float B, float C);
 	Vec3(float *vec);
 	Vec3 clone();
 	

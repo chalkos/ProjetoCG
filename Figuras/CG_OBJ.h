@@ -5,6 +5,8 @@
 #include <glew.h>
 #include <GL/glut.h>
 
+#include "../Vec3.h"
+
 
 /*
 TODO:
@@ -46,8 +48,8 @@ protected:
 	virtual void preencherVertices();
 
 	// preenche o array de vértices de acordo com coordenadas XY e faz um sólido de revolução
-	void revolutionSolidClose(float *x, float *y, int count, int fatias);
-	void revolutionSolidOpen(float *x, float *y, int count, int fatias);
+	void revolutionSolidClose(float *x, float *y, int count, int fatias, Vec3 pos = Vec3(0,0,0), bool texLimites = false);
+	void revolutionSolidOpen(float *x, float *y, int count, int fatias, Vec3 pos = Vec3(0,0,0));
 
 	// várias propriedades
 	float *emissiva;

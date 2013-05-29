@@ -118,7 +118,7 @@ void CG_OBJ::prepararBuffer(int maxBuffers){
 	glGenBuffers(CG_OBJ::maxBuffers, CG_OBJ::buffers);
 }
 
-void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias){
+void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec3 pos, bool texLimites){
 	float delta = 2 * M_PI / fatias;
 	
 	int vi = 0;
@@ -147,17 +147,23 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias){
 		alpha = delta * fatia;
 		alphaDelta = delta * (fatia+1);
 
-		this->addVertex(&vi,x[ri],y[ri],0);
-		this->addVertex(&vi,x[ri+1] * sin(alphaDelta), y[ri+1], x[ri+1] * cos(alphaDelta));
-		this->addVertex(&vi,x[ri+1] * sin(alpha), y[ri+1], x[ri+1] * cos(alpha));
+		this->addVertex(&vi,pos.X() + x[ri],pos.Y() + y[ri],pos.Z());
+		this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
+		this->addVertex(&vi,pos.X() + x[ri+1] * sin(alpha), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alpha));
 		
 		this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
 		this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));
 		this->addNormal(&ni, difSX * sin(alpha), difSY, difSX * cos(alpha));
 
-		this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmp/comprimento);
-		this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
-		this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmpNext/comprimento);
+		if( texLimites ){
+			this->addTextureCoord(&ti, 0.5, 0.5);
+			this->addTextureCoord(&ti, 0.5 + 0.5*cos(alpha), 0.5 + 0.5*sin(alpha));
+			this->addTextureCoord(&ti, 0.5 + 0.5*cos(alphaDelta), 0.5 + 0.5*sin(alphaDelta));
+		}else{
+			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmp/comprimento);
+			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
+			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmpNext/comprimento);
+		}
 	}
 
 
@@ -177,9 +183,9 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias){
 			alphaDelta = delta * (fatia+1);
 			
 
-			this->addVertex(&vi,x[ri] * sin(alpha), y[ri], x[ri] * cos(alpha));
-			this->addVertex(&vi,x[ri+1] * sin(alphaDelta), y[ri+1], x[ri+1] * cos(alphaDelta));
-			this->addVertex(&vi,x[ri+1] * sin(alpha), y[ri+1], x[ri+1] * cos(alpha));
+			this->addVertex(&vi,pos.X() + x[ri] * sin(alpha), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alpha));
+			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
+			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alpha), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alpha));
 			
 			this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
 			this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));
@@ -189,17 +195,17 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias){
 			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
 			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmpNext/comprimento);
 			
-			this->addVertex(&vi,x[ri] * sin(alphaDelta), y[ri], x[ri] * cos(alphaDelta));
-			this->addVertex(&vi,x[ri+1] * sin(alphaDelta), y[ri+1], x[ri+1] * cos(alphaDelta));
-			this->addVertex(&vi,x[ri] * sin(alpha), y[ri], x[ri] * cos(alpha));
+			this->addVertex(&vi,pos.X() + x[ri] * sin(alphaDelta), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alphaDelta));
+			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
+			this->addVertex(&vi,pos.X() + x[ri] * sin(alpha), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alpha));
 			
 			this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alphaDelta));
 			this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));
 			this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
 			
-			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmp/comprimento);
-			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
-			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmp/comprimento);
+			this->addTextureCoord(&ti, 0, 0);
+			this->addTextureCoord(&ti, 0, 0);
+			this->addTextureCoord(&ti, 0, 0);
 		}
 
 	}
@@ -220,21 +226,28 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias){
 		alpha = delta * fatia;
 		alphaDelta = delta * (fatia+1);
 
-			this->addVertex(&vi,x[ri],y[ri],0);
-			this->addVertex(&vi,x[ri-1] * sin(alpha), y[ri-1], x[ri-1] * cos(alpha));
-			this->addVertex(&vi,x[ri-1] * sin(alphaDelta), y[ri-1], x[ri-1] * cos(alphaDelta));
+			this->addVertex(&vi,pos.X() + x[ri],pos.Y() + y[ri],pos.Z());
+			this->addVertex(&vi,pos.X() + x[ri-1] * sin(alpha), pos.Y() + y[ri-1], pos.Z() + x[ri-1] * cos(alpha));
+			this->addVertex(&vi,pos.X() + x[ri-1] * sin(alphaDelta), pos.Y() + y[ri-1], pos.Z() + x[ri-1] * cos(alphaDelta));
 		
 			this->addNormal(&ni, difSX * sin(alpha), difSY, difSX * cos(alpha));
 			this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
 			this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alphaDelta));
 
-			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmp/comprimento);
-			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmpNext/comprimento);
-			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
+
+			if( texLimites ){
+				this->addTextureCoord(&ti, 0.5, 0.5);
+				this->addTextureCoord(&ti, 0.5 + 0.5*cos(alpha), 0.5 + 0.5*sin(alpha));
+				this->addTextureCoord(&ti, 0.5 + 0.5*cos(alphaDelta), 0.5 + 0.5*sin(alphaDelta));
+			}else{
+				this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmp/comprimento);
+				this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmpNext/comprimento);
+				this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
+			}
 	}
 }
 
-void CG_OBJ::revolutionSolidOpen(float *x, float *y, int count, int fatias){
+void CG_OBJ::revolutionSolidOpen(float *x, float *y, int count, int fatias, Vec3 pos){
 	float delta = 2 * M_PI / fatias;
 	
 	int vi = 0;
@@ -272,9 +285,9 @@ void CG_OBJ::revolutionSolidOpen(float *x, float *y, int count, int fatias){
 			alpha = delta * fatia;
 			alphaDelta = delta * (fatia+1);
 
-			this->addVertex(&vi,x[ri] * sin(alpha), y[ri], x[ri] * cos(alpha));
-			this->addVertex(&vi,x[ri+1] * sin(alphaDelta), y[ri+1], x[ri+1] * cos(alphaDelta));
-			this->addVertex(&vi,x[ri+1] * sin(alpha), y[ri+1], x[ri+1] * cos(alpha));
+			this->addVertex(&vi,pos.X() + x[ri] * sin(alpha), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alpha));
+			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
+			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alpha), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alpha));
 			
 			this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
 			this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));
@@ -284,9 +297,9 @@ void CG_OBJ::revolutionSolidOpen(float *x, float *y, int count, int fatias){
 			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
 			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmpNext/comprimento);
 			
-			this->addVertex(&vi,x[ri] * sin(alphaDelta), y[ri], x[ri] * cos(alphaDelta));
-			this->addVertex(&vi,x[ri+1] * sin(alphaDelta), y[ri+1], x[ri+1] * cos(alphaDelta));
-			this->addVertex(&vi,x[ri] * sin(alpha), y[ri], x[ri] * cos(alpha));
+			this->addVertex(&vi,pos.X() + x[ri] * sin(alphaDelta), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alphaDelta));
+			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
+			this->addVertex(&vi,pos.X() + x[ri] * sin(alpha), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alpha));
 			
 			this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alphaDelta));
 			this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));

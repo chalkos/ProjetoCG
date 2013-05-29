@@ -127,13 +127,13 @@ void Camera::lookAt(float dx, float dy, float dz){
 }
 
 void Camera::passoMaior(){
-	Camera::passo += 0.01;
+	Camera::passo += 0.001;
 
 	cout << "Passo: " << Camera::passo << endl;
 }
 
 void Camera::passoMenor(){
-	Camera::passo -= 0.01;
+	Camera::passo -= 0.001;
 
 	if( Camera::passo < 0 )
 		Camera::passo = 0.001;
@@ -147,7 +147,7 @@ void Camera::init(float x, float y, float z){
 	
 	up = Vec3(0,1,0);
 
-	Camera::dnear = 0.1f;
+	Camera::dnear = 1.0f;
 	Camera::dfar = 400.0f;
 
 	Camera::fov = 60.0f;

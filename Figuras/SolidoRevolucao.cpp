@@ -90,6 +90,55 @@ SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
 		
 		y[i++] = 4;  
 		break;
+	case mesaRedondaAberta: // mesa redonda
+		this->fechado = false;
+		
+
+		// os 3 pontos são um fix para as normais não serem suavizadas 
+		x[i++] = 2.5;
+		
+		x[i++] = 2.5;
+		x[i++] = 2.5;
+		x[i++] = 2.5;
+		
+		x[i++] = 0.5;
+		x[i++] = 0.5;
+		x[i++] = 0.5;
+
+		x[i++] = 0.5;
+		x[i++] = 0.5;
+		x[i++] = 0.5;
+		
+		x[i++] = 4;
+		x[i++] = 4;
+		x[i++] = 4;
+
+		x[i++] = 4;
+		x[i++] = 4;
+
+		
+		j=i; i=0;
+		y[i++] = 0;
+		
+		y[i++] = 0.1;
+		y[i++] = 0.1;
+		y[i++] = 0.1;
+
+		y[i++] = 0.1;
+		y[i++] = 0.1;
+		y[i++] = 0.1;
+		
+		y[i++] = 3.9;
+		y[i++] = 3.9;
+		y[i++] = 3.9;
+
+		y[i++] = 3.9;
+		y[i++] = 3.9;
+		y[i++] = 3.9;
+		
+		y[i++] = 4;
+		y[i++] = 4;
+		break;
 
 	case garrafa: // garrafa de vinho
 		this->fechado = true;

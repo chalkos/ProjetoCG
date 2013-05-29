@@ -24,6 +24,7 @@ void Textura::init(){
 
 	// definir os nomes de ficheiro das texturas
 	strcpy( Textura::filenames[texMadeira], "Texturas/madeira.png" );
+	strcpy( Textura::filenames[texMadeiraEscura], "Texturas/madeiraEscura.png" );
 	strcpy( Textura::filenames[texFolhas], "Texturas/folhas.png" );
 	strcpy( Textura::filenames[texPlanetaTerra], "Texturas/planetaTerra.jpg" );
 	strcpy( Textura::filenames[texLava1], "Texturas/lava1.png" );

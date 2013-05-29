@@ -91,6 +91,11 @@ void renderScene(void) {
 	*/
 
 	Figuras::desenharParedePedra();
+	Figuras::desenharMadeiraVertical();
+	Figuras::desenharMadeiraHorizontal();
+	Figuras::desenharMesasRedondasBaixo();
+
+	Figuras::desenharMesa();
 	
 	Textura::unsetTextura();
 

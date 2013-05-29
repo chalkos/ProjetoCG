@@ -8,10 +8,16 @@
 #define m 5 // metade
 #define q 2.5 // um quarto
 #define o 1.25 // um oitavo
-#define p 0.01 // distancia pequena
+#define p 0.05 // distancia pequena
 
 enum indiceFiguras {
 	figParedePedra,
+	figMadeiraVertical,
+	figMadeiraHorizontal,
+	figMesasRedondasBaixo,
+
+	figMesa,
+
 	figRelva,
 	
 	figEmissorLuz,
@@ -31,6 +37,10 @@ public:
 	static void desenharEmissorLuz();
 	//static void desenhar
 	static void desenharParedePedra();
+	static void desenharMadeiraVertical();
+	static void desenharMadeiraHorizontal();
+	static void desenharMesa();
+	static void desenharMesasRedondasBaixo();
 };
 
 

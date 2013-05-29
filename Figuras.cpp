@@ -22,6 +22,12 @@ void Figuras::init(){
 	CG_OBJ::prepararBuffer(figCOUNT_ENUM);
 
 	objetos[figParedePedra] = Complexo( complexoParedePedra );
+	objetos[figMadeiraVertical] = Complexo( complexoMadeiraVertical );
+	objetos[figMadeiraHorizontal] = Complexo( complexoMadeiraHorizontal );
+	objetos[figMesasRedondasBaixo] = Complexo( complexoMesasRedondasBaixo );
+
+	objetos[figMesa] = SolidoRevolucao(TipoSolidoRevolucao::mesa, 50);
+
 	objetos[figRelva] = Plano(4*50*u, 50, 50);
 
 	// "sol"
@@ -54,6 +60,19 @@ void Figuras::desenharFigura(int indice, float scaleX, float scaleY, float scale
 
 }
 
+void Figuras::desenharMesasRedondasBaixo(){
+	Textura::setTextura(texMadeiraEscura, 1, 1, 90);
+	objetos[figMesasRedondasBaixo].desenhar();
+}
+
+void Figuras::desenharMesa(){
+	Textura::setTextura(texMadeiraEscura);
+	glPushMatrix();
+	glTranslatef(-10, 0, -10);
+	objetos[figMesa].desenhar();
+	glPopMatrix();
+}
+
 void Figuras::desenharEmissorLuz(){
 	glPushMatrix();
 	int tempo = glutGet(GLUT_ELAPSED_TIME);
@@ -71,4 +90,14 @@ void Figuras::desenharParedePedra(){
 
 	Textura::setTextura(TipoTextura::texParedePedra);
 	objetos[figParedePedra].desenhar();
+}
+
+void Figuras::desenharMadeiraVertical(){
+	Textura::setTextura(TipoTextura::texMadeira);
+	objetos[figMadeiraVertical].desenhar();
+}
+
+void Figuras::desenharMadeiraHorizontal(){
+	Textura::setTextura(TipoTextura::texMadeira, 1, 1, 90);
+	objetos[figMadeiraHorizontal].desenhar();
 }

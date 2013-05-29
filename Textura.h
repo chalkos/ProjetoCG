@@ -7,6 +7,7 @@
 
 enum TipoTextura {
 	texMadeira,
+	texMadeiraEscura,
 	texFolhas,
 	texPlanetaTerra,
 	texLava1,
