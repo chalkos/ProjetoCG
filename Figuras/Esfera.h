@@ -7,8 +7,8 @@ class Esfera : public CG_OBJ {
 protected:
 	///////////////////// membros
 	float raio;
-	unsigned fatias;
-	unsigned seccoes;
+	int fatias;
+	int seccoes;
 	
 	///////////////////// herdado
 	void preencherVertices();

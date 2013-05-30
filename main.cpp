@@ -66,7 +66,7 @@ void renderScene(void) {
 
 	
 	//referencia
-	glColor3f(0.4, 0.4, 0.4);
+	glColor3f(1,1,1);
 	glutSolidSphere(2, 10, 10);
 
 	glLineWidth(20.5);
@@ -85,13 +85,8 @@ void renderScene(void) {
 	glEnd();
 	glLineWidth(1);
 
-
-
-	Light::enable(GL_LIGHTING);
-
-	
 	// ligar e posicionar as luzes
-	Light::enable(GL_LIGHTING);
+	/*Light::enable(GL_LIGHTING);
 	Light::enable(GL_LIGHT0);
 
 	Light::ambiente(GL_LIGHT0, 0.2,0.2,0.2);
@@ -108,6 +103,9 @@ void renderScene(void) {
 	//Figuras::desenharEmissorLuz();
 	glutSolidSphere(5, 10, 10);
 	glPopMatrix();
+	*/
+	
+	glColor3f(1,1,1);
 
 	
 
@@ -167,7 +165,7 @@ int main(int argc, char **argv) {
 
 	// alguns settings para OpenGL
 	glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	//glFrontFace(GL_CCW); //esquema de mão direita
 
 

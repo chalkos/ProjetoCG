@@ -46,12 +46,54 @@ ObjectTree *ObjectTree::init(){
 
 	// paredes do lado da porta
 	resChao->addFilho( (new ObjectTree) //apenas para agrupar as paredes deste lado
-		->addFilho( (new ObjectTree)->objecto( new Plano(a, 4*u+o+p, 2, 2) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*a, o, -2*u+o+p))
+		//parede de pedra
+		->addFilho( (new ObjectTree)->objecto( new Plano(a, 4*u+o, 2, 2) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*a, o, -0.5*(4*u+o)+o))
 			->texture(TipoTextura::texParedePedra, 1, 1, -90))
-		->addFilho( (new ObjectTree)->objecto( new Plano(a, 32*u, 2, 16) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*a, o, -8*u-16*u))
+		->addFilho( (new ObjectTree)->objecto( new Plano(a, 32*u+o, 2, 16) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*a, o, -8*u -0.5*(32*u+o) ))
 			->texture(TipoTextura::texParedePedra, 1, 1, -90))
+		//madeira vertical fina
+		->addFilho( (new ObjectTree)->objecto( new Plano(a-q, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*(a-q), o+p, -q+o+p))
+			->texture(TipoTextura::texMadeira, 1, 1, -90))
+		->addFilho( (new ObjectTree)->objecto( new Plano(a-q, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*(a-q), o+p, +q-4*u))
+			->texture(TipoTextura::texMadeira, 1, 1, -90))
+		->addFilho( (new ObjectTree)->objecto( new Plano(a-q, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*(a-q), o+p, -q-8*u))
+			->texture(TipoTextura::texMadeira, 1, 1, -90))
+		->addFilho( (new ObjectTree)->objecto( new Plano(a-q, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*(a-q), o+p, -q-12*u))
+			->texture(TipoTextura::texMadeira, 1, 1, -90))
+		->addFilho( (new ObjectTree)->objecto( new Plano(a-q, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*(a-q), o+p, q-22*u))
+			->texture(TipoTextura::texMadeira, 1, 1, -90))
+		->addFilho( (new ObjectTree)->objecto( new Plano(a-q, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*(a-q), o+p, -q-26*u))
+			->texture(TipoTextura::texMadeira, 1, 1, -90))
+		->addFilho( (new ObjectTree)->objecto( new Plano(a-q, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*(a-q), o+p, q-36*u))
+			->texture(TipoTextura::texMadeira, 1, 1, -90))
+		->addFilho( (new ObjectTree)->objecto( new Plano(a-q, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*(a-q), o+p, q-40*u-o-p))
+			->texture(TipoTextura::texMadeira, 1, 1, -90))
+		//secções de madeira vertical
+		->addFilho( (new ObjectTree)->objecto( new Plano(a, u*9, 1, 1) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*(a), o+p, -17*u))
+			->texture(TipoTextura::texMadeira, 18, 2, -90))
+		->addFilho( (new ObjectTree)->objecto( new Plano(a, u*9, 1, 1) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*(a), o+p, -31*u))
+			->texture(TipoTextura::texMadeira, 18, 2, -90))
+		//madeira vertical por cima da porta
+		->addFilho( (new ObjectTree)->objecto( new Plano(u, 4*u, 1, 2) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(a-m, o+p, -6*u))
+			->texture(TipoTextura::texMadeira, 4, 1, -90))
+		//madeira horizontal na parte de cima
+		->addFilho( (new ObjectTree)->objecto( new Plano(q, 4*u+o+p, 1, 4) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(a-o, o+p, -0.5*(4*u+o+p)+o+p))
+			->texture(TipoTextura::texMadeira, 0.5, 1, 0))
+		->addFilho( (new ObjectTree)->objecto( new Plano(q, 4*u+m, 1, 4) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(a-o, o+p, -10*u-q))
+			->texture(TipoTextura::texMadeira, 0.5, 1, 0))
+		->addFilho( (new ObjectTree)->objecto( new Plano(q, 5*u, 1, 4) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(a-o, o+p, -24*u))
+			->texture(TipoTextura::texMadeira, 0.5, 1, 0))
+		->addFilho( (new ObjectTree)->objecto( new Plano(q, 4*u+o+p+m, 1, 4) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(a-o, o+p, -40*u-o-p +0.5*(4*u+o+p+m)   ))
+			->texture(TipoTextura::texMadeira, 1, 1, 0))
+		); //fim paredes do lado da porta
 
-			); //fim resChao
+	// paredes do lado esquerdo à porta
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar as paredes deste lado
+		//parede de pedra
+		->addFilho(
+			(new ObjectTree)->objecto( new Plano(a, 2*(12*u+o), 2, 12) )->rotate( 90, Vec3(0,0,1) )->rotate(-90, Vec3(1,0,0))->translate(Vec3(0.5*a, 40*u+o, -(12*u)))
+			->texture(TipoTextura::texParedePedra, 1, 1, -90))
+	); //fim paredes do lado esquerdo à porta
 
 
 
