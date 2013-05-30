@@ -15,6 +15,8 @@ using namespace std;
 
 bool Camera::modoFPS = true;
 
+Vec3 Camera::fpsMousePos = Vec3(0,0,0);
+
 // posição da câmara
 Vec3 Camera::pos;
 
@@ -129,11 +131,17 @@ void Camera::lookAt(float dx, float dy, float dz){
 void Camera::passoMaior(){
 	Camera::passo += 0.001;
 
+	if( Camera::passo > 0.3 )
+		Camera::passo += 0.002;
+
 	cout << "Passo: " << Camera::passo << endl;
 }
 
 void Camera::passoMenor(){
 	Camera::passo -= 0.001;
+
+	if( Camera::passo > 0.3 )
+		Camera::passo -= 0.002;
 
 	if( Camera::passo < 0 )
 		Camera::passo = 0.001;
@@ -160,7 +168,7 @@ void Camera::toggleFPS(){
 	Camera::modoFPS = !Camera::modoFPS;
 	if( Camera::modoFPS ){
 		glutSetCursor(GLUT_CURSOR_NONE);
-		//glutWarpPointer((float)glutGet(GLUT_WINDOW_WIDTH)/2, (float)glutGet(GLUT_WINDOW_HEIGHT)/2);
+		glutWarpPointer(fpsMousePos.X(), fpsMousePos.Y());
 	}else{
 		glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
 	}
@@ -209,6 +217,7 @@ void Camera::moverDireita(){
 
 void Camera::mouseMove(int x, int y){
 	if( !Camera::modoFPS ) return;
+	fpsMousePos.reset( x, y, 0);
 	
 	Frustum::scheduleUpdate();
 	int w = glutGet(GLUT_WINDOW_WIDTH);

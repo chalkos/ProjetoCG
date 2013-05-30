@@ -17,6 +17,8 @@ enum TipoTextura : int {
 	texShinyMetal,
 	texShinyBrushedMetal,
 	texParedePedra,
+	texCalmCookie,
+	texChaoMadeira,
 
 	// não acrescentar nada depois deste elemento
 	texCOUNT_ENUM

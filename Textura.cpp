@@ -34,6 +34,8 @@ void Textura::init(){
 	strcpy_s( Textura::filenames[texShinyMetal], FILENAME_MAX_SIZE, "Texturas/shinyMetal.png" );
 	strcpy_s( Textura::filenames[texShinyBrushedMetal], FILENAME_MAX_SIZE, "Texturas/shinyBrushedMetal.png" );
 	strcpy_s( Textura::filenames[texParedePedra], FILENAME_MAX_SIZE, "Texturas/paredePedra.png" );
+	strcpy_s( Textura::filenames[texCalmCookie], FILENAME_MAX_SIZE, "Texturas/calmCookie.png" );
+	strcpy_s( Textura::filenames[texChaoMadeira], FILENAME_MAX_SIZE, "Texturas/chaoMadeira.png" );
 
 	// gerar identificadores de imagem
 	Textura::imageIds = (ILuint*)malloc(sizeof(ILuint) * texCOUNT_ENUM);

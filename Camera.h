@@ -18,6 +18,9 @@ class Camera{
 private:
 	static bool modoFPS;
 	
+	// posição do rato quando se parou o modo FPS
+	static Vec3 fpsMousePos;
+
 	// posição da câmara
 	static Vec3 pos;
 
