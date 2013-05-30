@@ -20,6 +20,12 @@ Vec3::Vec3(float a, float b, float c){
 	this->vec[2] = c;
 }
 
+void Vec3::reset(float A, float B, float C){
+	this->vec[0] = A;
+	this->vec[1] = B;
+	this->vec[2] = C;
+}
+
 Vec3::Vec3(float *vec){
 	this->vec[0] = vec[0];
 	this->vec[1] = vec[1];
@@ -92,4 +98,15 @@ void Vec3::normalizar(){
 	vec[0] /= norm;
 	vec[1] /= norm;
 	vec[2] /= norm;
+}
+
+float *Vec3::getAll(float *arr){
+	arr[0] = X();
+	arr[1] = Y();
+	arr[2] = Z();
+	return arr;
+}
+
+float Vec3::norma(){
+	return sqrt( vec[0] * vec[0] + vec[1] * vec[1] + vec[1] * vec[2] );
 }

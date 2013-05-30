@@ -23,17 +23,17 @@ void Textura::init(){
 		Textura::filenames[i] = (char*)malloc(sizeof(char) * FILENAME_MAX_SIZE);
 
 	// definir os nomes de ficheiro das texturas
-	strcpy( Textura::filenames[texMadeira], "Texturas/madeira.png" );
-	strcpy( Textura::filenames[texMadeiraEscura], "Texturas/madeiraEscura.png" );
-	strcpy( Textura::filenames[texFolhas], "Texturas/folhas.png" );
-	strcpy( Textura::filenames[texPlanetaTerra], "Texturas/planetaTerra.jpg" );
-	strcpy( Textura::filenames[texLava1], "Texturas/lava1.png" );
-	strcpy( Textura::filenames[texSol], "Texturas/sol.jpg" );
-	strcpy( Textura::filenames[texErvas], "Texturas/ervas.png" );
-	strcpy( Textura::filenames[texRelva], "Texturas/relva.png" );
-	strcpy( Textura::filenames[texShinyMetal], "Texturas/shinyMetal.png" );
-	strcpy( Textura::filenames[texShinyBrushedMetal], "Texturas/shinyBrushedMetal.png" );
-	strcpy( Textura::filenames[texParedePedra], "Texturas/paredePedra.png" );
+	strcpy_s( Textura::filenames[texMadeira], FILENAME_MAX_SIZE, "Texturas/madeira.png" );
+	strcpy_s( Textura::filenames[texMadeiraEscura], FILENAME_MAX_SIZE, "Texturas/madeiraEscura.png" );
+	strcpy_s( Textura::filenames[texFolhas], FILENAME_MAX_SIZE, "Texturas/folhas.png" );
+	strcpy_s( Textura::filenames[texPlanetaTerra], FILENAME_MAX_SIZE, "Texturas/planetaTerra.jpg" );
+	strcpy_s( Textura::filenames[texLava1], FILENAME_MAX_SIZE, "Texturas/lava1.png" );
+	strcpy_s( Textura::filenames[texSol], FILENAME_MAX_SIZE, "Texturas/sol.jpg" );
+	strcpy_s( Textura::filenames[texErvas], FILENAME_MAX_SIZE, "Texturas/ervas.png" );
+	strcpy_s( Textura::filenames[texRelva], FILENAME_MAX_SIZE, "Texturas/relva.png" );
+	strcpy_s( Textura::filenames[texShinyMetal], FILENAME_MAX_SIZE, "Texturas/shinyMetal.png" );
+	strcpy_s( Textura::filenames[texShinyBrushedMetal], FILENAME_MAX_SIZE, "Texturas/shinyBrushedMetal.png" );
+	strcpy_s( Textura::filenames[texParedePedra], FILENAME_MAX_SIZE, "Texturas/paredePedra.png" );
 
 	// gerar identificadores de imagem
 	Textura::imageIds = (ILuint*)malloc(sizeof(ILuint) * texCOUNT_ENUM);
@@ -97,6 +97,12 @@ int Textura::getHeight(TipoTextura tipoTextura){
 	return Textura::texturas[tipoTextura].getHeight();
 }
 
+void Textura::setColor(float R, float G, float B){
+	unsetTextura();
+	glColor3f( R, G, B);
+
+}
+
 void Textura::setTextura(float sx, float sy, float graus){
 	glMatrixMode(GL_TEXTURE);
 
@@ -131,6 +137,11 @@ void Textura::setTextura(TipoTextura tipoTextura, float sx, float sy, float grau
 
 void Textura::unsetTextura(){
 	glBindTexture(GL_TEXTURE_2D, 0);
+	glMatrixMode(GL_TEXTURE);
+	// apaga as modificações anteriores
+	glLoadIdentity();
+	
+	glMatrixMode(GL_MODELVIEW);
 }
 
 void Textura::translate(float x, float y){

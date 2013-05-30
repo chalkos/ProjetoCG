@@ -5,7 +5,7 @@
 
 #include <IL/il.h>
 
-enum TipoTextura {
+enum TipoTextura : int {
 	texMadeira,
 	texMadeiraEscura,
 	texFolhas,
@@ -31,6 +31,7 @@ public:
 	static int getHeight(TipoTextura tipoTextura);
 	static void setTextura(TipoTextura tipoTextura, float sx=1, float sy=1, float graus=0); //set textura, escala e rotação
 	static void setTextura(float sx, float sy, float graus=0); //set escala e rotação
+	static void setColor(float R, float G, float B);
 	static void translate(float x, float y);
 	static void unsetTextura();
 

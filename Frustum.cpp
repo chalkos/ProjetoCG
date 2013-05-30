@@ -14,7 +14,6 @@ void Frustum::updateFrustum( Vec3 *pos, Vec3 *up, Vec3 *center, float fov, float
 	if( !frustumNeedsUpdate || ratio == 0.0f )
 		return;
 
-	float tmp[3];
 	Vec3 X,Y,Z;
 
 

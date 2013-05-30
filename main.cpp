@@ -32,15 +32,10 @@
 #include "Input.h"
 #include "Camera.h"
 
-// Figuras
-#include "Figuras.h"
 #include "Textura.h"
 #include "Light.h"
 #include "Profiler.h"
-
-int tipoPrimitiva = 3;
-
-float teste = 0;
+#include "ObjectTree.h"
 
 void renderScene(void) {
 	Profiler::startFrame();
@@ -68,9 +63,33 @@ void renderScene(void) {
 		glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 	}
 	
-	glColor3f(1,1,1);
 
-	/*
+	
+	//referencia
+	glColor3f(0.4, 0.4, 0.4);
+	glutSolidSphere(2, 10, 10);
+
+	glLineWidth(20.5);
+	glBegin(GL_LINES);
+	glColor3f(1, 0, 0);
+	glVertex3f(0,  0, 0);
+	glVertex3f(10, 0, 0);
+	
+	glColor3f(0, 1, 0);
+	glVertex3f(0,  0, 0);
+	glVertex3f(0, 10, 0);
+	
+	glColor3f(0, 0, 1);
+	glVertex3f(0,  0, 0);
+	glVertex3f(0, 0, 10);
+	glEnd();
+	glLineWidth(1);
+
+
+
+	Light::enable(GL_LIGHTING);
+
+	
 	// ligar e posicionar as luzes
 	Light::enable(GL_LIGHTING);
 	Light::enable(GL_LIGHT0);
@@ -85,21 +104,20 @@ void renderScene(void) {
 	glPushMatrix();
 	//glTranslatef(125*sin(Input::teste2), Input::teste1 ,100 + 125*cos(Input::teste2));
 	glTranslatef(Input::teste3*sin(Input::teste2), Input::teste1 ,Input::teste3*cos(Input::teste2));
-	Textura::setTextura(texLava1);
-	Figuras::desenharEmissorLuz();
+	//Textura::setTextura(texLava1);
+	//Figuras::desenharEmissorLuz();
+	glutSolidSphere(5, 10, 10);
 	glPopMatrix();
-	*/
 
-	Figuras::desenharParedePedra();
-	Figuras::desenharMadeiraVertical();
-	Figuras::desenharMadeiraHorizontal();
-	Figuras::desenharMesasRedondasBaixo();
+	
 
-	Figuras::desenharMesa();
+	
+	ObjectTree::draw();
+
 	
 	Textura::unsetTextura();
 
-	//Light::disable(GL_LIGHTING);
+	Light::disable(GL_LIGHTING);
 
 	// ----------------
 	// escrever texto
@@ -109,7 +127,7 @@ void renderScene(void) {
 	glPushMatrix();
 	glLoadIdentity();
 	char texto[100];
-	sprintf(texto, "FPS: %.2f", Profiler::getFPS());
+	sprintf_s(texto, 100, "FPS: %.2f", Profiler::getFPS());
 	Camera::renderString(5,10,0,Fonts::BITMAP_HELVETICA_10,texto);
 	glPopMatrix();
 	Camera::restorePerspectiveProjection();
@@ -117,8 +135,6 @@ void renderScene(void) {
 	// End of frame
 	glutSwapBuffers();
 }
-
-
 
 int main(int argc, char **argv) {
 
@@ -151,12 +167,12 @@ int main(int argc, char **argv) {
 
 	// alguns settings para OpenGL
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 	//glFrontFace(GL_CCW); //esquema de mão direita
 
 
 	// preparar objetos
-	Figuras::init();
+	ObjectTree::init();
 
 
 	Profiler::init();
@@ -171,8 +187,6 @@ int main(int argc, char **argv) {
 	Profiler::start(proStartup);
 	Sleep(5000);
 	printf("passaram %d\n", Profiler::diff(proStartup));*/
-
-
 
 
 	

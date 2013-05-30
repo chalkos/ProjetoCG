@@ -1,5 +1,6 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
+#include <conio.h>
 #include <glew.h>
 #include <GL/glut.h>
 
@@ -8,11 +9,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-// search - glVertex3f(
-// replace - this->addVertex(&vi,
-
-
-
+#define anguloRigido M_PI_2
 
 /*********************************
 
@@ -65,6 +62,12 @@ void CG_OBJ::addTextureCoord(int *indice, float x1, float y1, float x2, float y2
 }
 
 void CG_OBJ::guardarOBJ(int nTriangulos){
+	if( CG_OBJ::nBuffers >= CG_OBJ::maxBuffers ){
+		std::cout << "[ERRO] Todos os " << CG_OBJ::maxBuffers << " buffers estão ocupados.\nPress any key to exit" << std::endl;
+		_getch();
+		exit(EXIT_FAILURE);
+	}
+
 	// escolher o buffer
 	this->bufferPos = CG_OBJ::nBuffers;
 	CG_OBJ::nBuffers+=3;
@@ -79,17 +82,21 @@ void CG_OBJ::guardarOBJ(int nTriangulos){
 	this->normalB = (float*)malloc(sizeof(float) * this->nFloats);
 	this->textureB = (float*)malloc(sizeof(float) * this->nVertices * 2);
 
-	this->emissiva = NULL;
-	this->especular = NULL;
-	this->ambiente = NULL;
-	this->difusa = NULL;
+	// definir valores predefinidos de acordo com
+	// http://msdn.microsoft.com/en-us/library/windows/desktop/dd373945(v=vs.85).aspx
+	this->emissiva = Vec3(0.0, 0.0, 0.0);
+	this->especular = Vec3(0.0, 0.0, 0.0);
+	this->ambiente = Vec3(0.8, 0.8, 0.8);
+	this->difusa = Vec3(0.2, 0.2, 0.2);
 	this->shininess = 0;
 
 	// preencher os vértices
 	this->preencherVertices();
 
+	
+
 	// preencher indices
-	this->vertexI = (unsigned int*)malloc(sizeof(unsigned int) * this->nVertices);
+	this->vertexI = (int*)malloc(sizeof(int) * this->nVertices);
 	preencherIndices();
 
 	// seleccionar os buffers e meter dados
@@ -118,7 +125,7 @@ void CG_OBJ::prepararBuffer(int maxBuffers){
 	glGenBuffers(CG_OBJ::maxBuffers, CG_OBJ::buffers);
 }
 
-void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec3 pos, bool texLimites){
+void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec3 pos){
 	float delta = 2 * M_PI / fatias;
 	
 	int vi = 0;
@@ -135,6 +142,8 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 	float cmp = 0;
 	float cmpNext = 0;
 
+	//Vec3 atual, proximo; // vetores para medir o ângulo
+
 	float difX = (y[ri+1] - y[ri]);
 	float difY = -(x[ri+1] - x[ri]);
 	float difSX = ((y[ri+1] - y[ri])+(y[ri+2] - y[ri+1]))/2; //smooth
@@ -143,6 +152,11 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 	// fecho em baixo
 	cmp = cmpNext;
 	cmpNext += sqrt( (x[ri+1] - x[ri])*(x[ri+1] - x[ri]) + (y[ri+1]-y[ri])*(y[ri+1]-y[ri]) );
+
+	/*atual.reset( x[ri], y[ri], 0);
+	proximo.reset( x[ri+1], y[ri+1], 0);
+	proximo.decrementar( &atual );*/
+
 	for(int fatia=0; fatia < fatias; fatia++){
 		alpha = delta * fatia;
 		alphaDelta = delta * (fatia+1);
@@ -151,19 +165,20 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 		this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
 		this->addVertex(&vi,pos.X() + x[ri+1] * sin(alpha), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alpha));
 		
-		this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
-		this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));
-		this->addNormal(&ni, difSX * sin(alpha), difSY, difSX * cos(alpha));
+		
+		/*if( acos( atual.innerProduct(&proximo) / (atual.norma() * proximo.norma()) ) >= anguloRigido || true ){
+			this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
+			this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alphaDelta));
+			this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
+		}else{*/
+			this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
+			this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));
+			this->addNormal(&ni, difSX * sin(alpha), difSY, difSX * cos(alpha));
+		//}
 
-		if( texLimites ){
-			this->addTextureCoord(&ti, 0.5, 0.5);
-			this->addTextureCoord(&ti, 0.5 + 0.5*cos(alpha), 0.5 + 0.5*sin(alpha));
-			this->addTextureCoord(&ti, 0.5 + 0.5*cos(alphaDelta), 0.5 + 0.5*sin(alphaDelta));
-		}else{
-			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmp/comprimento);
-			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
-			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmpNext/comprimento);
-		}
+		this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmp/comprimento);
+		this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
+		this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmpNext/comprimento);
 	}
 
 
@@ -177,6 +192,11 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 		cmp = cmpNext;
 		cmpNext += sqrt( (x[ri+1] - x[ri])*(x[ri+1] - x[ri]) + (y[ri+1]-y[ri])*(y[ri+1]-y[ri]) );
 
+		
+		/*atual.reset( x[ri], y[ri], 0);
+		proximo.reset( x[ri+1], y[ri+1], 0);
+		proximo.decrementar( &atual );*/
+
 		// desenhar o reclangulo (=2 triangulos) dos lados
 		for(int fatia=0; fatia < fatias; fatia++){
 			alpha = delta * fatia;
@@ -187,9 +207,15 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
 			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alpha), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alpha));
 			
-			this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
-			this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));
-			this->addNormal(&ni, difSX * sin(alpha), difSY, difSX * cos(alpha));
+			/*if( acos( atual.innerProduct(&proximo) / (atual.norma() * proximo.norma()) ) >= anguloRigido || true ){
+				this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
+				this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alphaDelta));
+				this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
+			}else{*/
+				this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
+				this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));
+				this->addNormal(&ni, difSX * sin(alpha), difSY, difSX * cos(alpha));
+			//}
 			
 			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmp/comprimento);
 			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
@@ -199,9 +225,15 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
 			this->addVertex(&vi,pos.X() + x[ri] * sin(alpha), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alpha));
 			
-			this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alphaDelta));
-			this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));
-			this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
+			/*if( acos( atual.innerProduct(&proximo) / (atual.norma() * proximo.norma()) ) >= anguloRigido || true ){
+				this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alpha));
+				this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alphaDelta));
+				this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
+			}else{*/
+				this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alphaDelta));
+				this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));
+				this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
+			//}
 			
 			this->addTextureCoord(&ti, 0, 0);
 			this->addTextureCoord(&ti, 0, 0);
@@ -221,6 +253,10 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 	cmp = cmpNext;
 	cmp += sqrt( (x[ri] - x[ri-1])*(x[ri] - x[ri-1]) + (y[ri]-y[ri-1])*(y[ri]-y[ri-1]) );
 
+	/*atual.reset( x[ri-1], y[ri-1], 0);
+	proximo.reset( x[ri], y[ri], 0);
+	proximo.decrementar( &atual );*/
+
 	// fecho em cima
 	for(int fatia=0; fatia < fatias; fatia++){
 		alpha = delta * fatia;
@@ -230,20 +266,19 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 			this->addVertex(&vi,pos.X() + x[ri-1] * sin(alpha), pos.Y() + y[ri-1], pos.Z() + x[ri-1] * cos(alpha));
 			this->addVertex(&vi,pos.X() + x[ri-1] * sin(alphaDelta), pos.Y() + y[ri-1], pos.Z() + x[ri-1] * cos(alphaDelta));
 		
-			this->addNormal(&ni, difSX * sin(alpha), difSY, difSX * cos(alpha));
-			this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
-			this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alphaDelta));
+			/*if( acos( atual.innerProduct(&proximo) / (atual.norma() * proximo.norma()) ) >= anguloRigido || true ){
+				this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alpha));
+				this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alphaDelta));
+				this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
+			}else{*/
+				this->addNormal(&ni, difSX * sin(alpha), difSY, difSX * cos(alpha));
+				this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
+				this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alphaDelta));
+			//}
 
-
-			if( texLimites ){
-				this->addTextureCoord(&ti, 0.5, 0.5);
-				this->addTextureCoord(&ti, 0.5 + 0.5*cos(alpha), 0.5 + 0.5*sin(alpha));
-				this->addTextureCoord(&ti, 0.5 + 0.5*cos(alphaDelta), 0.5 + 0.5*sin(alphaDelta));
-			}else{
-				this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmp/comprimento);
-				this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmpNext/comprimento);
-				this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
-			}
+			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmp/comprimento);
+			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmpNext/comprimento);
+			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
 	}
 }
 
@@ -339,7 +374,7 @@ void CG_OBJ::preencherIndices(){
 			}
 		}
 	}
-	printf("VBO c/ indices: %d de %d eram duplicados!\n", duplicados, this->nVertices);
+//	printf("VBO c/ indices: %d de %d eram duplicados!\n", duplicados, this->nVertices);
 }
 
 /////////////// non-static
@@ -357,111 +392,42 @@ void CG_OBJ::desenhar(){
 
 	//glMaterialfv(GL_FRONT, componente, array);
 
-	bool mudouMaterial = false;
-
-	if( this->emissiva != NULL ){
-		glMaterialfv(GL_FRONT,GL_EMISSION,this->emissiva);
-		mudouMaterial = true;
-	}
-
-	if( this->especular != NULL  ){
-		glMaterialfv(GL_FRONT,GL_SPECULAR,this->especular);
-		mudouMaterial = true;
-	}
-
-	if(	this->ambiente != NULL  ){
-		glMaterialfv(GL_FRONT,GL_AMBIENT,this->ambiente);
-		mudouMaterial = true;
-	}
-
-	if( this->difusa != NULL  ){
-		glMaterialfv(GL_FRONT,GL_DIFFUSE,this->difusa);
-		mudouMaterial = true;
-	}
-	
+	float aux[3];
+	glMaterialfv(GL_FRONT,GL_EMISSION,this->emissiva.getAll(aux));
+	glMaterialfv(GL_FRONT,GL_SPECULAR,this->especular.getAll(aux));
+	glMaterialfv(GL_FRONT,GL_AMBIENT,this->ambiente.getAll(aux));
+	glMaterialfv(GL_FRONT,GL_DIFFUSE,this->difusa.getAll(aux));
 	glMaterialfv(GL_FRONT,GL_SHININESS,&this->shininess);
 	
 	//  Desenhar
 	//glDrawArrays(GL_TRIANGLES, 0, this->nVertices);
 	glDrawElements(GL_TRIANGLES, this->nVertices ,GL_UNSIGNED_INT, vertexI); //com indices
-	if(mudouMaterial)
-		resetMaterialPoperties();
+	//resetMaterialPoperties();
 }
 
-void CG_OBJ::setEmissiva(float r, float g, float b){
-	if( this->emissiva != NULL ) resetEmissiva();
-	this->emissiva = (float*)malloc(sizeof(float)*3);
-	this->emissiva[0] = r;
-	this->emissiva[1] = g;
-	this->emissiva[2] = b;
+CG_OBJ *CG_OBJ::setEmissiva(float r, float g, float b){
+	this->emissiva = Vec3(r,g,b);
+	return this;
 }
 
-void CG_OBJ::setEspecular(float r, float g, float b){
-	if( this->especular != NULL ) resetEspecular();
-	this->especular = (float*)malloc(sizeof(float)*3);
-	this->especular[0] = r;
-	this->especular[1] = g;
-	this->especular[2] = b;
+CG_OBJ *CG_OBJ::setEspecular(float r, float g, float b){
+	this->especular = Vec3(r,g,b);
+	return this;
 }
 
-void CG_OBJ::setAmbiente(float r, float g, float b){
-	if( this->ambiente != NULL ) resetAmbiente();
-	this->ambiente = (float*)malloc(sizeof(float)*3);
-	this->ambiente[0] = r;
-	this->ambiente[1] = g;
-	this->ambiente[2] = b;
+CG_OBJ *CG_OBJ::setAmbiente(float r, float g, float b){
+	this->ambiente = Vec3(r,g,b);
+	return this;
 }
 
-void CG_OBJ::setDifusa(float r, float g, float b){
-	if( this->difusa != NULL ) resetDifusa();
-	this->difusa = (float*)malloc(sizeof(float)*3);
-	this->difusa[0] = r;
-	this->difusa[1] = g;
-	this->difusa[2] = b;
+CG_OBJ *CG_OBJ::setDifusa(float r, float g, float b){
+	this->difusa = Vec3(r,g,b);
+	return this;
 }
 
-
-void CG_OBJ::setShininess(float s){
+CG_OBJ *CG_OBJ::setShininess(float s){
 	this->shininess = s;
-}
-
-void CG_OBJ::resetShininess(){
-	this->shininess = 0;
-}
-
-void CG_OBJ::resetEmissiva(){
-	free(this->emissiva);
-	this->emissiva = NULL;
-}
-
-void CG_OBJ::resetEspecular(){
-	free(this->especular);
-	this->especular = NULL;
-}
-
-void CG_OBJ::resetAmbiente(){
-	free(this->ambiente);
-	this->ambiente = NULL;
-}
-
-void CG_OBJ::resetDifusa(){
-	free(this->difusa);
-	this->difusa = NULL;
-}
-
-void CG_OBJ::resetMaterialPoperties(){
-	// valores predefinidos de acordo com
-	// http://msdn.microsoft.com/en-us/library/windows/desktop/dd373945(v=vs.85).aspx
-
-	float amb[3] = {0.2, 0.2, 0.2}; //ambiente
-	float dif[3] = {0.8, 0.8, 0.8}; //difusa
-	float esp[3] = {0.0, 0.0, 0.0}; //especular
-	float emi[3] = {0.0, 0.0, 0.0}; //emissiva
-
-	glMaterialfv(GL_FRONT,GL_EMISSION,emi);
-	glMaterialfv(GL_FRONT,GL_SPECULAR,esp);
-	glMaterialfv(GL_FRONT,GL_AMBIENT,amb);
-	glMaterialfv(GL_FRONT,GL_DIFFUSE,dif);
+	return this;
 }
 
 /////////////// abstract

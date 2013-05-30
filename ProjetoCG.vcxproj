@@ -60,6 +60,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild />
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,18 +91,17 @@
   <ItemGroup>
     <ClCompile Include="BoundingVolume.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Figuras.cpp" />
     <ClCompile Include="Figuras\CG_OBJ.cpp" />
     <ClCompile Include="Figuras\Cilindro.cpp" />
     <ClCompile Include="Figuras\Cubo.cpp" />
     <ClCompile Include="Figuras\Esfera.cpp" />
-    <ClCompile Include="Figuras\Complexo.cpp" />
     <ClCompile Include="Figuras\Plano.cpp" />
     <ClCompile Include="Figuras\SolidoRevolucao.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ObjectTree.cpp" />
     <ClCompile Include="Plano3D.cpp" />
     <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="Textura.cpp" />
@@ -111,17 +111,16 @@
   <ItemGroup>
     <ClInclude Include="BoundingVolume.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Figuras.h" />
     <ClInclude Include="Figuras\CG_OBJ.h" />
     <ClInclude Include="Figuras\Cilindro.h" />
     <ClInclude Include="Figuras\Cubo.h" />
     <ClInclude Include="Figuras\Esfera.h" />
-    <ClInclude Include="Figuras\Complexo.h" />
     <ClInclude Include="Figuras\Plano.h" />
     <ClInclude Include="Figuras\SolidoRevolucao.h" />
     <ClInclude Include="Frustum.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="ObjectTree.h" />
     <ClInclude Include="Plano3D.h" />
     <ClInclude Include="Profiler.h" />
     <ClInclude Include="Textura.h" />

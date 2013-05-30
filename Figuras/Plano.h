@@ -8,13 +8,15 @@ protected:
 	///////////////////// membros
 	int camadasx;
 	int camadasz;
-	float comprimento;
+	float comprimento; //x
+	float largura; //z
 	
 	///////////////////// herdado
 	void preencherVertices();
 
 public:
 	Plano(float comprimento, int camadasx, int camadasz);
+	Plano(float compX, float compZ, int camadasx, int camadasz);
 };
 
 #endif // __PLANO_H_INCLUDED__

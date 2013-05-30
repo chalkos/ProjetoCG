@@ -17,6 +17,9 @@ public:
 	float Y();
 	float Z();
 	void setVal(int pos, float val);
+	float *getAll(float *arr);
+
+	void reset(float A, float B, float C);
 
 	// operações
 	void incrementar( Vec3 *inc );
@@ -26,6 +29,7 @@ public:
 	Vec3 crossProduct( Vec3 *snd );
 	float innerProduct( Vec3 *snd);
 	void normalizar();
+	float norma();
 
 };
 

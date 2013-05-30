@@ -8,8 +8,8 @@ protected:
 	///////////////////// membros
 	float raio;
 	float altura;
-	unsigned fatias;
-	unsigned seccoes;
+	int fatias;
+	int seccoes;
 	
 	///////////////////// herdado
 	void preencherVertices();

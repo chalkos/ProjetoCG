@@ -7,12 +7,6 @@
 
 #include "../Vec3.h"
 
-
-/*
-TODO:
-- uma maneira de alertar quando ocupar todos os buffers, ou maneira de alocar mais.
-*/
-
 class CG_OBJ {
 protected:
 	////////////// static
@@ -30,6 +24,9 @@ protected:
 	////////////// non-static
 	float comprimento; // altura dos solidos de revolucao
 
+	Vec3 minBound;
+	Vec3 maxBound;
+
 	int nTriangulos; // numero de triangulos
 	int nVertices;   // numero de vertices
 	int nFloats;     // numero de floats
@@ -37,7 +34,7 @@ protected:
 	int bufferPos;   // posição no buffer onde está o objecto
 
 	float *vertexB;  // array de coordenadas
-	unsigned int *vertexI;    // array de indices de coordenadas
+	int *vertexI;    // array de indices de coordenadas
 	float *normalB;  // array de normais
 	float *textureB; // array de coordenadas de textura
 
@@ -48,14 +45,14 @@ protected:
 	virtual void preencherVertices();
 
 	// preenche o array de vértices de acordo com coordenadas XY e faz um sólido de revolução
-	void revolutionSolidClose(float *x, float *y, int count, int fatias, Vec3 pos = Vec3(0,0,0), bool texLimites = false);
+	void revolutionSolidClose(float *x, float *y, int count, int fatias, Vec3 pos = Vec3(0,0,0));
 	void revolutionSolidOpen(float *x, float *y, int count, int fatias, Vec3 pos = Vec3(0,0,0));
 
 	// várias propriedades
-	float *emissiva;
-	float *especular;
-	float *ambiente;
-	float *difusa;
+	Vec3 emissiva;
+	Vec3 especular;
+	Vec3 ambiente;
+	Vec3 difusa;
 	float shininess;
 
 
@@ -63,7 +60,6 @@ public:
 	/////////////// static
 	static GLuint *buffers;
 	static void prepararBuffer(int maxBuffers);
-	static void resetMaterialPoperties();
 
 	// trata as coordenadas repetidas
 	void preencherIndices();
@@ -77,16 +73,11 @@ public:
 
 	
 
-	void setEmissiva(float r, float g, float b);
-	void setEspecular(float r, float g, float b);
-	void setAmbiente(float r, float g, float b);
-	void setDifusa(float r, float g, float b);
-	void setShininess(float s);
-	void resetEmissiva();
-	void resetEspecular();
-	void resetAmbiente();
-	void resetDifusa();
-	void resetShininess();
+	CG_OBJ *setEmissiva(float r, float g, float b);
+	CG_OBJ *setEspecular(float r, float g, float b);
+	CG_OBJ *setAmbiente(float r, float g, float b);
+	CG_OBJ *setDifusa(float r, float g, float b);
+	CG_OBJ *setShininess(float s);
 };
 
 

@@ -45,9 +45,6 @@
     <ClCompile Include="Figuras\Plano.cpp">
       <Filter>Figuras</Filter>
     </ClCompile>
-    <ClCompile Include="Figuras.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Figuras\SolidoRevolucao.cpp">
       <Filter>Figuras</Filter>
     </ClCompile>
@@ -72,8 +69,8 @@
     <ClCompile Include="BoundingVolume.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Figuras\Complexo.cpp">
-      <Filter>Figuras</Filter>
+    <ClCompile Include="ObjectTree.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +98,6 @@
     <ClInclude Include="Figuras\Plano.h">
       <Filter>Figuras</Filter>
     </ClInclude>
-    <ClInclude Include="Figuras.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Figuras\SolidoRevolucao.h">
       <Filter>Figuras</Filter>
     </ClInclude>
@@ -128,8 +122,8 @@
     <ClInclude Include="BoundingVolume.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Figuras\Complexo.h">
-      <Filter>Figuras</Filter>
+    <ClInclude Include="ObjectTree.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

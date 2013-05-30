@@ -454,7 +454,7 @@ SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
 	
 	if( i != j ){
 		std::cout << "[ERRO] #X (=" << j << ") != #Y (=" << i << ") TipoSolidoRevolucao=" << tipo << " @ SolidoRevolucao.cpp\nPress any key to exit" << std::endl;
-		getch();
+		_getch();
 		exit(EXIT_FAILURE);
 	}
 
