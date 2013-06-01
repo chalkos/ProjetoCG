@@ -93,7 +93,8 @@ void CG_OBJ::guardarOBJ(int nTriangulos){
 	// preencher os vértices
 	this->preencherVertices();
 
-	
+	// calcular limites do objecto
+	this->calculateBounds();
 
 	// preencher indices
 	this->vertexI = (int*)malloc(sizeof(int) * this->nVertices);
@@ -109,6 +110,47 @@ void CG_OBJ::guardarOBJ(int nTriangulos){
 	glBindBuffer(GL_ARRAY_BUFFER,CG_OBJ::buffers[this->bufferPos+2]); // selecionar buffer para texturas
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * this->nVertices * 2, this->textureB, GL_STATIC_DRAW); // meter texturas
 }
+
+void CG_OBJ::calculateBounds(){
+	//inicializar com o primeiro vertice
+	if( this->nVertices > 0 ){
+		this->minBound = Vec3(this->vertexB[0], this->vertexB[1], this->vertexB[2]);
+		this->maxBound = Vec3(this->vertexB[0], this->vertexB[1], this->vertexB[2]);
+	}else
+		return;
+
+	// começar no segundo vertice
+	for(int i=3; i<this->nFloats; i+=3){
+		// X
+		if( vertexB[i] > maxBound.X() )
+			maxBound.setX( vertexB[i] );
+		if( vertexB[i] < minBound.X() )
+			minBound.setX( vertexB[i] );
+		// Y
+		if( vertexB[i+1] > maxBound.Y() )
+			maxBound.setY( vertexB[i+1] );
+		if( vertexB[i+1] < minBound.Y() )
+			minBound.setY( vertexB[i+1] );
+		// Z
+		if( vertexB[i+2] > maxBound.Z() )
+			maxBound.setZ( vertexB[i+2] );
+		if( vertexB[i+2] < minBound.Z() )
+			minBound.setZ( vertexB[i+2] );
+	}
+}
+
+float CG_OBJ::getCompX(){
+	return maxBound.X() - minBound.X();
+}
+
+float CG_OBJ::getCompY(){
+	return maxBound.Y() - minBound.Y();
+}
+
+float CG_OBJ::getCompZ(){
+	return maxBound.Z() - minBound.Z();
+}
+
 
 /////////////// static
 void CG_OBJ::prepararBuffer(int maxBuffers){

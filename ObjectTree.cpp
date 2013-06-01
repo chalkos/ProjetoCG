@@ -25,7 +25,7 @@ ObjectTree *ObjectTree::raizObj = NULL;
 
 ObjectTree *ObjectTree::init(){
 
-	CG_OBJ::prepararBuffer(100); // preparar buffers
+	CG_OBJ::prepararBuffer(250); // preparar buffers
 
 	Light *lTeste = (new Light(luz0))
 		->setPos(Vec3(10,10,10), 0)
@@ -34,9 +34,13 @@ ObjectTree *ObjectTree::init(){
 	
 	ObjectTree *resChao = new ObjectTree();
 	ObjectTree *telhado = new ObjectTree();
+	ObjectTree *deco = new ObjectTree();
 	raizObj = (new ObjectTree())
 		->addFilho( resChao )
 		->addFilho( telhado );
+
+	// decoração de paredes interiores (definido mais à frente)
+	resChao->addFilho( deco );
 
 	// chão
 	resChao->addFilho( (new ObjectTree)->objecto( new Plano(24*u+2*o, 40*u+2*o, 12, 20) )->translate(Vec3(12*u, 0, -20*u))
@@ -50,9 +54,9 @@ ObjectTree *ObjectTree::init(){
 		->addFilho( (new ObjectTree)->objecto( new Plano(a, 32*u+o, 2, 16) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*a, o, -8*u -0.5*(32*u+o) ))
 			->texture(TipoTextura::texParedePedra, 1, 1, -90))
 		->addFilho( (new ObjectTree)->objecto( new Plano(a, 4*u-o, 2, 2) )->rotate( 90, Vec3(0,0,1) )->rotate( 180, Vec3(1,0,0) )->translate(Vec3(0.5*a, o, 0.5*(4*u+o)))
-			->texture(TipoTextura::texParedePedra, 1, 1, -90)) //lado de dentro
+			->texture(TipoTextura::texParedeDentro, 1, 1, -90)) //lado de dentro
 		->addFilho( (new ObjectTree)->objecto( new Plano(a, 32*u-o, 2, 16) )->rotate( 90, Vec3(0,0,1) )->rotate( 180, Vec3(1,0,0) )->translate(Vec3(0.5*a, o, 8*u +0.5*(32*u-o) ))
-			->texture(TipoTextura::texParedePedra, 1, 1, -90)) //lado de dentro
+			->texture(TipoTextura::texParedeDentro, 1, 1, -90)) //lado de dentro
 		//madeira vertical fina
 		->addFilho( (new ObjectTree)->objecto( new Plano(a-q, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->translate(Vec3(0.5*(a-q), o+p, -q+o+p))
 			->texture(TipoTextura::texMadeira, 1, 1, -90))
@@ -97,7 +101,7 @@ ObjectTree *ObjectTree::init(){
 		->addFilho( (new ObjectTree)->objecto( new Plano(a, 2*(12*u+o), 2, 12) )->rotate( 90, Vec3(0,0,1) )->rotate(-90, Vec3(1,0,0))->translate(Vec3(0.5*a, 40*u+o, -(12*u)))
 			->texture(TipoTextura::texParedePedra, 1, 1, -90))
 		->addFilho( (new ObjectTree)->objecto( new Plano(a, 2*(12*u-o), 2, 12) )->rotate( 90, Vec3(0,0,1) )->rotate(90, Vec3(1,0,0))->translate(Vec3(0.5*a, -40*u+o, (12*u)))
-			->texture(TipoTextura::texParedePedra, 1, 1, -90)) //parte de dentro
+			->texture(TipoTextura::texParedeDentro, 1, 1, -90)) //parte de dentro
 		//madeira vertical fina
 		->addFilho( (new ObjectTree)->objecto( new Plano(a-q, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->rotate(-90, Vec3(1,0,0))->translate(Vec3(0.5*(a-q), 40*u+o+p, -q+o+p ))
 			->texture(TipoTextura::texMadeira, 1, 1, -90))
@@ -118,7 +122,7 @@ ObjectTree *ObjectTree::init(){
 		->addFilho( (new ObjectTree)->objecto( new Plano(a, 2*(12*u+o), 2, 12) )->rotate( 90, Vec3(0,0,1) )->rotate(90, Vec3(1,0,0))->translate(Vec3(0.5*a, o, (12*u)))
 			->texture(TipoTextura::texParedePedra, 1, 1, -90))
 		->addFilho( (new ObjectTree)->objecto( new Plano(a, 2*(12*u-o), 2, 12) )->rotate( 90, Vec3(0,0,1) )->rotate(-90, Vec3(1,0,0))->translate(Vec3(0.5*a, +o, -(12*u)))
-			->texture(TipoTextura::texParedePedra, 1, 1, -90)) //parte de dentro
+			->texture(TipoTextura::texParedeDentro, 1, 1, -90)) //parte de dentro
 		//madeira vertical fina
 		->addFilho( (new ObjectTree)->objecto( new Plano(a-q, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->rotate(90, Vec3(1,0,0))->translate(Vec3(0.5*(a-q), o+p, q-o-p ))
 			->texture(TipoTextura::texMadeira, 1, 1, -90))
@@ -139,7 +143,7 @@ ObjectTree *ObjectTree::init(){
 		->addFilho( (new ObjectTree)->objecto( new Plano(a, 2*(20*u+o), 2, 12) )->rotate( 90, Vec3(0,0,1) )->rotate(180, Vec3(1,0,0))->translate(Vec3(0.5*a, 24*u+o, (20*u)))
 			->texture(TipoTextura::texParedePedra, 1, 1, -90))
 		->addFilho( (new ObjectTree)->objecto( new Plano(a, 2*(20*u-o), 2, 12) )->rotate( 90, Vec3(0,0,1) )->rotate(0, Vec3(1,0,0))->translate(Vec3(0.5*a, -24*u+o, -(20*u)))
-			->texture(TipoTextura::texParedePedra, 1, 1, -90)) //parte de dentro
+			->texture(TipoTextura::texParedeDentro, 1, 1, -90)) //parte de dentro
 		//madeira vertical fina
 		->addFilho( (new ObjectTree)->objecto( new Plano(a-q, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->rotate(180, Vec3(1,0,0))->translate(Vec3(0.5*(a-q), 24*u+o+p, q-o-p ))
 			->texture(TipoTextura::texMadeira, 1, 1, -90))
@@ -221,9 +225,109 @@ ObjectTree *ObjectTree::init(){
 	); //fim balcão
 
 
+	// portas
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito às portas
+		->addFilho( (new ObjectTree)->objecto(new Plano(a-u, 2*u, 1, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3( 0.5*(a-u), o+p, -0.5*(2*u)-4*u))
+			->texture( TipoTextura::texDoorRight, 1, 1, -90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(a-u, 2*u, 1, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3( 0.5*(a-u), o+p, -0.5*(2*u)-6*u))
+			->texture( TipoTextura::texDoorLeft, 1, 1, -90))
+		//parte de dentro
+		->addFilho( (new ObjectTree)->objecto(new Plano(a-u, 2*u, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3( 0.5*(a-u), o+p, 0.5*(2*u)+6*u))
+			->texture( TipoTextura::texDoorRight, 1, 1, -90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(a-u, 2*u, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3( 0.5*(a-u), o+p, 0.5*(2*u)+4*u))
+			->texture( TipoTextura::texDoorLeft, 1, 1, -90))
+	); //fim portas
 
-		
+	// decoração de paredes interiores do lado da porta
+	for(int i=10; i<38; i+=2){
+		deco->addFilho( (new ObjectTree)->objecto(new Plano(a, m, 2, 1))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(0.5*a, o+p, i*u))
+			->texture(TipoTextura::texMadeira, 1, 2, 90));
+		deco->addFilho( (new ObjectTree)->objecto(new Plano(m, u+m, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(q, o+p, i*u+u))
+			->texture(TipoTextura::texMadeira, 1, 1, 0));
+		deco->addFilho( (new ObjectTree)->objecto(new Plano(m, u+m, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(a*0.5, o+p, i*u+u))
+			->texture(TipoTextura::texMadeira, 1, 1, 0));
+		deco->addFilho( (new ObjectTree)->objecto(new Plano(m, u+m, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(a-m+q, o+p, i*u+u))
+			->texture(TipoTextura::texMadeira, 1, 1, 0));
+	}
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(a, m, 2, 1))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(0.5*a, o+p, 38*u))
+		->texture(TipoTextura::texMadeira, 1, 2, 90));
+	//madeira vertical fina (lado de dentro)
+	deco->addFilho( (new ObjectTree)->objecto( new Plano(a, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->rotate( 180, Vec3(1,0,0) )->translate(Vec3(0.5*(a), o+p, 0.5*m+o+p))
+		->texture(TipoTextura::texMadeira, 1, 2, 90)); //esquina
+	deco->addFilho( (new ObjectTree)->objecto( new Plano(a, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->rotate( 180, Vec3(1,0,0) )->translate(Vec3(0.5*(a), o+p, -0.5*m+4*u))
+		->texture(TipoTextura::texMadeira, 1, 2, 90)); //lado da porta
+	deco->addFilho( (new ObjectTree)->objecto( new Plano(a, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->rotate( 180, Vec3(1,0,0) )->translate(Vec3(0.5*(a), o+p, 0.5*m+8*u))
+		->texture(TipoTextura::texMadeira, 1, 2, 90)); //outro lado da porta
+	deco->addFilho( (new ObjectTree)->objecto( new Plano(a, m, 2, 1) )->rotate( 90, Vec3(0,0,1) )->rotate( 180, Vec3(1,0,0) )->translate(Vec3(0.5*(a), o+p, -0.5*m+40*u-o-p))
+		->texture(TipoTextura::texMadeira, 1, 2, 90)); //esquina do fundo
+	//madeira vertical por cima da porta (lado de dentro)
+	deco->addFilho( (new ObjectTree)->objecto( new Plano(u, 4*u, 1, 2) )->rotate( 90, Vec3(0,0,1) )->rotate( 180, Vec3(1,0,0) )->translate(Vec3(a-m, o+p, 6*u))
+		->texture(TipoTextura::texMadeira, 4, 1, -90));
+	//madeira horizontal (lado de dentro)
+	deco->addFilho( (new ObjectTree)->objecto( new Plano(m, 2*u-q-m, 1, 1) )->rotate( 90, Vec3(0,0,1) )->rotate( 180, Vec3(1,0,0) )->translate(Vec3(a-q, o+p, 0.5*(2*u-q-m)+8*u+m))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 2*u-q-m, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(q, o+p, 0.5*(2*u-q-m)+8*u+m))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 2*u-q-m, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(a*0.5, o+p, 0.5*(2*u-q-m)+8*u+m))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 2*u-q-m-p-o, 1, 2))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(q, o+p, 0.5*(2*u-q-m-p-o)+38*u+q))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 2*u-q-m-p-o, 1, 2))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(a*0.5, o+p, 0.5*(2*u-q-m-p-o)+38*u+q))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 2*u-q-m-p-o, 1, 2))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(a-m+q, o+p, 0.5*(2*u-q-m-p-o)+38*u+q))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
 	
+	deco->addFilho( (new ObjectTree)->objecto( new Plano(m, 0.5*(4*u-o-p-u)-q, 1, 2) )->rotate( 90, Vec3(0,0,1) )->rotate( 180, Vec3(1,0,0) )->translate(Vec3(a-q, o+p, 0.5*(0.5*(4*u-o-p-u)-q)+o+p+m))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 0.5*(4*u-o-p-u)-q, 1, 2))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(q, o+p, 0.5*(0.5*(4*u-o-p-u)-q)+o+p+m))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 0.5*(4*u-o-p-u)-q, 1, 2))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(a*0.5, o+p, 0.5*(0.5*(4*u-o-p-u)-q)+o+p+m))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(a, m, 2, 1))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(0.5*a, o+p, 0.5*(4*u+o+p)))
+		->texture(TipoTextura::texMadeira, 1, 2, 90));
+	
+	deco->addFilho( (new ObjectTree)->objecto( new Plano(m, 0.5*(4*u-o-p-u)-q, 1, 2) )->rotate( 90, Vec3(0,0,1) )->rotate( 180, Vec3(1,0,0) )->translate(Vec3(a-q, o+p, -0.5*(0.5*(4*u-o-p-u)-q)+4*u-m))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 0.5*(4*u-o-p-u)-q, 1, 2))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(q, o+p, -0.5*(0.5*(4*u-o-p-u)-q)+4*u-m))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 0.5*(4*u-o-p-u)-q, 1, 2))->rotate(90, Vec3(0,0,1))->rotate(180, Vec3(1,0,0))->translate(Vec3(a*0.5, o+p, -0.5*(0.5*(4*u-o-p-u)-q)+4*u-m))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+	
+	
+	// decoração de paredes interiores do lado oposto ao da porta
+	for(int i=0; i<36; i+=2){
+		deco->addFilho( (new ObjectTree)->objecto(new Plano(a, m, 2, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3(0.5*a, -24*u+o+p, -0.5*(m)-i*u-o-p))
+			->texture(TipoTextura::texMadeira, 1, 2, 90));
+		deco->addFilho( (new ObjectTree)->objecto(new Plano(m, u+m, 1, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3(q, -24*u+o+p, -i*u-u-o-q-p))
+			->texture(TipoTextura::texMadeira, 1, 1, 0));
+		deco->addFilho( (new ObjectTree)->objecto(new Plano(m, u+m, 1, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3(a*0.5, -24*u+o+p, -i*u-u-o-q-p))
+			->texture(TipoTextura::texMadeira, 1, 1, 0));
+		deco->addFilho( (new ObjectTree)->objecto(new Plano(m, u+m, 1, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3(a-m+q, -24*u+o+p, -i*u-u-o-q-p))
+			->texture(TipoTextura::texMadeira, 1, 1, 0));
+	}
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(a, m, 2, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3(0.5*a, -24*u+o+p, -0.5*(m)-36*u-o-p))
+		->texture(TipoTextura::texMadeira, 1, 2, 90));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(a, m, 2, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3(0.5*a, -24*u+o+p, -0.5*(m)-40*u-o+m+q+p))
+		->texture(TipoTextura::texMadeira, 1, 2, 90));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 4*u-q-2*p-u, 1, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3(q, -24*u+o+p, -0.5*(4*u-q-2*p-u)-36*u-m-o-p))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 4*u-q-2*p-u, 1, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3(a*0.5, -24*u+o+p, -0.5*(4*u-q-2*p-u)-36*u-m-o-p))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 4*u-q-2*p-u, 1, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3(a-m+q, -24*u+o+p, -0.5*(4*u-q-2*p-u)-36*u-m-o-p))
+		->texture(TipoTextura::texMadeira, 1, 1, 0));
+	
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 2*(12*u-p-o), 1, 12))->rotate(90, Vec3(0,0,1))->rotate(-90, Vec3(1,0,0))->translate(Vec3(q, o+p, -0.5*(2*(12*u-p-o))-o-p))
+		->texture( TipoTextura::texMadeira, 1, 1, 0));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 2*(12*u-p-o), 1, 12))->rotate(90, Vec3(0,0,1))->rotate(-90, Vec3(1,0,0))->translate(Vec3(a-q, o+p, -0.5*(2*(12*u-p-o))-o-p))
+		->texture( TipoTextura::texMadeira, 1, 1, 0));
+	
+	// mesa bilhar
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à mesa de bilhar
+		->addFilho( (new ObjectTree)->objecto(new Plano(a-u, 2*u, 1, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3( 0.5*(a-u), o+p, -0.5*(2*u)-4*u))
+			->texture( TipoTextura::texDoorRight, 1, 1, -90))
+	); //fim mesa bilhar
 	
 	return NULL;
 }

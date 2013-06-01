@@ -22,12 +22,17 @@ private:
 	Vec3 *modsVec;
 	float *modsExtra;
 
+	// outras caracteristicas
 	bool texturizar;
 	Vec3 cor;
 	TipoTextura texTipo;
 	float texScaleX, texScaleY, texAnguloRotacao;
 	Light *luzes[8];
+	
+	// o objecto a desenhar
 	CG_OBJ *obj;
+
+	// activar/desactivar este objecto
 	bool *toggle;
 
 	// filhos

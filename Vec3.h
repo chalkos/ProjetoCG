@@ -17,6 +17,9 @@ public:
 	float Y();
 	float Z();
 	void setVal(int pos, float val);
+	void setX(float val);
+	void setY(float val);
+	void setZ(float val);
 	float *getAll(float *arr);
 
 	void reset(float A, float B, float C);

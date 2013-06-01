@@ -32,7 +32,7 @@ float Camera::ratio=0;
 Vec3 Camera::up;
 Vec3 Camera::center;
 
-float Camera::passo = 0.5;
+float Camera::passo = 1.5;
 
 void Camera::renderString( float x, float y, int spacing, Fonts font, char *string) {
 	char *c;
@@ -156,7 +156,7 @@ void Camera::init(float x, float y, float z){
 	up = Vec3(0,1,0);
 
 	Camera::dnear = 1.0f;
-	Camera::dfar = 400.0f;
+	Camera::dfar = 470.0f;
 
 	Camera::fov = 60.0f;
 

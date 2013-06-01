@@ -110,3 +110,15 @@ float *Vec3::getAll(float *arr){
 float Vec3::norma(){
 	return sqrt( vec[0] * vec[0] + vec[1] * vec[1] + vec[1] * vec[2] );
 }
+
+void Vec3::setX(float val){
+	setVal(0, val);
+}
+
+void Vec3::setY(float val){
+	setVal(1, val);
+}
+
+void Vec3::setZ(float val){
+	setVal(2, val);
+}

@@ -39,6 +39,10 @@ void Textura::init(){
 	strcpy_s( Textura::filenames[texAlcatifaVermelha], FILENAME_MAX_SIZE, "Texturas/alcatifaVermelha.png" );
 	strcpy_s( Textura::filenames[texMadeiraVermelha], FILENAME_MAX_SIZE, "Texturas/madeiraVermelha.png" );
 	strcpy_s( Textura::filenames[texMarble], FILENAME_MAX_SIZE, "Texturas/marble.png" );
+	strcpy_s( Textura::filenames[texDoorLeft], FILENAME_MAX_SIZE, "Texturas/doorLeft.png" );
+	strcpy_s( Textura::filenames[texDoorRight], FILENAME_MAX_SIZE, "Texturas/doorRight.png" );
+	strcpy_s( Textura::filenames[texParedeDentro], FILENAME_MAX_SIZE, "Texturas/paredeDentro.png" );
+
 
 	// gerar identificadores de imagem
 	Textura::imageIds = (ILuint*)malloc(sizeof(ILuint) * texCOUNT_ENUM);

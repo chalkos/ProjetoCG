@@ -26,6 +26,7 @@ protected:
 
 	Vec3 minBound;
 	Vec3 maxBound;
+	void calculateBounds();
 
 	int nTriangulos; // numero de triangulos
 	int nVertices;   // numero de vertices
@@ -70,7 +71,11 @@ public:
 
 	// obtém o numero máximo de buffers actual
 	static int getMaxBuffers();
-
+	
+	// obtém o tamanho do objecto nos vários eixos
+	float getCompX();
+	float getCompY();
+	float getCompZ();
 	
 
 	CG_OBJ *setEmissiva(float r, float g, float b);
