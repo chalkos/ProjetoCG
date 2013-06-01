@@ -72,6 +72,9 @@
     <ClCompile Include="ObjectTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Figuras\Triangulo.cpp">
+      <Filter>Figuras</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities.h">
@@ -125,6 +128,9 @@
     <ClInclude Include="ObjectTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Figuras\Triangulo.h">
+      <Filter>Figuras</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texturas\madeira.png">
@@ -158,6 +164,18 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Texturas\madeiraEscura.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\alcatifaVermelha.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\calmCookie.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\madeiraVermelha.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\marble.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

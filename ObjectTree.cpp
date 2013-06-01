@@ -11,6 +11,7 @@
 #include "Figuras\Cilindro.h"
 #include "Figuras\Esfera.h"
 #include "Figuras\SolidoRevolucao.h"
+#include "Figuras\Triangulo.h"
 
 #define a 60   // altura das paredes (6*u)
 #define u 10   // undidade
@@ -24,25 +25,18 @@ ObjectTree *ObjectTree::raizObj = NULL;
 
 ObjectTree *ObjectTree::init(){
 
-	CG_OBJ::prepararBuffer(50); // preparar buffers
+	CG_OBJ::prepararBuffer(100); // preparar buffers
 
 	Light *lTeste = (new Light(luz0))
 		->setPos(Vec3(10,10,10), 0)
 		->setAmb(Vec3(0.2, 0.2, 0.2))
 		->setDif(Vec3(0.9, 0.9, 0.9));
 	
-	//raizObj->objecto( (new SolidoRevolucao(TipoSolidoRevolucao::mesa, 3))->setAmbiente(0,0,1) )->scale(Vec3(30, 30, 30));
-	//raizObj->objecto( (new SolidoRevolucao(TipoSolidoRevolucao::copoChampanhe, 30))->setAmbiente(0,0,1) );
-	
 	ObjectTree *resChao = new ObjectTree();
-	ObjectTree *primeiroPiso = new ObjectTree();
 	ObjectTree *telhado = new ObjectTree();
 	raizObj = (new ObjectTree())
 		->addFilho( resChao )
-		->addFilho( primeiroPiso )
 		->addFilho( telhado );
-	
-	resChao;//->objecto( new Plano(100*a, 20, 20) )->texture(TipoTextura::texRelva, 1,1,0);
 
 	// chão
 	resChao->addFilho( (new ObjectTree)->objecto( new Plano(24*u+2*o, 40*u+2*o, 12, 20) )->translate(Vec3(12*u, 0, -20*u))
@@ -162,12 +156,71 @@ ObjectTree *ObjectTree::init(){
 			->texture(TipoTextura::texMadeira, 0.5, 1, 0))
 	); //fim paredes do lado em frente à porta
 
-
-
+	// palco
 	/*
-		->addFilho( (new ObjectTree)
-			->objecto( (new Plano(50,25,25))->setAmbiente(0,1,0) )
-			->rotate( 45, Vec3(1,0,0)))*/
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar as escadas
+		->addFilho( (new ObjectTree)->objecto(new Plano(16*u, 16*u, 1, 1))->translate(Vec3(12*u, q, -32*u))
+			->texture( TipoTextura::texAlcatifaVermelha, 4, 4, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(q, 16*u, 1, 32))->rotate( 90, Vec3(0,0,1) )->rotate( 90, Vec3(1,0,0) )->translate(Vec3(q/2, -24*u, 12*u))
+			->texture( TipoTextura::texMadeiraVermelha, 1, 1, 180))
+		->addFilho( (new ObjectTree)->objecto(new Plano(q, 16*u, 1, 32))->rotate( 90, Vec3(0,0,1) )->translate(Vec3(q/2, -4*u,-32*u))
+			->texture( TipoTextura::texMadeiraVermelha, 1, 1, 180))
+		->addFilho( (new ObjectTree)->objecto(new Plano(q, 16*u, 1, 32))->rotate( 90, Vec3(0,0,1) )->rotate( 180, Vec3(1,0,0) )->translate(Vec3(q/2, 20*u, 32*u))
+			->texture( TipoTextura::texMadeiraVermelha, 1, 1, 180))
+	); //fim palco*/
+
+	// balcão
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar as partes do balcão
+		//pés do balcão
+		->addFilho( (new ObjectTree)->objecto(new Plano(o, 7*u, 1, 3))->rotate(90, Vec3(0,0,1))->translate(Vec3( 0.5*o, -11*u+o, -3.5*u-o ))
+			->texture( TipoTextura::texMadeiraEscura, 0.1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(o, 11*u+q, 1, 3))->rotate(90, Vec3(0,0,1))->rotate(-90,Vec3(1,0,0))->translate(Vec3(0.5*o, 7*u+o, -0.5*(11*u+q)-11*u+o))
+			->texture( TipoTextura::texMadeiraEscura, 0.1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(o, u, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(180,Vec3(1,0,0))->translate(Vec3( 0.5*o, 22*u+o, m+6*u+o ))
+			->texture( TipoTextura::texMadeiraEscura, 0.1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(o, 10*u+q, 1, 3))->rotate(90, Vec3(0,0,1))->rotate(90,Vec3(1,0,0))->translate(Vec3(0.5*o, -6*u-o, 0.5*(10*u+q)+12*u-o))
+			->texture( TipoTextura::texMadeiraEscura, 0.1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(o, 6*u, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(180,Vec3(1,0,0))->translate(Vec3( 0.5*o, 12*u-o, 3*u+o ))
+			->texture( TipoTextura::texMadeiraEscura, 0.1, 1, 0))
+		//corpo do balcão
+		->addFilho( (new ObjectTree)->objecto(new Plano(u+m+q, 7*u+o, 1, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3( 0.5*(u+m+q)+o, -11*u+q, -0.5*(7*u+o)-o ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 2, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(u+m+q, 11*u+m, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(-90, Vec3(1,0,0))->translate(Vec3( 0.5*(u+m+q)+o, 7*u+q, -0.5*(11*u+m)-11*u+q))
+			->texture( TipoTextura::texMadeiraEscura, 1, 3, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(u+m+q, 10*u+q, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(90, Vec3(1,0,0))->translate(Vec3( 0.5*(u+m+q)+o, -6*u, 0.5*(10*u+m)+12*u-o))
+			->texture( TipoTextura::texMadeiraEscura, 1, 3, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(u+m+q, 6*u-o, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(180,Vec3(1,0,0))->translate(Vec3( 0.5*(u+m+q)+o, 12*u, 0.5*(6*u-o)+o ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 2, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(u+m+q, u+q, 1, 1))->rotate(90, Vec3(0,0,1))->rotate(180,Vec3(1,0,0))->translate(Vec3( 0.5*(u+m+q)+o, 22*u+q, 0.5*(u+q)+(6*u-o)+o ))
+			->texture( TipoTextura::texMadeiraEscura, 0.3, 1, 90))
+		//Tampo do balcão parte de baixo
+		->addFilho( (new ObjectTree)->objecto(new Plano(2*u, 8*u-o, 1, 1))->rotate(180, Vec3(0,0,1))->translate(Vec3( -0.5*(2*u)-10*u, -2*u+o, -0.5*(8*u-o)-o))
+			->texture( TipoTextura::texMarble, 3, 1, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(9*u+m+m+q, 2*u, 1, 1))->rotate(180, Vec3(0,0,1))->translate(Vec3( -0.5*(9*u+m+m+q)-12*u, -2*u+o, -0.5*(2*u)-6*u))
+			->texture( TipoTextura::texMarble, 1, 4, 90))
+		//Tampo, parte lateral
+		->addFilho( (new ObjectTree)->objecto(new Plano(o, 8*u-o, 1, 1))->rotate(90,Vec3(0,0,1))->translate(Vec3( 0.5*o+2*u-o, -10*u, -0.5*(8*u-o)-o))
+			->texture( TipoTextura::texMarble, 3, 0.1, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(o, 11*u+m+m+q, 1, 1))->rotate(90,Vec3(0,0,1))->rotate(-90,Vec3(1,0,0))->translate(Vec3( 0.5*o+2*u-o, 8*u, -0.5*(11*u+m+m+q)-10*u))
+			->texture( TipoTextura::texMarble, 3, 0.1, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(o, 9*u+m+m+q, 1, 1))->rotate(90,Vec3(0,0,1))->rotate(90,Vec3(1,0,0))->translate(Vec3( 0.5*o+2*u-o, -6*u, 0.5*(9*u+m+m+q)+12*u))
+			->texture( TipoTextura::texMarble, 3, 0.1, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(o, 2*u, 1, 1))->rotate(90,Vec3(0,0,1))->rotate(180,Vec3(1,0,0))->translate(Vec3( 0.5*o+2*u-o, 22*u+q, 0.5*(2*u)+6*u))
+			->texture( TipoTextura::texMarble, 1, 0.1, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(o, 6*u-o, 1, 1))->rotate(90,Vec3(0,0,1))->rotate(180,Vec3(1,0,0))->translate(Vec3( 0.5*o+2*u-o, 12*u, 0.5*(6*u-o)+o))
+			->texture( TipoTextura::texMarble, 3, 0.1, 90))
+		//Tampo do balcão parte de cima
+		->addFilho( (new ObjectTree)->objecto(new Plano(2*u, 6*u-o, 1, 1))->translate(Vec3( 0.5*(2*u)+10*u, 2*u, -0.5*(6*u-o)-o))
+			->texture( TipoTextura::texMarble, 3, 1, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(2*u, 2*u, 1, 1))->translate(Vec3(0.5*(2*u) + 10*u, 2*u, -0.5*(2*u) + -6*u))
+			->texture( TipoTextura::texMarble, 1, 1, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(9*u+m+m+q, 2*u, 1, 1))->translate(Vec3( 0.5*(9*u+m+m+q)+12*u, 2*u, -0.5*(2*u)-6*u))
+			->texture( TipoTextura::texMarble, 1, 3, 90))
+		//cenas em cima do balcão
+			//...
+	); //fim balcão
+
+
 
 		
 	
