@@ -62,26 +62,6 @@ void renderScene(void) {
 		glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 	}
 
-
-	// ligar e posicionar as luzes
-	Light::enable(GL_LIGHTING);
-	/*Light::enable(GL_LIGHT0);
-
-	Light::ambiente(GL_LIGHT0, 0.2,0.2,0.2);
-	Light::difusa(GL_LIGHT0, 0.9,0.9,0.9);
-
-	//Light::posicao(GL_LIGHT0, 125*sin(Input::teste2), Input::teste1 ,110 + 125*cos(Input::teste2), 1.0);
-	Light::posicao(GL_LIGHT0, Input::teste3*sin(Input::teste2), Input::teste1 ,Input::teste3*cos(Input::teste2), 1.0);
-	
-	glPushMatrix();
-	//glTranslatef(125*sin(Input::teste2), Input::teste1 ,100 + 125*cos(Input::teste2));
-	glTranslatef(Input::teste3*sin(Input::teste2), Input::teste1 ,Input::teste3*cos(Input::teste2));
-	//Textura::setTextura(texLava1);
-	//Figuras::desenharEmissorLuz();
-	glutSolidSphere(5, 10, 10);
-	glPopMatrix();
-	*/
-
 	ObjectTree::draw();
 
 	Textura::unsetTextura();

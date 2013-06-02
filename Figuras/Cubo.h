@@ -9,13 +9,16 @@ protected:
 	int camadasx;
 	int camadasy;
 	int camadasz;
-	float lado;
+	float compX;
+	float compY;
+	float compZ;
 	
 	///////////////////// herdado
 	void preencherVertices();
 
 public:
 	Cubo(float lado, int camadasx, int camadasy, int camadasz);
+	Cubo(float compX, float compY, float compZ, int camadasx, int camadasy, int camadasz);
 };
 
 #endif // __CUBO_H_INCLUDED__

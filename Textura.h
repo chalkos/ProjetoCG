@@ -26,6 +26,9 @@ enum TipoTextura : int {
 	texDoorRight,
 	texParedeDentro,
 	texBilharTecido,
+	texMadeiraSimples,
+	texPlastico,
+	texTecto,
 
 	// não acrescentar nada depois deste elemento
 	texCOUNT_ENUM

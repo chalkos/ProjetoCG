@@ -30,28 +30,32 @@
 
 
 ObjectTree *ObjectTree::raizObj = NULL;
+Light *ObjectTree::luzesGlobais[8];
 
 void ObjectTree::init(){
 
-	CG_OBJ::prepararBuffer(300); // preparar buffers
+	CG_OBJ::prepararBuffer(400); // preparar buffers
 
-	Light *lTeste = (new Light(luz0))
-		->setPos(Vec3(10,10,10), 0)
-		->setAmb(Vec3(0.2, 0.2, 0.2))
-		->setDif(Vec3(0.9, 0.9, 0.9));
+	luzesGlobais[0] = (new Light(luz0))->setPos(Vec3(8*u, a, -13*u), 1)->setAmb(Vec3(0.2, 0.2, 0.2))->setDif(Vec3(1,1,1));
+	luzesGlobais[1] = (new Light(luz1))->setPos(Vec3(16*u, a, -13*u), 1)->setAmb(Vec3(0.2, 0.2, 0.2))->setDif(Vec3(1,1,1));
+	luzesGlobais[2] = (new Light(luz2))->setPos(Vec3(8*u, a, -26*u), 1)->setAmb(Vec3(0.2, 0.2, 0.2))->setDif(Vec3(1,1,1));
+	luzesGlobais[3] = (new Light(luz3))->setPos(Vec3(16*u, a, -26*u), 1)->setAmb(Vec3(0.2, 0.2, 0.2))->setDif(Vec3(1,1,1));
+
+	Vec3 posObjecto = Vec3(0,0,0); //posição do proximo banco a desenhar
 	
 	ObjectTree *resChao = new ObjectTree();
-	ObjectTree *telhado = new ObjectTree();
 	ObjectTree *deco = new ObjectTree();
 	raizObj = (new ObjectTree())
 		->addFilho( resChao )
 		->addFilho( deco )
-		//->addFilho( telhado )
 		;
 
 	// chão
 	resChao->addFilho( (new ObjectTree)->objecto( new Plano(24*u+2*o, 40*u+2*o, 12, 20) )->translate(Vec3(12*u, 0, -20*u))
 		->texture(TipoTextura::texChaoMadeira, 1, 1, 0));
+	// tecto
+	resChao->addFilho( (new ObjectTree)->objecto( new Plano(24*u+2*o, 40*u+2*o, 12, 20) )->rotate(-180, Vec3(0,0,1))->translate(Vec3(-12*u, -a, -20*u))
+		->texture(TipoTextura::texTecto, 1, 1, 0));
 
 	// paredes do lado da porta
 	resChao->addFilho( (new ObjectTree) //apenas para agrupar as paredes deste lado
@@ -227,8 +231,6 @@ void ObjectTree::init(){
 			->texture( TipoTextura::texMarble, 1, 1, 90))
 		->addFilho( (new ObjectTree)->objecto(new Plano(9*u+m+m+q, 2*u, 1, 1))->translate(Vec3( 0.5*(9*u+m+m+q)+12*u, 2*u, -0.5*(2*u)-6*u))
 			->texture( TipoTextura::texMarble, 1, 3, 90))
-		//cenas em cima do balcão
-			//...
 	); //fim balcão
 
 
@@ -392,7 +394,7 @@ void ObjectTree::init(){
 		// tecido acima
 		->addFilho( (new ObjectTree)->objecto(new Plano(q, 4*u, 1, 2))->translate(Vec3( 0.5*(q)+14*u-q, 2*u+q, -40*u+0.5*(4*u)+7*u))
 			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
-		->addFilho( (new ObjectTree)->objecto(new Plano(q, 4*u, 1, 2))->translate(Vec3( 0.5*(q)+110*u, 2*u+q, -40*u+0.5*(4*u)+7*u))
+		->addFilho( (new ObjectTree)->objecto(new Plano(q, 4*u, 1, 2))->translate(Vec3( 0.5*(q)+20*u, 2*u+q, -40*u+0.5*(4*u)+7*u))
 			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
 		->addFilho( (new ObjectTree)->objecto(new Plano(6*u+m, q, 3, 1))->translate(Vec3( 0.5*(6*u+m)+14*u-q, 2*u+q, -40*u+0.5*(q)+7*u-q))
 			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
@@ -425,10 +427,262 @@ void ObjectTree::init(){
 			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
 		->addFilho( (new ObjectTree)->objecto(new SolidoRevolucao(pernaBilhar, 10))->scale(Vec3(u,u,u))->translate(Vec3( (0.5*(m+q)+19*u)/u, 0, (-40*u+0.5*(m+q)+10*u)/u ))
 			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		// bolas
+		->addFilho( (new ObjectTree)->objecto( (new Esfera(q*0.5, 15, 15))->setAmbiente(0,0.6,0)->setDifusa(0.6,1,0.6)->setShininess(70) )->texture(texParedeDentro, 0.001, 0.001, 0)
+			->translate( Vec3(0.5*(6*u)+12*u, 2*u+0.5*q, -40*u+0.5*(4*u)+7*u+q)))
+		->addFilho( (new ObjectTree)->objecto( (new Esfera(q*0.5, 15, 15))->setAmbiente(0.6,0.6,0)->setDifusa(1,1,0.6)->setShininess(70) )->texture(texParedeDentro, 0.001, 0.001, 0)
+			->translate( Vec3(0.5*(6*u)+14*u, 2*u+0.5*q, -40*u+0.5*(4*u)+7*u)))
+		->addFilho( (new ObjectTree)->objecto( (new Esfera(q*0.5, 15, 15))->setAmbiente(0,0.6,0.6)->setDifusa(0.6,1,1)->setShininess(70) )->texture(texParedeDentro, 0.001, 0.001, 0)
+			->translate( Vec3(0.5*(6*u)+13*u, 2*u+0.5*q, -40*u+0.5*(4*u)+7*u-o)))
 	); //fim mesa bilhar
 
+	
+	// banco
+	posObjecto.reset(9*u+m, 0, -u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito ao banco
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q), +2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q), +2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+	);
+	posObjecto.reset(9*u+m, 0, -3*u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito ao banco
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q), +2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q), +2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+	);
+	posObjecto.reset(9*u+m, 0, -5*u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito ao banco
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q), +2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q), +2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+	);
+	posObjecto.reset(20*u, 0, -9*u+m);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito ao banco
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q), +2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q), +2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+	);
+	posObjecto.reset(18*u, 0, -9*u+m);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito ao banco
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q), +2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q), +2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+	);
+	posObjecto.reset(16*u, 0, -9*u+m);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito ao banco
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q), +2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q), +2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+	);
+	
 
+	posObjecto.reset(6*u, 0, -15*u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à cadeira
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		// encosto (suporte)
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// encosto
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, m, o, 1, 3, 1))->translate( Vec3( posObjecto.X(), 1.7*(u+q-0.5*o)+o, +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+	);
+	posObjecto.reset(7*u+q, 0, -15*u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à cadeira
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		// encosto (suporte)
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// encosto
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, m, o, 1, 3, 1))->translate( Vec3( posObjecto.X(), 1.7*(u+q-0.5*o)+o, +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+	);
+	posObjecto.reset(7*u+q, 0, -19*u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à cadeira
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		// encosto (suporte)
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, -m+o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, -m+o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// encosto
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, m, o, 1, 3, 1))->translate( Vec3( posObjecto.X(), 1.7*(u+q-0.5*o)+o, -m+o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+	);
+	posObjecto.reset(6*u, 0, -19*u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à cadeira
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		// encosto (suporte)
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, -m+o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, -m+o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// encosto
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, m, o, 1, 3, 1))->translate( Vec3( posObjecto.X(), 1.7*(u+q-0.5*o)+o, -m+o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+	);
+	posObjecto.reset(6*u+m, 0, -17*u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à mesa
+		->addFilho( (new ObjectTree)->objecto(new Cilindro(m+q, o, 15, 1))->translate( Vec3( posObjecto.X(), 0.5*o, posObjecto.Z() ) )
+			->texture(TipoTextura::texPlastico, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cilindro(q, u+m+q, 15, 1))->translate( Vec3( posObjecto.X(), 0.5*(u+m+q)+o, posObjecto.Z() ) )
+			->texture(TipoTextura::texPlastico, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cilindro(u+q, o*0.5, 25, 1))->translate( Vec3( posObjecto.X(), 0.25*o+(u+m+q)+o, posObjecto.Z() ) )
+			->texture(TipoTextura::texMarble, 1, 1, 0))
+	);
 
+	
+	posObjecto.reset(13*u, 0, -15*u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à cadeira
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		// encosto (suporte)
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// encosto
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, m, o, 1, 3, 1))->translate( Vec3( posObjecto.X(), 1.7*(u+q-0.5*o)+o, +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+	);
+	posObjecto.reset(14*u+q, 0, -15*u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à cadeira
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		// encosto (suporte)
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// encosto
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, m, o, 1, 3, 1))->translate( Vec3( posObjecto.X(), 1.7*(u+q-0.5*o)+o, +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+	);
+	posObjecto.reset(14*u+q, 0, -19*u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à cadeira
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		// encosto (suporte)
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, -m+o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, -m+o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// encosto
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, m, o, 1, 3, 1))->translate( Vec3( posObjecto.X(), 1.7*(u+q-0.5*o)+o, -m+o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+	);
+	posObjecto.reset(13*u, 0, -19*u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à cadeira
+		// tampo
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, o, u, 2, 1, 2))->translate( Vec3( posObjecto.X(), u+q, posObjecto.Z() ) )->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), -2.5*o+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 0.5*(u+q-0.5*o), +m-o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 3, 0))
+		// encosto (suporte)
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( -2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, -m+o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cubo(o, u+q-0.5*o, o*0.5, 1, 3, 1))->translate( Vec3( +2.5*o+posObjecto.X(), 1.5*(u+q-0.5*o)+o, -m+o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+		// encosto
+		->addFilho( (new ObjectTree)->objecto(new Cubo(u, m, o, 1, 3, 1))->translate( Vec3( posObjecto.X(), 1.7*(u+q-0.5*o)+o, -m+o*0.5+posObjecto.Z()))->texture(TipoTextura::texMadeiraSimples, 1, 1, 0))
+	);
+	posObjecto.reset(13*u+m, 0, -17*u);
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à mesa
+		->addFilho( (new ObjectTree)->objecto(new Cilindro(m+q, o, 15, 1))->translate( Vec3( posObjecto.X(), 0.5*o, posObjecto.Z() ) )
+			->texture(TipoTextura::texPlastico, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cilindro(q, u+m+q, 15, 1))->translate( Vec3( posObjecto.X(), 0.5*(u+m+q)+o, posObjecto.Z() ) )
+			->texture(TipoTextura::texPlastico, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Cilindro(u+q, o*0.5, 25, 1))->translate( Vec3( posObjecto.X(), 0.25*o+(u+m+q)+o, posObjecto.Z() ) )
+			->texture(TipoTextura::texMarble, 1, 1, 0))
+	);
+
+	//copos e garrafas no balcão
+	resChao->addFilho( (new ObjectTree) // apenas para agrupar as garrafas e copos no balcao
+		->addFilho( (new ObjectTree)->objecto( (new SolidoRevolucao(copoChampanhe, 20))->setEspecular(1,1,1)->setShininess(50)->setAmbiente(0.1,0.1,0.3) )->texture(texShinyMetal,1, 1,0)
+			->scale(Vec3(0.025, 0.025, 0.025))->translate( Vec3(11*u, 2*u, -7*u).multiplicar(1/0.025) ))
+		->addFilho( (new ObjectTree)->objecto( (new SolidoRevolucao(copoChampanhe, 20))->setEspecular(1,1,1)->setShininess(50)->setAmbiente(0.1,0.1,0.3) )->texture(texShinyMetal,1, 1,0)
+			->scale(Vec3(0.025, 0.025, 0.025))->translate( Vec3(11*u+m, 2*u, -7*u).multiplicar(1/0.025) ))
+		
+		->addFilho( (new ObjectTree)->objecto( (new SolidoRevolucao(copoVinho, 20))->setEspecular(1,1,1)->setShininess(50)->setAmbiente(0.3,0.1,0.1) )->texture(texShinyMetal,1, 1,0)
+			->scale(Vec3(0.008, 0.008, 0.008))->translate( Vec3(12*u, 2*u, -7*u).multiplicar(1/0.008) ))
+		->addFilho( (new ObjectTree)->objecto( (new SolidoRevolucao(copoVinho, 20))->setEspecular(1,1,1)->setShininess(50)->setAmbiente(0.3,0.1,0.1) )->texture(texShinyMetal,1, 1,0)
+			->scale(Vec3(0.008, 0.008, 0.008))->translate( Vec3(12*u+m, 2*u, -7*u).multiplicar(1/0.008) ))
+		
+		->addFilho( (new ObjectTree)->objecto( (new SolidoRevolucao(garrafa, 20))->setEspecular(1,1,1)->setShininess(50)->setAmbiente(0.4,0.2,0.1) )->texture(texShinyMetal,1, 1,0)
+			->scale(Vec3(0.03, 0.03, 0.03))->translate( Vec3(13*u, 2*u, -7*u).multiplicar(1/0.03) ))
+		->addFilho( (new ObjectTree)->objecto( (new SolidoRevolucao(garrafa, 20))->setEspecular(1,1,1)->setShininess(50)->setAmbiente(0.4,0.2,0.1) )->texture(texShinyMetal,1, 1,0)
+			->scale(Vec3(0.03, 0.03, 0.03))->translate( Vec3(13*u+m, 2*u, -7*u).multiplicar(1/0.03) ))
+		
+		->addFilho( (new ObjectTree)->objecto( (new SolidoRevolucao(copoSimples, 20))->setEspecular(1,1,1)->setShininess(50)->setAmbiente(0.1,0.4,0.1) )->texture(texShinyMetal,1, 1,0)
+			->scale(Vec3(0.5, 0.5, 0.5))->translate( Vec3(11*u, 2*u, -6*u).multiplicar(1/0.5) ))
+		->addFilho( (new ObjectTree)->objecto( (new SolidoRevolucao(copoSimples, 20))->setEspecular(1,1,1)->setShininess(50)->setAmbiente(0.1,0.4,0.1) )->texture(texShinyMetal,1, 1,0)
+			->scale(Vec3(0.5, 0.5, 0.5))->translate( Vec3(11*u, 2*u, -6*u-m).multiplicar(1/0.5) ))
+	);
+
+	//Lampadas
+	resChao->addFilho( (new ObjectTree) // apenas para agrupar as garrafas e copos no balcao
+		->addFilho( (new ObjectTree)->objecto( (new Esfera(m, 20, 20))->setEmissiva(0.6,0.6,0) )->texture(texParedeDentro,0.01, 0.01,0)
+			->translate( Vec3(8*u+q, a, -13*u-q) ))
+		->addFilho( (new ObjectTree)->objecto( (new Esfera(m, 20, 20))->setEmissiva(0.6,0.6,0) )->texture(texParedeDentro,0.01, 0.01,0)
+			->translate( Vec3(8*u+q, a, -26*u-q) ))
+		->addFilho( (new ObjectTree)->objecto( (new Esfera(m, 20, 20))->setEmissiva(0.6,0.6,0) )->texture(texParedeDentro,0.01, 0.01,0)
+			->translate( Vec3(16*u+q, a, -13*u-q) ))
+		->addFilho( (new ObjectTree)->objecto( (new Esfera(m, 20, 20))->setEmissiva(0.6,0.6,0) )->texture(texParedeDentro,0.01, 0.01,0)
+			->translate( Vec3(16*u+q, a, -26*u-q) ))
+	);
+
+	/*
+	
+	luzesGlobais[0] = (new Light(luz0))->setPos(Vec3(6*u, a, -13*u), 1)->setAmb(Vec3(0.2, 0.2, 0.2))->setDif(Vec3(1,1,1));
+	luzesGlobais[1] = (new Light(luz1))->setPos(Vec3(12*u, a, -13*u), 1)->setAmb(Vec3(0.2, 0.2, 0.2))->setDif(Vec3(1,1,1));
+	luzesGlobais[2] = (new Light(luz2))->setPos(Vec3(6*u, a, -26*u), 1)->setAmb(Vec3(0.2, 0.2, 0.2))->setDif(Vec3(1,1,1));
+	luzesGlobais[3] = (new Light(luz3))->setPos(Vec3(12*u, a, -26*u), 1)->setAmb(Vec3(0.2, 0.2, 0.2))->setDif(Vec3(1,1,1));
+	*/
 	
 	checkBounds(raizObj);
 }
@@ -509,6 +763,9 @@ void ObjectTree::localEfectivo(ObjectTree *tree, Vec3 *ponto){
 }
 
 void ObjectTree::draw(){
+	Light::enable(GL_LIGHTING);
+	for(int i=0; i<4; i++)
+		luzesGlobais[i]->aplicarELigar();
 	drawAux( raizObj, frusIntersecta);
 }
 
@@ -530,16 +787,17 @@ void ObjectTree::drawAux( ObjectTree *raiz, PosicaoNoFrustum posNoFrustum){
 		glPushMatrix();
 
 		// ligar luzes
+		/*
 		for(int i=0; i<8; i++){
 			if( raiz->luzes[i] == NULL ){
 				if( i == 0 ){ //não ligou nenhum luz
-					Light::disable(GL_LIGHTING);
-					glColor3f( raiz->cor.X(), raiz->cor.Y(), raiz->cor.Z());
+					//Light::disable(GL_LIGHTING);
+					//glColor3f( raiz->cor.X(), raiz->cor.Y(), raiz->cor.Z());
 				}
 				break;
 			}
 			raiz->luzes[i]->aplicarELigar();
-		}
+		}*/
 
 		/*
 		// mostrar bounding boxes
@@ -571,10 +829,16 @@ void ObjectTree::drawAux( ObjectTree *raiz, PosicaoNoFrustum posNoFrustum){
 		*/
 
 		// colocar textura
-		if( raiz->texTipo >= 0 && raiz->texTipo < TipoTextura::texCOUNT_ENUM)
-			Textura::setTextura(raiz->texTipo, raiz->texScaleX, raiz->texScaleY, raiz->texAnguloRotacao);
-		else
+		if( raiz->texturizar ){
+			if( raiz->texTipo >= 0 && raiz->texTipo < TipoTextura::texCOUNT_ENUM)
+				Textura::setTextura(raiz->texTipo, raiz->texScaleX, raiz->texScaleY, raiz->texAnguloRotacao);
+			else
+				Textura::unsetTextura();
+		}else{
+			//Light::disable(GL_LIGHTING);
 			Textura::unsetTextura();
+			glColor3f( raiz->cor.X(), raiz->cor.Y(), raiz->cor.Z() );
+		}
 
 		for(int i=0; i<raiz->modsCount; i++)
 			switch( raiz->modsTipo[i] ){
@@ -592,16 +856,20 @@ void ObjectTree::drawAux( ObjectTree *raiz, PosicaoNoFrustum posNoFrustum){
 		// efectivamente desenhar
 		raiz->obj->desenhar();
 		
+		if( !raiz->texturizar ){
+			Light::enable(GL_LIGHTING);
+		}
 
 		// desligar luzes
+		/*
 		for(int i=0; i<8; i++){
 			if( raiz->luzes[i] == NULL ){
 				if( i == 0 ) //voltar a ligar a iluminação
-					Light::enable(GL_LIGHTING);
+					;//Light::enable(GL_LIGHTING);
 				break;
 			}
 			raiz->luzes[i]->desligar();
-		}
+		}*/
 
 		glPopMatrix(); 
 	}
@@ -684,6 +952,18 @@ ObjectTree *ObjectTree::texture( TipoTextura tipo, float sX, float sY, float ang
 	this->texScaleX = sX;
 	this->texScaleY = sY;
 	this->texAnguloRotacao = anguloRot;
+	return this;
+}
+
+ObjectTree *ObjectTree::addLights( Light *luzes[], int i0, int i1, int i2, int i3, int i4, int i5, int i6, int i7){
+	if(i0 != -1) this->addLight( luzes[i0] );
+	if(i1 != -1) this->addLight( luzes[i1] );
+	if(i2 != -1) this->addLight( luzes[i2] );
+	if(i3 != -1) this->addLight( luzes[i3] );
+	if(i4 != -1) this->addLight( luzes[i4] );
+	if(i5 != -1) this->addLight( luzes[i5] );
+	if(i6 != -1) this->addLight( luzes[i6] );
+	if(i7 != -1) this->addLight( luzes[i7] );
 	return this;
 }
 

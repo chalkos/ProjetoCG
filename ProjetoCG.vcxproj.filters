@@ -175,5 +175,14 @@
     <Image Include="Texturas\bilharTecido.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Texturas\madeiraSimples.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\tecto.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\plastico.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

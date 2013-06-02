@@ -47,9 +47,6 @@ protected:
 	void revolutionSolidClose(float *x, float *y, int count, int fatias);
 	void revolutionSolidOpen(float *x, float *y, int count, int fatias);
 
-	// preencher o array de vértices de acordo com os dados do solido de distorção
-	void distortionSolid(Vec3 *pontos, float raio, int count, int fatias);
-
 	// várias propriedades
 	Vec3 emissiva;
 	Vec3 especular;

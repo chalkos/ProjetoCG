@@ -158,27 +158,6 @@ void CG_OBJ::prepararBuffer(int maxBuffers){
 	glGenBuffers(CG_OBJ::maxBuffers, CG_OBJ::buffers);
 }
 
-void CG_OBJ::distortionSolid(Vec3 *pontos, float raio, int count, int fatias){
-	float delta = 2 * M_PI / fatias;
-	
-	int vi = 0;
-	int ni = 0;
-	int ti = 0;
-
-	int ri = 0; // iterador de fase no sólido de distorção
-
-	float cmp = 0;
-	float cmpNext = 0;
-
-	//Vec3 atual, proximo; // vetores para medir o ângulo
-
-	float difX = (y[ri+1] - y[ri]);
-	float difY = -(x[ri+1] - x[ri]);
-	float difSX = ((y[ri+1] - y[ri])+(y[ri+2] - y[ri+1]))/2; //smooth
-	float difSY = (-(x[ri+1] - x[ri])-(x[ri+2] - x[ri+1]))/2; //smooth
-
-}
-
 void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias){
 	float delta = 2 * M_PI / fatias;
 	

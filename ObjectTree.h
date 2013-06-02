@@ -47,6 +47,7 @@ private:
 	static void drawAux( ObjectTree *raiz, PosicaoNoFrustum posNoFrustum );
 	static void checkBounds(ObjectTree *tree);
 	static void localEfectivo(ObjectTree *tree, Vec3 *ponto);
+	static Light *luzesGlobais[8];
 
 public:
 	ObjectTree();
@@ -57,6 +58,7 @@ public:
 	ObjectTree *color( Vec3 vec );
 	ObjectTree *texture( TipoTextura tipo, float sX, float sY, float anguloRot );
 	ObjectTree *addLight( Light *luz );
+	ObjectTree *addLights( Light *luzes[], int i0=-1, int i1=-1, int i2=-1, int i3=-1, int i4=-1, int i5=-1, int i6=-1, int i7=-1);
 
 	ObjectTree *objecto( CG_OBJ *O );
 
