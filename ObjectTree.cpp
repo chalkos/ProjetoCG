@@ -14,7 +14,6 @@
 #include "Figuras\Cilindro.h"
 #include "Figuras\Esfera.h"
 #include "Figuras\SolidoRevolucao.h"
-#include "Figuras\Triangulo.h"
 
 #include "Frustum.h"
 #include "Profiler.h"
