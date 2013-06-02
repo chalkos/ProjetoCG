@@ -158,7 +158,28 @@ void CG_OBJ::prepararBuffer(int maxBuffers){
 	glGenBuffers(CG_OBJ::maxBuffers, CG_OBJ::buffers);
 }
 
-void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec3 pos){
+void CG_OBJ::distortionSolid(Vec3 *pontos, float raio, int count, int fatias){
+	float delta = 2 * M_PI / fatias;
+	
+	int vi = 0;
+	int ni = 0;
+	int ti = 0;
+
+	int ri = 0; // iterador de fase no sólido de distorção
+
+	float cmp = 0;
+	float cmpNext = 0;
+
+	//Vec3 atual, proximo; // vetores para medir o ângulo
+
+	float difX = (y[ri+1] - y[ri]);
+	float difY = -(x[ri+1] - x[ri]);
+	float difSX = ((y[ri+1] - y[ri])+(y[ri+2] - y[ri+1]))/2; //smooth
+	float difSY = (-(x[ri+1] - x[ri])-(x[ri+2] - x[ri+1]))/2; //smooth
+
+}
+
+void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias){
 	float delta = 2 * M_PI / fatias;
 	
 	int vi = 0;
@@ -194,9 +215,9 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 		alpha = delta * fatia;
 		alphaDelta = delta * (fatia+1);
 
-		this->addVertex(&vi,pos.X() + x[ri],pos.Y() + y[ri],pos.Z());
-		this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
-		this->addVertex(&vi,pos.X() + x[ri+1] * sin(alpha), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alpha));
+		this->addVertex(&vi,x[ri], y[ri],0);
+		this->addVertex(&vi,x[ri+1] * sin(alphaDelta), y[ri+1], x[ri+1] * cos(alphaDelta));
+		this->addVertex(&vi,x[ri+1] * sin(alpha), y[ri+1], x[ri+1] * cos(alpha));
 		
 		
 		/*if( acos( atual.innerProduct(&proximo) / (atual.norma() * proximo.norma()) ) >= anguloRigido || true ){
@@ -236,9 +257,9 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 			alphaDelta = delta * (fatia+1);
 			
 
-			this->addVertex(&vi,pos.X() + x[ri] * sin(alpha), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alpha));
-			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
-			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alpha), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alpha));
+			this->addVertex(&vi,x[ri] * sin(alpha), y[ri], x[ri] * cos(alpha));
+			this->addVertex(&vi,x[ri+1] * sin(alphaDelta), y[ri+1], x[ri+1] * cos(alphaDelta));
+			this->addVertex(&vi,x[ri+1] * sin(alpha), y[ri+1], x[ri+1] * cos(alpha));
 			
 			/*if( acos( atual.innerProduct(&proximo) / (atual.norma() * proximo.norma()) ) >= anguloRigido || true ){
 				this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
@@ -254,9 +275,9 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
 			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmpNext/comprimento);
 			
-			this->addVertex(&vi,pos.X() + x[ri] * sin(alphaDelta), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alphaDelta));
-			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
-			this->addVertex(&vi,pos.X() + x[ri] * sin(alpha), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alpha));
+			this->addVertex(&vi,x[ri] * sin(alphaDelta), y[ri], x[ri] * cos(alphaDelta));
+			this->addVertex(&vi,x[ri+1] * sin(alphaDelta), y[ri+1], x[ri+1] * cos(alphaDelta));
+			this->addVertex(&vi,x[ri] * sin(alpha), y[ri], x[ri] * cos(alpha));
 			
 			/*if( acos( atual.innerProduct(&proximo) / (atual.norma() * proximo.norma()) ) >= anguloRigido || true ){
 				this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alpha));
@@ -295,9 +316,9 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 		alpha = delta * fatia;
 		alphaDelta = delta * (fatia+1);
 
-			this->addVertex(&vi,pos.X() + x[ri],pos.Y() + y[ri],pos.Z());
-			this->addVertex(&vi,pos.X() + x[ri-1] * sin(alpha), pos.Y() + y[ri-1], pos.Z() + x[ri-1] * cos(alpha));
-			this->addVertex(&vi,pos.X() + x[ri-1] * sin(alphaDelta), pos.Y() + y[ri-1], pos.Z() + x[ri-1] * cos(alphaDelta));
+			this->addVertex(&vi,x[ri],y[ri],0);
+			this->addVertex(&vi,x[ri-1] * sin(alpha), y[ri-1], x[ri-1] * cos(alpha));
+			this->addVertex(&vi,x[ri-1] * sin(alphaDelta), y[ri-1], x[ri-1] * cos(alphaDelta));
 		
 			/*if( acos( atual.innerProduct(&proximo) / (atual.norma() * proximo.norma()) ) >= anguloRigido || true ){
 				this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alpha));
@@ -315,7 +336,7 @@ void CG_OBJ::revolutionSolidClose(float *x, float *y, int count, int fatias, Vec
 	}
 }
 
-void CG_OBJ::revolutionSolidOpen(float *x, float *y, int count, int fatias, Vec3 pos){
+void CG_OBJ::revolutionSolidOpen(float *x, float *y, int count, int fatias){
 	float delta = 2 * M_PI / fatias;
 	
 	int vi = 0;
@@ -353,9 +374,9 @@ void CG_OBJ::revolutionSolidOpen(float *x, float *y, int count, int fatias, Vec3
 			alpha = delta * fatia;
 			alphaDelta = delta * (fatia+1);
 
-			this->addVertex(&vi,pos.X() + x[ri] * sin(alpha), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alpha));
-			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
-			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alpha), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alpha));
+			this->addVertex(&vi,x[ri] * sin(alpha), y[ri], x[ri] * cos(alpha));
+			this->addVertex(&vi,x[ri+1] * sin(alphaDelta), y[ri+1], x[ri+1] * cos(alphaDelta));
+			this->addVertex(&vi,x[ri+1] * sin(alpha), y[ri+1], x[ri+1] * cos(alpha));
 			
 			this->addNormal(&ni, difX * sin(alpha), difY, difX * cos(alpha));
 			this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));
@@ -365,9 +386,9 @@ void CG_OBJ::revolutionSolidOpen(float *x, float *y, int count, int fatias, Vec3
 			this->addTextureCoord(&ti, (fatia+1)/(float)fatias, 1-cmpNext/comprimento);
 			this->addTextureCoord(&ti, fatia/(float)fatias, 1-cmpNext/comprimento);
 			
-			this->addVertex(&vi,pos.X() + x[ri] * sin(alphaDelta), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alphaDelta));
-			this->addVertex(&vi,pos.X() + x[ri+1] * sin(alphaDelta), pos.Y() + y[ri+1], pos.Z() + x[ri+1] * cos(alphaDelta));
-			this->addVertex(&vi,pos.X() + x[ri] * sin(alpha), pos.Y() + y[ri], pos.Z() + x[ri] * cos(alpha));
+			this->addVertex(&vi,x[ri] * sin(alphaDelta), y[ri], x[ri] * cos(alphaDelta));
+			this->addVertex(&vi,x[ri+1] * sin(alphaDelta), y[ri+1], x[ri+1] * cos(alphaDelta));
+			this->addVertex(&vi,x[ri] * sin(alpha), y[ri], x[ri] * cos(alpha));
 			
 			this->addNormal(&ni, difX * sin(alphaDelta), difY, difX * cos(alphaDelta));
 			this->addNormal(&ni, difSX * sin(alphaDelta), difSY, difSX * cos(alphaDelta));

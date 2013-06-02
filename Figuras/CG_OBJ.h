@@ -44,8 +44,11 @@ protected:
 	virtual void preencherVertices();
 
 	// preenche o array de vértices de acordo com coordenadas XY e faz um sólido de revolução
-	void revolutionSolidClose(float *x, float *y, int count, int fatias, Vec3 pos = Vec3(0,0,0));
-	void revolutionSolidOpen(float *x, float *y, int count, int fatias, Vec3 pos = Vec3(0,0,0));
+	void revolutionSolidClose(float *x, float *y, int count, int fatias);
+	void revolutionSolidOpen(float *x, float *y, int count, int fatias);
+
+	// preencher o array de vértices de acordo com os dados do solido de distorção
+	void distortionSolid(Vec3 *pontos, float raio, int count, int fatias);
 
 	// várias propriedades
 	Vec3 emissiva;
