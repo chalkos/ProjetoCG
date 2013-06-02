@@ -5,7 +5,7 @@ Plano3D::Plano3D(){}
 Plano3D::Plano3D( Vec3 *normal, Vec3 *ponto ){
 	this->normal = normal->clone();
 	this->ponto = ponto->clone();
-	this->D = this->normal.innerProduct( &this->ponto );
+	this->D = -this->normal.innerProduct( &this->ponto );
 }
 
 Vec3 Plano3D::getPonto(){

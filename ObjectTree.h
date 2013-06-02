@@ -5,6 +5,7 @@
 #include "Light.h"
 #include "Figuras\CG_OBJ.h"
 #include "Textura.h"
+#include "Frustum.h"
 
 enum TipoMod {
 	translação,
@@ -31,6 +32,8 @@ private:
 	
 	// o objecto a desenhar
 	CG_OBJ *obj;
+	Vec3 *boundsMin;
+	Vec3 *boundsMax;
 
 	// activar/desactivar este objecto
 	bool *toggle;
@@ -41,7 +44,9 @@ private:
 
 	// a árvore
 	static ObjectTree *raizObj;
-	static void drawAux( ObjectTree *raiz );
+	static void drawAux( ObjectTree *raiz, PosicaoNoFrustum posNoFrustum );
+	static void checkBounds(ObjectTree *tree);
+	static void localEfectivo(ObjectTree *tree, Vec3 *ponto);
 
 public:
 	ObjectTree();
@@ -57,7 +62,7 @@ public:
 
 	ObjectTree *addFilho( ObjectTree *filho );
 
-	static ObjectTree *init();
+	static void init();
 	static void draw();
 };
 

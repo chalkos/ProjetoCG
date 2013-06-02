@@ -42,6 +42,7 @@ void Textura::init(){
 	strcpy_s( Textura::filenames[texDoorLeft], FILENAME_MAX_SIZE, "Texturas/doorLeft.png" );
 	strcpy_s( Textura::filenames[texDoorRight], FILENAME_MAX_SIZE, "Texturas/doorRight.png" );
 	strcpy_s( Textura::filenames[texParedeDentro], FILENAME_MAX_SIZE, "Texturas/paredeDentro.png" );
+	strcpy_s( Textura::filenames[texBilharTecido], FILENAME_MAX_SIZE, "Texturas/bilharTecido.png" );
 
 
 	// gerar identificadores de imagem

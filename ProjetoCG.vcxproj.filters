@@ -66,9 +66,6 @@
     <ClCompile Include="Vec3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BoundingVolume.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -122,9 +119,6 @@
     <ClInclude Include="Vec3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BoundingVolume.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -176,6 +170,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Texturas\marble.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Texturas\bilharTecido.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

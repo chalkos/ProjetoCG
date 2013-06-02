@@ -1,17 +1,20 @@
 #include <iostream>
 using namespace std;
 
+#include <glew.h>
+#include <GL/glut.h>
+
 #include "Frustum.h"
 
 #include "Utilities.h"
 #include <math.h>
 
 bool Frustum::frustumNeedsUpdate = true;
-bool Frustum::frustumCullingEnabled = false;
+bool Frustum::frustumCullingEnabled = true;
 Plano3D Frustum::plano[planoCOUNT_ENUM];
 
 void Frustum::updateFrustum( Vec3 *pos, Vec3 *up, Vec3 *center, float fov, float ratio, float dNear, float dFar){
-	if( !frustumNeedsUpdate || ratio == 0.0f )
+	if( !frustumNeedsUpdate || ratio == 0.0f || !frustumCullingEnabled)
 		return;
 
 	Vec3 X,Y,Z;
@@ -91,9 +94,47 @@ void Frustum::updateFrustum( Vec3 *pos, Vec3 *up, Vec3 *center, float fov, float
 	frustumNeedsUpdate = false;
 }
 
+PosicaoNoFrustum Frustum::boxInFrustum(Vec3 *min, Vec3 *max){
+	// caso não esteja a utilizar frustum culling, afirmar que está sempre visivel
+	if( !frustumCullingEnabled )
+		return PosicaoNoFrustum::frusDentro;
+
+	Vec3 pts[8];
+	
+	// preencher um array com os 8 vertices
+	pts[0] = Vec3( min->X(), min->Y(), min->Z() );
+	pts[1] = Vec3( min->X(), min->Y(), max->Z() );
+	pts[2] = Vec3( min->X(), max->Y(), min->Z() );
+	pts[3] = Vec3( min->X(), max->Y(), max->Z() );
+	pts[4] = Vec3( max->X(), min->Y(), min->Z() );
+	pts[5] = Vec3( max->X(), min->Y(), max->Z() );
+	pts[6] = Vec3( max->X(), max->Y(), min->Z() );
+	pts[7] = Vec3( max->X(), max->Y(), max->Z() );
+
+	int dentro, i, j, fora;
+	PosicaoNoFrustum res = PosicaoNoFrustum::frusDentro;
+
+	for( i=0; i<planoCOUNT_ENUM; i++){
+		
+		dentro=0;
+		fora=0;
+		for( j = 0; j<8 && (dentro == 0 || fora == 0); j++){
+			if( plano[i].distancia(&pts[j]) >= 0 )
+				dentro++;
+			else
+				fora++;
+		}
+		// se todos os vertices estiverem do lado "errado" de um plano, está fora
+		if( dentro == 0 )
+			return PosicaoNoFrustum::frusFora;
+		else if( fora > 0 )
+			res = PosicaoNoFrustum::frusIntersecta;
+	}
+
+	return res;
+}
 
 bool Frustum::pointInFrustum( Vec3 *ponto ){
-
 	for( int i=0; i<planoCOUNT_ENUM; i++){
 		if( plano[i].distancia(ponto) < 0 )
 			return false;
@@ -113,14 +154,6 @@ void Frustum::toggleFrustumCulling(){
 
 bool Frustum::isCullingEnabled(){
 	return frustumCullingEnabled;
-}
-
-bool Frustum::volumeInFrustum(BoundingVolume *vol){
-	//
-	//  Por implementar
-	//
-	
-	return true;
 }
 
 void Frustum::scheduleUpdate(){

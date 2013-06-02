@@ -24,8 +24,6 @@ protected:
 	////////////// non-static
 	float comprimento; // altura dos solidos de revolucao
 
-	Vec3 minBound;
-	Vec3 maxBound;
 	void calculateBounds();
 
 	int nTriangulos; // numero de triangulos
@@ -72,10 +70,9 @@ public:
 	// obtém o numero máximo de buffers actual
 	static int getMaxBuffers();
 	
-	// obtém o tamanho do objecto nos vários eixos
-	float getCompX();
-	float getCompY();
-	float getCompZ();
+	// obtém os limites do objecto nos vários eixos
+	Vec3 *minBound;
+	Vec3 *maxBound;
 	
 
 	CG_OBJ *setEmissiva(float r, float g, float b);

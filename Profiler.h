@@ -18,7 +18,6 @@ private:
 
 	static int frames;
 	static float fps;
-
 public:
 	static void init();
 	static int diff(ProfilerData cronometro);
@@ -29,6 +28,7 @@ public:
 
 	static void startFrame();
 	static float getFPS();
+
 };
 
 #endif // __PROFILER_H_INCLUDED__

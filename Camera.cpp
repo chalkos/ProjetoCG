@@ -117,14 +117,13 @@ void Camera::lookAt(float dx, float dy, float dz){
 		pos.getVal(1)+dy,
 		pos.getVal(2)+dz);
 
-	if( Frustum::isCullingEnabled() )
-		Frustum::updateFrustum(&pos, &up, &center, Camera::fov, Camera::ratio, Camera::dnear, Camera::dfar);
 
 	// transpor o mundo, rodar o mundo, colocar câmara
 	gluLookAt(pos.getVal(0), pos.getVal(1), pos.getVal(2),    // posição da câmara
 		center.getVal(0), center.getVal(1), center.getVal(2), // ponto para onde a câmara está apontada
 		up.getVal(0), up.getVal(1), up.getVal(2));      // “up vector” (0.0f, 1.0f, 0.0f)
-
+	
+	Frustum::updateFrustum(&pos, &up, &center, Camera::fov, Camera::ratio, Camera::dnear, Camera::dfar);
 
 }
 

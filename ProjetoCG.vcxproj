@@ -89,7 +89,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BoundingVolume.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Figuras\CG_OBJ.cpp" />
     <ClCompile Include="Figuras\Cilindro.cpp" />
@@ -110,7 +109,6 @@
     <ClCompile Include="Vec3.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoundingVolume.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Figuras\CG_OBJ.h" />
     <ClInclude Include="Figuras\Cilindro.h" />
@@ -131,6 +129,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texturas\alcatifaVermelha.png">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+    </Image>
+    <Image Include="Texturas\bilharTecido.png">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
     </Image>

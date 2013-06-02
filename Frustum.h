@@ -2,7 +2,6 @@
 #define __FRUSTUM_H_INCLUDED__
 
 #include "Plano3D.h"
-#include "BoundingVolume.h"
 
 enum PlanosFrustum {
 	planoNear,
@@ -15,18 +14,24 @@ enum PlanosFrustum {
 	planoCOUNT_ENUM
 };
 
+enum PosicaoNoFrustum{
+	frusDentro,
+	frusFora,
+	frusIntersecta,
+};
+
 class Frustum{
 private:
 	static bool frustumNeedsUpdate;
 	static bool frustumCullingEnabled;
 	static Plano3D plano[planoCOUNT_ENUM];
 
+	static bool pointInFrustum(Vec3 *ponto);
 public:
 	static void updateFrustum( Vec3 *pos, Vec3 *up, Vec3 *center, float fov, float ratio, float dNear, float dFar);
-	
+
 	// testes de pontos
-	static bool pointInFrustum(Vec3 *ponto);
-	static bool volumeInFrustum(BoundingVolume *vol);
+	static PosicaoNoFrustum boxInFrustum(Vec3 *min, Vec3 *max);
 
 	static void toggleFrustumCulling();
 	static bool isCullingEnabled();

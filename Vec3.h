@@ -21,6 +21,7 @@ public:
 	void setY(float val);
 	void setZ(float val);
 	float *getAll(float *arr);
+	
 
 	void reset(float A, float B, float C);
 
@@ -33,7 +34,7 @@ public:
 	float innerProduct( Vec3 *snd);
 	void normalizar();
 	float norma();
-
 };
+
 
 #endif // __VEC3_H_INCLUDED__

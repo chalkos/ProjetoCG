@@ -3,7 +3,7 @@
 
 #include "CG_OBJ.h"
 
-enum TipoSolidoRevolucao { mesa, mesaRedondaAberta, garrafa, candeeiro, abajour, copoSimples, copoChampanhe, copoVinho, testeLuz, testeLuz2, cilindrotesteLuz };
+enum TipoSolidoRevolucao { mesa, mesaRedondaAberta, garrafa, candeeiro, abajour, copoSimples, copoChampanhe, copoVinho, pernaBilhar};
 
 class SolidoRevolucao : public CG_OBJ {
 private:

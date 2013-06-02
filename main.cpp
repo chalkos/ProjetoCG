@@ -52,7 +52,6 @@ void renderScene(void) {
 	// posicionar a camara
 	//Camera::lookAt(-1,0,-1);
 	Camera::lookAt();
-
 			  
 	// opções
 	if( Input::apenasLinhas ){
@@ -62,6 +61,7 @@ void renderScene(void) {
 		// activou o culling na classe Input
 		glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 	}
+
 
 	// ligar e posicionar as luzes
 	Light::enable(GL_LIGHTING);
@@ -87,6 +87,8 @@ void renderScene(void) {
 	Textura::unsetTextura();
 
 	Light::disable(GL_LIGHTING);
+	
+	
 
 	// ----------------
 	// escrever texto

@@ -93,7 +93,7 @@ float Vec3::innerProduct( Vec3 *snd){
 }
 
 void Vec3::normalizar(){
-	float norm = sqrt( vec[0] * vec[0] + vec[1] * vec[1] + vec[1] * vec[2] );
+	float norm = sqrt( vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2] );
 	
 	vec[0] /= norm;
 	vec[1] /= norm;

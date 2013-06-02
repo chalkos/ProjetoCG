@@ -1,5 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <iostream>
+#include <conio.h>
+#include <float.h>
 #include <glew.h>
 #include <GL/glut.h>
 
@@ -13,6 +16,11 @@
 #include "Figuras\SolidoRevolucao.h"
 #include "Figuras\Triangulo.h"
 
+#include "Frustum.h"
+#include "Profiler.h"
+
+#include "Utilities.h"
+
 #define a 60   // altura das paredes (6*u)
 #define u 10   // undidade
 #define m 5    // metade
@@ -23,9 +31,9 @@
 
 ObjectTree *ObjectTree::raizObj = NULL;
 
-ObjectTree *ObjectTree::init(){
+void ObjectTree::init(){
 
-	CG_OBJ::prepararBuffer(250); // preparar buffers
+	CG_OBJ::prepararBuffer(300); // preparar buffers
 
 	Light *lTeste = (new Light(luz0))
 		->setPos(Vec3(10,10,10), 0)
@@ -37,10 +45,9 @@ ObjectTree *ObjectTree::init(){
 	ObjectTree *deco = new ObjectTree();
 	raizObj = (new ObjectTree())
 		->addFilho( resChao )
-		->addFilho( telhado );
-
-	// decoração de paredes interiores (definido mais à frente)
-	resChao->addFilho( deco );
+		->addFilho( deco )
+		//->addFilho( telhado )
+		;
 
 	// chão
 	resChao->addFilho( (new ObjectTree)->objecto( new Plano(24*u+2*o, 40*u+2*o, 12, 20) )->translate(Vec3(12*u, 0, -20*u))
@@ -323,25 +330,199 @@ ObjectTree *ObjectTree::init(){
 	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 2*(12*u-p-o), 1, 12))->rotate(90, Vec3(0,0,1))->rotate(-90, Vec3(1,0,0))->translate(Vec3(a-q, o+p, -0.5*(2*(12*u-p-o))-o-p))
 		->texture( TipoTextura::texMadeira, 1, 1, 0));
 	
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 2*(12*u-p-o), 1, 12))->rotate(90, Vec3(0,0,1))->rotate(90, Vec3(1,0,0))->translate(Vec3(q, -40*u+o+p, 0.5*(2*(12*u-p-o))+o+p))
+		->texture( TipoTextura::texMadeira, 1, 1, 0));
+	deco->addFilho( (new ObjectTree)->objecto(new Plano(m, 2*(12*u-p-o), 1, 12))->rotate(90, Vec3(0,0,1))->rotate(90, Vec3(1,0,0))->translate(Vec3(a-q, -40*u+o+p, 0.5*(2*(12*u-p-o))+o+p))
+		->texture( TipoTextura::texMadeira, 1, 1, 0));
+	
 	// mesa bilhar
 	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à mesa de bilhar
-		->addFilho( (new ObjectTree)->objecto(new Plano(a-u, 2*u, 1, 1))->rotate(90, Vec3(0,0,1))->translate(Vec3( 0.5*(a-u), o+p, -0.5*(2*u)-4*u))
-			->texture( TipoTextura::texDoorRight, 1, 1, -90))
+		// tecido na area de jogo
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u, 4*u, 3, 2))->translate(Vec3( 0.5*(6*u)+4*u, 2*u, -40*u+0.5*(4*u)+7*u))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		// madeira na parte de baixo da mesa
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u+m, 4*u+m, 4, 3))->rotate(-180, Vec3(0,0,1))->translate(Vec3( -0.5*(6*u)-4*u, -1*u-m, -40*u+0.5*(4*u)+7*u))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		// tecido acima
+		->addFilho( (new ObjectTree)->objecto(new Plano(q, 4*u, 1, 2))->translate(Vec3( 0.5*(q)+4*u-q, 2*u+q, -40*u+0.5*(4*u)+7*u))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(q, 4*u, 1, 2))->translate(Vec3( 0.5*(q)+10*u, 2*u+q, -40*u+0.5*(4*u)+7*u))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u+m, q, 3, 1))->translate(Vec3( 0.5*(6*u+m)+4*u-q, 2*u+q, -40*u+0.5*(q)+7*u-q))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u+m, q, 3, 1))->translate(Vec3( 0.5*(6*u+m)+4*u-q, 2*u+q, -40*u+0.5*(q)+11*u))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		// tecido nas bordas
+		->addFilho( (new ObjectTree)->objecto(new Plano(q, 4*u, 1, 2))->rotate(-90, Vec3(0,0,1))->translate(Vec3( -0.5*(q)-2*u, 4*u, -40*u+0.5*(4*u)+7*u  ))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(q, 4*u, 1, 2))->rotate(90, Vec3(0,0,1))->translate(Vec3( 0.5*(q)+2*u, -10*u, -40*u+0.5*(4*u)+7*u  ))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u, q, 3, 1))->rotate(90, Vec3(1,0,0))->translate(Vec3( 0.5*(6*u)+4*u, -40*u+7*u, -0.5*(q)-2*u  ))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u, q, 3, 1))->rotate(-90, Vec3(1,0,0))->translate(Vec3( 0.5*(6*u)+4*u, 40*u-11*u, 0.5*(q)+2*u  ))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		// madeira exterior
+		->addFilho( (new ObjectTree)->objecto(new Plano(u-q, 4*u+m, 1, 2))->rotate(-90, Vec3(0,0,1))->translate(Vec3( 0.5*(u-q)-2*u-q, 10*u+q, -40*u+0.5*(4*u)+7*u  ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(u-q, 4*u+m, 1, 2))->rotate(90, Vec3(0,0,1))->translate(Vec3( -0.5*(u-q)+2*u+q, -4*u+q, -40*u+0.5*(4*u)+7*u  ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u+m, u-q, 3, 1))->rotate(90, Vec3(1,0,0))->translate(Vec3( 0.5*(6*u)+4*u, -40*u+11*u+q, 0.5*(u-q)-2*u-q  ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u+m, u-q, 3, 1))->rotate(-90, Vec3(1,0,0))->translate(Vec3( 0.5*(6*u)+4*u, 40*u-7*u+q, -0.5*(u-q)+2*u+q  ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new SolidoRevolucao(pernaBilhar, 10))->scale(Vec3(u,u,u))->translate(Vec3( (0.5*(m+q)+4*u)/u, 0, (-40*u+0.5*(m+q)+7*u)/u ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new SolidoRevolucao(pernaBilhar, 10))->scale(Vec3(u,u,u))->translate(Vec3( (0.5*(m+q)+9*u)/u, 0, (-40*u+0.5*(m+q)+7*u)/u ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new SolidoRevolucao(pernaBilhar, 10))->scale(Vec3(u,u,u))->translate(Vec3( (0.5*(m+q)+4*u)/u, 0, (-40*u+0.5*(m+q)+10*u)/u ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new SolidoRevolucao(pernaBilhar, 10))->scale(Vec3(u,u,u))->translate(Vec3( (0.5*(m+q)+9*u)/u, 0, (-40*u+0.5*(m+q)+10*u)/u ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
 	); //fim mesa bilhar
 	
-	return NULL;
+	// segunda mesa bilhar (a da direita
+	resChao->addFilho( (new ObjectTree) //apenas para agrupar o que diz respeito à mesa de bilhar
+		// tecido na area de jogo
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u, 4*u, 3, 2))->translate(Vec3( 0.5*(6*u)+14*u, 2*u, -40*u+0.5*(4*u)+7*u))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		// madeira na parte de baixo da mesa
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u+m, 4*u+m, 4, 3))->rotate(-180, Vec3(0,0,1))->translate(Vec3( -0.5*(6*u)-14*u, -1*u-m, -40*u+0.5*(4*u)+7*u))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		// tecido acima
+		->addFilho( (new ObjectTree)->objecto(new Plano(q, 4*u, 1, 2))->translate(Vec3( 0.5*(q)+14*u-q, 2*u+q, -40*u+0.5*(4*u)+7*u))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(q, 4*u, 1, 2))->translate(Vec3( 0.5*(q)+110*u, 2*u+q, -40*u+0.5*(4*u)+7*u))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u+m, q, 3, 1))->translate(Vec3( 0.5*(6*u+m)+14*u-q, 2*u+q, -40*u+0.5*(q)+7*u-q))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u+m, q, 3, 1))->translate(Vec3( 0.5*(6*u+m)+14*u-q, 2*u+q, -40*u+0.5*(q)+11*u))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		// tecido nas bordas
+		->addFilho( (new ObjectTree)->objecto(new Plano(q, 4*u, 1, 2))->rotate(-90, Vec3(0,0,1))->translate(Vec3( -0.5*(q)-2*u, 14*u, -40*u+0.5*(4*u)+7*u  ))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(q, 4*u, 1, 2))->rotate(90, Vec3(0,0,1))->translate(Vec3( 0.5*(q)+2*u, -20*u, -40*u+0.5*(4*u)+7*u  ))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u, q, 3, 1))->rotate(90, Vec3(1,0,0))->translate(Vec3( 0.5*(6*u)+14*u, -40*u+7*u, -0.5*(q)-2*u  ))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u, q, 3, 1))->rotate(-90, Vec3(1,0,0))->translate(Vec3( 0.5*(6*u)+14*u, 40*u-11*u, 0.5*(q)+2*u  ))
+			->texture( TipoTextura::texBilharTecido, 1, 1, 0))
+		// madeira exterior
+		->addFilho( (new ObjectTree)->objecto(new Plano(u-q, 4*u+m, 1, 2))->rotate(-90, Vec3(0,0,1))->translate(Vec3( 0.5*(u-q)-2*u-q, 20*u+q, -40*u+0.5*(4*u)+7*u  ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(u-q, 4*u+m, 1, 2))->rotate(90, Vec3(0,0,1))->translate(Vec3( -0.5*(u-q)+2*u+q, -14*u+q, -40*u+0.5*(4*u)+7*u  ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 90))
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u+m, u-q, 3, 1))->rotate(90, Vec3(1,0,0))->translate(Vec3( 0.5*(6*u)+14*u, -40*u+11*u+q, 0.5*(u-q)-2*u-q  ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new Plano(6*u+m, u-q, 3, 1))->rotate(-90, Vec3(1,0,0))->translate(Vec3( 0.5*(6*u)+14*u, 40*u-7*u+q, -0.5*(u-q)+2*u+q  ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		// pernas
+		->addFilho( (new ObjectTree)->objecto(new SolidoRevolucao(pernaBilhar, 10))->scale(Vec3(u,u,u))->translate(Vec3( (0.5*(m+q)+14*u)/u, 0, (-40*u+0.5*(m+q)+7*u)/u ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new SolidoRevolucao(pernaBilhar, 10))->scale(Vec3(u,u,u))->translate(Vec3( (0.5*(m+q)+19*u)/u, 0, (-40*u+0.5*(m+q)+7*u)/u ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new SolidoRevolucao(pernaBilhar, 10))->scale(Vec3(u,u,u))->translate(Vec3( (0.5*(m+q)+14*u)/u, 0, (-40*u+0.5*(m+q)+10*u)/u ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+		->addFilho( (new ObjectTree)->objecto(new SolidoRevolucao(pernaBilhar, 10))->scale(Vec3(u,u,u))->translate(Vec3( (0.5*(m+q)+19*u)/u, 0, (-40*u+0.5*(m+q)+10*u)/u ))
+			->texture( TipoTextura::texMadeiraEscura, 1, 1, 0))
+	); //fim mesa bilhar
+
+
+
+	
+	checkBounds(raizObj);
+}
+
+void ObjectTree::checkBounds(ObjectTree *tree){
+	if( tree == NULL )
+		return;
+
+	if( tree->obj == NULL && tree->numFilhos == 0 ){
+		std::cout << "[ERRO] Não pode haver árvores sem filhos e sem objectos!\nPress any key to exit" << std::endl;
+		_getch();
+		exit(EXIT_FAILURE);
+	}
+
+	// verificar os limites dos filhos
+	for(int i=0; i<tree->numFilhos; i++)
+		checkBounds( tree->filhos[i] );
+	
+	// atribuir valores predefinidos absurdos
+	tree->boundsMin = new Vec3(FLT_MAX, FLT_MAX, FLT_MAX);
+	tree->boundsMax = new Vec3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+
+	// verificar o próprio limite (caso tenha um objecto)
+	if( tree->obj != NULL ){
+		tree->boundsMin->setX( tree->obj->minBound->X() );
+		tree->boundsMin->setY( tree->obj->minBound->Y() );
+		tree->boundsMin->setZ( tree->obj->minBound->Z() );
+		tree->boundsMax->setX( tree->obj->maxBound->X() );
+		tree->boundsMax->setY( tree->obj->maxBound->Y() );
+		tree->boundsMax->setZ( tree->obj->maxBound->Z() );
+
+		// obter o local efectivo
+		localEfectivo(tree, tree->boundsMin);
+		localEfectivo(tree, tree->boundsMax);
+	}
+
+	// expandir o próprio conforme o tamanho dos filhos (caso os tenha)
+	for(int i=0; i<tree->numFilhos; i++){
+		if( tree->boundsMin->X() > tree->filhos[i]->boundsMin->X() ) tree->boundsMin->setX( tree->filhos[i]->boundsMin->X() );
+		if( tree->boundsMin->Y() > tree->filhos[i]->boundsMin->Y() ) tree->boundsMin->setY( tree->filhos[i]->boundsMin->Y() );
+		if( tree->boundsMin->Z() > tree->filhos[i]->boundsMin->Z() ) tree->boundsMin->setZ( tree->filhos[i]->boundsMin->Z() );
+		
+		if( tree->boundsMax->X() < tree->filhos[i]->boundsMax->X() ) tree->boundsMax->setX( tree->filhos[i]->boundsMax->X() );
+		if( tree->boundsMax->Y() < tree->filhos[i]->boundsMax->Y() ) tree->boundsMax->setY( tree->filhos[i]->boundsMax->Y() );
+		if( tree->boundsMax->Z() < tree->filhos[i]->boundsMax->Z() ) tree->boundsMax->setZ( tree->filhos[i]->boundsMax->Z() );
+	}
+}
+
+void ObjectTree::localEfectivo(ObjectTree *tree, Vec3 *ponto){
+	Vec3 res = Vec3();
+	GLfloat matriz[16];
+
+	glPushMatrix();
+	for(int i=0; i<tree->modsCount; i++)
+			switch( tree->modsTipo[i] ){
+			case TipoMod::rotação:
+				glRotatef( tree->modsExtra[i], tree->modsVec[i].X(), tree->modsVec[i].Y(), tree->modsVec[i].Z());
+				break;
+			case TipoMod::translação:
+				glTranslatef(tree->modsVec[i].X(), tree->modsVec[i].Y(), tree->modsVec[i].Z());
+				break;
+			case TipoMod::escala:
+				glScalef(tree->modsVec[i].X(), tree->modsVec[i].Y(), tree->modsVec[i].Z());
+				break;
+			}
+
+	glGetFloatv(GL_MODELVIEW_MATRIX, matriz);
+
+	res.setX( matriz[0] * ponto->X() + matriz[4] * ponto->Y() + matriz[8] * ponto->Z() + matriz[12] );
+	res.setY( matriz[1] * ponto->X() + matriz[5] * ponto->Y() + matriz[9] * ponto->Z() + matriz[13] );
+	res.setZ( matriz[2] * ponto->X() + matriz[6] * ponto->Y() + matriz[10] * ponto->Z() + matriz[14] );
+	
+	ponto->setX( res.X() );
+	ponto->setY( res.Y() );
+	ponto->setZ( res.Z() );
+
+	glPopMatrix();
 }
 
 void ObjectTree::draw(){
-	drawAux( raizObj );
+	drawAux( raizObj, frusIntersecta);
 }
 
-void ObjectTree::drawAux( ObjectTree *raiz ){
+void ObjectTree::drawAux( ObjectTree *raiz, PosicaoNoFrustum posNoFrustum){
 	if( raiz == NULL )
 		return;
 
 	if( raiz->toggle != NULL && *raiz->toggle == false )
 		return;
+
+	// se não estiver visivel, não desenha
+	if( posNoFrustum != frusDentro )
+		if( (posNoFrustum = Frustum::boxInFrustum( raiz->boundsMin, raiz->boundsMax ) ) == frusFora )
+			return;
 
 	if( raiz->obj != NULL ){
 
@@ -359,6 +540,35 @@ void ObjectTree::drawAux( ObjectTree *raiz ){
 			}
 			raiz->luzes[i]->aplicarELigar();
 		}
+
+		/*
+		// mostrar bounding boxes
+		glColor3f(1,0,0);
+		glBegin(GL_LINES);
+		glVertex3f( raiz->boundsMin->X(), raiz->boundsMin->Y(), raiz->boundsMin->Z());
+		glVertex3f( raiz->boundsMin->X(), raiz->boundsMax->Y(), raiz->boundsMin->Z());
+		glVertex3f( raiz->boundsMin->X(), raiz->boundsMin->Y(), raiz->boundsMin->Z());
+		glVertex3f( raiz->boundsMin->X(), raiz->boundsMin->Y(), raiz->boundsMax->Z());
+		glVertex3f( raiz->boundsMin->X(), raiz->boundsMin->Y(), raiz->boundsMin->Z());
+		glVertex3f( raiz->boundsMax->X(), raiz->boundsMin->Y(), raiz->boundsMin->Z());
+		
+		glVertex3f( raiz->boundsMin->X(), raiz->boundsMin->Y(), raiz->boundsMax->Z());
+		glVertex3f( raiz->boundsMax->X(), raiz->boundsMin->Y(), raiz->boundsMax->Z());
+		glVertex3f( raiz->boundsMin->X(), raiz->boundsMin->Y(), raiz->boundsMax->Z());
+		glVertex3f( raiz->boundsMin->X(), raiz->boundsMax->Y(), raiz->boundsMax->Z());
+		
+		glVertex3f( raiz->boundsMin->X(), raiz->boundsMax->Y(), raiz->boundsMin->Z());
+		glVertex3f( raiz->boundsMin->X(), raiz->boundsMax->Y(), raiz->boundsMax->Z());
+		glVertex3f( raiz->boundsMin->X(), raiz->boundsMax->Y(), raiz->boundsMin->Z());
+		glVertex3f( raiz->boundsMax->X(), raiz->boundsMax->Y(), raiz->boundsMin->Z());
+		
+		glVertex3f( raiz->boundsMax->X(), raiz->boundsMin->Y(), raiz->boundsMin->Z());
+		glVertex3f( raiz->boundsMax->X(), raiz->boundsMax->Y(), raiz->boundsMin->Z());
+		glVertex3f( raiz->boundsMax->X(), raiz->boundsMin->Y(), raiz->boundsMin->Z());
+		glVertex3f( raiz->boundsMax->X(), raiz->boundsMin->Y(), raiz->boundsMax->Z());
+		glEnd();
+		glColor3f(1,1,1);
+		*/
 
 		// colocar textura
 		if( raiz->texTipo >= 0 && raiz->texTipo < TipoTextura::texCOUNT_ENUM)
@@ -381,6 +591,7 @@ void ObjectTree::drawAux( ObjectTree *raiz ){
 
 		// efectivamente desenhar
 		raiz->obj->desenhar();
+		
 
 		// desligar luzes
 		for(int i=0; i<8; i++){
@@ -397,7 +608,7 @@ void ObjectTree::drawAux( ObjectTree *raiz ){
 
 	// desenhar filhos
 	for(int i=0; i<raiz->numFilhos; i++)
-		drawAux( raiz->filhos[i] );
+		drawAux( raiz->filhos[i], posNoFrustum );
 	return;
 }
 
