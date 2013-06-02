@@ -61,12 +61,16 @@
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild />
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -96,7 +100,6 @@
     <ClCompile Include="Figuras\Esfera.cpp" />
     <ClCompile Include="Figuras\Plano.cpp" />
     <ClCompile Include="Figuras\SolidoRevolucao.cpp" />
-    <ClCompile Include="Figuras\Triangulo.cpp" />
     <ClCompile Include="Frustum.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -116,7 +119,6 @@
     <ClInclude Include="Figuras\Esfera.h" />
     <ClInclude Include="Figuras\Plano.h" />
     <ClInclude Include="Figuras\SolidoRevolucao.h" />
-    <ClInclude Include="Figuras\Triangulo.h" />
     <ClInclude Include="Frustum.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Light.h" />

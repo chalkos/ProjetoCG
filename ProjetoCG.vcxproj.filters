@@ -69,9 +69,6 @@
     <ClCompile Include="ObjectTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Figuras\Triangulo.cpp">
-      <Filter>Figuras</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities.h">
@@ -121,9 +118,6 @@
     </ClInclude>
     <ClInclude Include="ObjectTree.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Figuras\Triangulo.h">
-      <Filter>Figuras</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
