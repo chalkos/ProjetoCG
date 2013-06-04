@@ -3,8 +3,6 @@
 
 enum ProfilerData {
 	proStartup,
-	proCarregarFiguras,
-	proCarregarTexturas,
 	proFrame,
 	
 	// não acrescentar nada depois deste elemento
@@ -22,7 +20,6 @@ public:
 	static void init();
 	static int diff(ProfilerData cronometro);
 	static void start(ProfilerData cronometro); //tambem faz resume
-	static void reset(ProfilerData cronometro);
 	static void pause(ProfilerData cronometro);
 	static int now();
 

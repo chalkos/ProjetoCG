@@ -108,7 +108,7 @@ float *Vec3::getAll(float *arr){
 }
 
 float Vec3::norma(){
-	return sqrt( vec[0] * vec[0] + vec[1] * vec[1] + vec[1] * vec[2] );
+	return sqrt( vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2] );
 }
 
 void Vec3::setX(float val){

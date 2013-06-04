@@ -40,10 +40,6 @@ void Profiler::start(ProfilerData cronometro){
 		cronometros[cronometro] = now();
 }
 
-void Profiler::reset(ProfilerData cronometro){
-	//cronometros[cronometro] = -1;
-}
-
 void Profiler::startFrame(){
 	if( cronometros[proFrame] == -1 )
 		start(proFrame);

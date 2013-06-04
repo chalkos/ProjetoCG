@@ -62,7 +62,7 @@ private:
 
 
 	// non-static
-	int t, tw, th;
+	int tw, th;
 	ILubyte *imageData;
 
 	Textura(TipoTextura tipoTextura);

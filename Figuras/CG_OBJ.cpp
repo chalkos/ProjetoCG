@@ -384,10 +384,10 @@ void CG_OBJ::preencherIndices(){
 	int duplicados = 0;
 
 	for(unsigned int i=0; i<this->nVertices; i++)
-		vertexI[i] = 0xFFFFFFFF; // meter todos com o maior valor uint possivel
+		vertexI[i] = -1; // meter todos com um valor absurdo
 	
 	for(unsigned int i=0; i<this->nVertices; i++){
-		if( vertexI[i] == 0xFFFFFFFF ){
+		if( vertexI[i] == -1 ){
 			vertexI[i] = i;
 			for(int j=i+1; j<this->nVertices; j++){
 				if( vertexB[i*3] == vertexB[j*3] &&
@@ -402,7 +402,7 @@ void CG_OBJ::preencherIndices(){
 					textureB[i*2+1] == textureB[j*2+1] ){ // e se as coordenadas de textura forem iguais
 						
 						duplicados++;
-						vertexI[j] = i; // é um duplicado!! -> mete no array de vertexI a apontar para lá
+						vertexI[j] = i; // é um duplicado!! -> mete no array de vertexI a apontar para a primeira ocorrência
 				}
 			}
 		}

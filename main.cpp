@@ -5,10 +5,6 @@
  *	movimento do rato - olhar
  *  barra de espaços - libertar/prender o rato
  *	
- *	U/J - subir/descer a luz de testes
- *	I/K - rodar a luz de testes em volta da cena
- *	O/L - aumentar/diminuir a distancia da luz de testes à origem XZ
- *	
  *	[+] - aumentar a velocidade de movimento
  *	[-] - reduzir a velocidade de movimento
  *
@@ -41,7 +37,6 @@ void renderScene(void) {
 	Profiler::startFrame();
 	
 	Input::processInput();
-
 
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -94,15 +89,14 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(800,600);
-	glutCreateWindow("ProjetoCG - Bar");
+	glutCreateWindow("ProjetoCG - O Bar");
 		
-
-// registo de funções 
+	// registo de funções 
 	glutDisplayFunc(renderScene);
 	glutIdleFunc(renderScene);
 	glutReshapeFunc(Camera::changeSize);
 
-// pôr aqui registo da funções do teclado e rato
+	// pôr aqui registo da funções do teclado e rato
 	Input::init();
 
 	// inicializar a câmara na posição: (x,y,z)
@@ -113,33 +107,17 @@ int main(int argc, char **argv) {
 
 	// DevIL init
 	ilInit();
-	Textura::init(); //antes de inicializar as Figuras
-	
+	Textura::init();
 
 	// alguns settings para OpenGL
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	//glFrontFace(GL_CCW); //esquema de mão direita
 
-
 	// preparar objetos
 	ObjectTree::init();
 
-
 	Profiler::init();
-
-	/*
-	Profiler::start(proStartup);
-	Sleep(5000);
-	printf("passaram %d\n", Profiler::diff(proStartup));
-	Profiler::pause(proStartup);
-	Sleep(5000);
-	printf("passaram %d\n", Profiler::diff(proStartup));
-	Profiler::start(proStartup);
-	Sleep(5000);
-	printf("passaram %d\n", Profiler::diff(proStartup));*/
-
-
 	
 	// entrar no ciclo do GLUT 
 	glutMainLoop();

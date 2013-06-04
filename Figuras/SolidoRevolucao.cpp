@@ -31,7 +31,6 @@ SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
 		this->fechado = true;
 		
 
-		// os 3 pontos são um fix para as normais não serem suavizadas 
 		x[i++] = 0;
 
 		x[i++] = 2.5;
@@ -94,7 +93,6 @@ SolidoRevolucao::SolidoRevolucao(TipoSolidoRevolucao tipo, int detalhe){
 		this->fechado = false;
 		
 
-		// os 3 pontos são um fix para as normais não serem suavizadas 
 		x[i++] = 2.5;
 		
 		x[i++] = 2.5;

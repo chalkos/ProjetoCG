@@ -47,7 +47,7 @@ protected:
 	void revolutionSolidClose(float *x, float *y, int count, int fatias);
 	void revolutionSolidOpen(float *x, float *y, int count, int fatias);
 
-	// várias propriedades
+	// várias propriedades do material
 	Vec3 emissiva;
 	Vec3 especular;
 	Vec3 ambiente;
